@@ -10,7 +10,10 @@
 call plug#begin('~/.vim/plugged')
 
 " Atom One Dark / Light theme.
-Plug 'rakr/vim-one'
+" Plug 'rakr/vim-one'
+
+" Gruvbox theme
+Plug 'gruvbox-community/gruvbox'
 
 " Integrate fzf with Vim.
 Plug '~/.fzf'
@@ -134,7 +137,7 @@ endif
 syntax on
 
 " Set the color scheme.
-colorscheme one
+colorscheme gruvbox
 set background=dark
 
 " -----------------------------------------------------------------------------

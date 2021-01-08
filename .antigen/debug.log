@@ -326,3 +326,31 @@ antigen
 [WRN][1610122629.0966281891] -antigen-cache-init return code was 0
 [LOG][1610122629.0967237949] /home/scudzy/dotfiles//antigen.zsh:1592
 [LOG][1610122629.0967237949] LOADED EXTENSION cache EXT
+[WRN][1610126229.7512276173] /home/scudzy/dotfiles//antigen.zsh:266
+[WRN][1610126229.7512276173] -antigen-interactive-mode: filecode:file:shfunc:shfunc $_ANTIGEN_INTERACTIVE = 
+[WRN][1610126229.7517073154] /home/scudzy/dotfiles//antigen.zsh:1590
+[WRN][1610126229.7517073154] -antigen-lock-init return code was 0
+[LOG][1610126229.7518494129] /home/scudzy/dotfiles//antigen.zsh:1592
+[LOG][1610126229.7518494129] LOADED EXTENSION lock EXT
+[WRN][1610126229.7548408508] /home/scudzy/dotfiles//antigen.zsh:1702
+[WRN][1610126229.7548408508] Init parallel extension PARALLEL
+[WRN][1610126229.7549870014] /home/scudzy/dotfiles//antigen.zsh:266
+[WRN][1610126229.7549870014] -antigen-interactive-mode: filecode:file:shfunc:shfunc:shfunc:eval:shfunc:shfunc $_ANTIGEN_INTERACTIVE = 
+[WRN][1610126229.7551262379] /home/scudzy/dotfiles//antigen.zsh:1590
+[WRN][1610126229.7551262379] -antigen-parallel-init return code was 0
+[LOG][1610126229.7552123070] /home/scudzy/dotfiles//antigen.zsh:1592
+[LOG][1610126229.7552123070] LOADED EXTENSION parallel EXT
+[WRN][1610126229.7552964687] /home/scudzy/dotfiles//antigen.zsh:1710
+[WRN][1610126229.7552964687] Exec parallel extension PARALLEL
+[WRN][1610126229.7559499741] /home/scudzy/dotfiles//antigen.zsh:266
+[WRN][1610126229.7559499741] -antigen-interactive-mode: filecode:file:shfunc:shfunc:shfunc:eval:shfunc:shfunc $_ANTIGEN_INTERACTIVE = 
+[WRN][1610126229.7560894489] /home/scudzy/dotfiles//antigen.zsh:1590
+[WRN][1610126229.7560894489] -antigen-defer-init return code was 0
+[LOG][1610126229.7561693192] /home/scudzy/dotfiles//antigen.zsh:1592
+[LOG][1610126229.7561693192] LOADED EXTENSION defer EXT
+[WRN][1610126229.7582566738] /home/scudzy/dotfiles//antigen.zsh:266
+[WRN][1610126229.7582566738] -antigen-interactive-mode: filecode:file:shfunc:shfunc:shfunc:eval:shfunc:shfunc $_ANTIGEN_INTERACTIVE = 
+[WRN][1610126229.7586815357] /home/scudzy/dotfiles//antigen.zsh:1590
+[WRN][1610126229.7586815357] -antigen-cache-init return code was 0
+[LOG][1610126229.7588691711] /home/scudzy/dotfiles//antigen.zsh:1592
+[LOG][1610126229.7588691711] LOADED EXTENSION cache EXT
