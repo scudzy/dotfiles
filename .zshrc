@@ -10,6 +10,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
+export DOTFILES="/home/scudzy/dotfiles/"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -96,10 +97,16 @@ plugins=(
   node
   nmap
   nvm
+  command-not-found
+  emoji
+  ripgrep
+  systemd
+  zsh-interactive-cd
+  zsh-completions
   )
 
 source $ZSH/oh-my-zsh.sh
-
+source $DOTFILES/antigen.zsh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -144,6 +151,7 @@ alias cmd='/c/windows/system32/cmd.exe'
 alias fzf='fzf --height 50%'
 alias wttr='curl -s "wttr.in/Kuantan?1Fmq"'
 alias choco='/c/ProgramData/chocolatey/bin/choco.exe'
+alias fast='cmd /c fast -u'
 
 # Launch neofetch on login
 echo ""
