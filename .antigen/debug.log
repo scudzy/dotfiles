@@ -627,6 +627,7 @@ dotfiles/antigen.zsh
 [WRN][1610187654.5108003616] -antigen-cache-init return code was 0
 [LOG][1610187654.5108942986] /home/scudzy/dotfiles//antigen.zsh:1592
 [LOG][1610187654.5108942986] LOADED EXTENSION cache EXT
+<<<<<<< HEAD
 [WRN][1610189382.2872097492] /home/scudzy/dotfiles//antigen.zsh:266
 [WRN][1610189382.2872097492] -antigen-interactive-mode: filecode:file:shfunc:shfunc $_ANTIGEN_INTERACTIVE = 
 [WRN][1610189382.2877097130] /home/scudzy/dotfiles//antigen.zsh:1590
@@ -655,3 +656,5 @@ dotfiles/antigen.zsh
 [WRN][1610189382.2943184376] -antigen-cache-init return code was 0
 [LOG][1610189382.2944414616] /home/scudzy/dotfiles//antigen.zsh:1592
 [LOG][1610189382.2944414616] LOADED EXTENSION cache EXT
+=======
+>>>>>>> 8da8caac6166525d9985b2104da20f156eb0dd32
