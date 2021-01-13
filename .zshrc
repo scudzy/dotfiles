@@ -153,6 +153,7 @@ alias wttr='curl -s "wttr.in/Kuantan?0?q?T"'
 alias choco='/c/ProgramData/chocolatey/bin/choco.exe'
 alias fast='cmd /c fast -u'
 alias ipgeo='powershell ipgeo'
+alias noxfce4='nohup xfce4-terminal & sleep 3'
 
 # Launch neofetch on login
 echo ""
