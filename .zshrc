@@ -154,6 +154,7 @@ alias choco='/c/ProgramData/chocolatey/bin/choco.exe'
 alias fast='cmd /c fast -u'
 alias ipgeo='powershell ipgeo'
 alias noxfce4='nohup xfce4-terminal & sleep 3'
+alias ff='nohup firefox & sleep 3'
 
 # Launch neofetch on login
 echo ""
