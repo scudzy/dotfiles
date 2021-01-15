@@ -120,7 +120,7 @@ source $DOTFILES/antigen.zsh
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+export EDITOR="vim"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -138,23 +138,25 @@ export EDITOR='vim'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
-alias ll='ls -laF'
-alias suu='sudo apt update; sudo apt upgrade -y'
-alias dfah='df -aHH'
-alias dush='du -sh'
-alias pwsh='/c/Program\ Files/Powershell/7/pwsh.exe'
-alias cmd='/c/windows/system32/cmd.exe'
-alias powershell='/c/windows/system32/windowspowershell/v1.0/powershell.exe'
-alias st3='/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
-alias path='echo $PATH'
-alias cmd='/c/windows/system32/cmd.exe'
-alias fzf='fzf --height 50%'
-alias wttr='curl -s "wttr.in/Kuantan?0?q?t"'
-alias choco='/c/ProgramData/chocolatey/bin/choco.exe'
-alias fast='cmd /c fast -u'
-alias ipgeo='powershell ipgeo'
-alias noxfce4='nohup xfce4-terminal & sleep 3'
-alias ff='nohup firefox & sleep 3'
+#alias ll="ls -laF"
+alias suu="sudo apt update && sudo apt upgrade -y"
+alias dfah="df -aH"
+alias dush="du -sh"
+alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
+alias cmd="/c/windows/system32/cmd.exe"
+alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
+alias st3="/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe"
+alias path="echo $PATH"
+alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
+alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
+alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
+alias fast="cmd /c fast -u"
+alias ipgeo="powershell ipgeo"
+alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
+alias ff="nohup firefox >/dev/null 2>&1 & sleep 3"
+alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS3"
+alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS4"
+alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS6"
 
 # Launch neofetch on login
 echo ""
@@ -206,7 +208,7 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   }
   alias ls='ls -F -h --color=always -v --author --time-style=long-iso'
   alias ll='ls -alF'
-  alias l='ls -l -a'
+  alias l='ls -l'
 fi
 
 # x11 forwarding
@@ -259,8 +261,8 @@ export HISTCONTROL=ignoreboth
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Load aliases if they exist.
-[ -f "${HOME}/.aliases" ] && source "${HOME}/.aliases"
-[ -f "${HOME}/.aliases.local" ] && source "${HOME}/.aliases.local"
+#[ -f "${HOME}/.aliases" ] && source "${HOME}/.aliases"
+#[ -f "${HOME}/.aliases.local" ] && source "${HOME}/.aliases.local"
 
 # Determine git branch.
 parse_git_branch() {

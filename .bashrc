@@ -76,7 +76,4 @@ if grep -qE "(Microsoft|WSL)" /proc/version &>/dev/null; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export BROWSER='/mnt/c/Windows/explorer.exe'
-
-
-
+#export BROWSER='/mnt/c/Windows/explorer.exe'
