@@ -19,5 +19,4 @@ tags
 [._]*.un~/
 
 .aliases.local
-antigen/debug.log
 .git
