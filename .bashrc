@@ -47,7 +47,7 @@ esac
 
 # Enable asdf to manage various programming runtime versions.
 #   Requires: https://asdf-vm.com/#/
-source "${HOME}"/.asdf/asdf.sh
+#source "${HOME}"/.asdf/asdf.sh
 
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)

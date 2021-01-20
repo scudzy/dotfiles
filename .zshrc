@@ -16,16 +16,16 @@ export DOTFILES="/home/scudzy/dotfiles/"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # ZSH Autocomplete
-# source "/home/scudzy/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+#source ~/.oh-my-zsh/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+#ZSH_THEME_RANDOM_CANDIDATES=( "agnoster" "spaceship" )
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -106,7 +106,7 @@ plugins=(
   )
 
 source $ZSH/oh-my-zsh.sh
-#source $DOTFILES/antigen.zsh
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
