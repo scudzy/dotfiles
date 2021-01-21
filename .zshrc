@@ -158,6 +158,7 @@ alias ff="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS6"
+alias clip="/c/Windows/SysWOW64/clip.exe"
 
 # Launch neofetch on login
 echo ""

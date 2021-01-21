@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+mkdir -p ~/.local/share/fonts
 ln -s ~/dotfiles/.aliases ~/.aliases
 ln -s ~/dotfiles/.bashrc ~/.bashrc
 ln -s ~/dotfiles/.gemrc ~/.gemrc
@@ -8,4 +9,5 @@ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 sudo ln -s ~/dotfiles/etc/wsl.conf /etc/wsl.conf
-cp ~/dotfiles/.gitconfig.user ~/.gitconfig.user
+cp -i ~/dotfiles/.gitconfig.user ~/.gitconfig.user
+cp -r ~/dotfiles/.local/share/fonts/Meslo\ LG\ S\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
