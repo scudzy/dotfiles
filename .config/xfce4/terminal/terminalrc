@@ -1,12 +1,11 @@
 [Configuration]
-FontName=MesloLGS Nerd Font 12
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
 MiscBellUrgent=FALSE
 MiscBordersDefault=TRUE
 MiscCursorBlinks=FALSE
 MiscCursorShape=TERMINAL_CURSOR_SHAPE_BLOCK
-MiscDefaultGeometry=122x30
+MiscDefaultGeometry=115x30
 MiscInheritGeometry=FALSE
 MiscMenubarDefault=FALSE
 MiscMouseAutohide=FALSE
@@ -25,10 +24,9 @@ MiscRewrapOnResize=TRUE
 MiscUseShiftArrowsToScroll=FALSE
 MiscSlimTabs=FALSE
 MiscNewTabAdjacent=FALSE
-MiscSearchDialogOpacity=100
-MiscShowUnsafePasteDialog=TRUE
-ColorForeground=#ffffffffffff
-ColorBackground=#000000000000
-ColorPalette=rgb(0,0,0);rgb(205,0,0);rgb(0,205,0);rgb(205,205,0);rgb(0,0,205);rgb(235,91,235);rgb(0,205,205);rgb(229,229,229);rgb(127,127,127);rgb(255,0,0);rgb(0,255,0);rgb(255,255,0);rgb(92,92,255);rgb(241,167,241);rgb(0,255,255);rgb(255,255,255)
-TitleInitial=wsl2
+TitleInitial=xfce4-terminal
+FontName=MesloLGS Nerd Font 12
+ColorPalette=rgb(0,0,0);rgb(241,61,15);rgb(16,235,16);rgb(247,250,42);rgb(30,43,224);rgb(220,163,220);rgb(0,170,170);rgb(143,139,139);rgb(85,85,85);rgb(255,85,85);rgb(85,255,85);rgb(255,255,85);rgb(85,85,255);rgb(255,85,255);rgb(85,255,255);rgb(255,255,255)
+CommandLoginShell=TRUE
+ScrollingUnlimited=TRUE
 
