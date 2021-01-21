@@ -167,6 +167,7 @@ echo ""
 # PATH
 # export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
 export PATH="${PATH}:/home/scudzy/.local/bin"
+export PATH="${PATH}:/home/scudzy/dotfiles/sh"
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
