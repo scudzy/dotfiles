@@ -155,10 +155,11 @@ alias csw="powershell choco upgrade all -y && powershell scoop update && powersh
 alias ipgeo="powershell ipgeo"
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
 alias ff="nohup firefox >/dev/null 2>&1 & sleep 3"
-alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS3"
-alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS4"
-alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS6"
+alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
+alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
+alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
+alias code="cmd /c code ."
 
 # Launch neofetch on login
 echo ""
