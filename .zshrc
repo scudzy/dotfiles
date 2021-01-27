@@ -158,7 +158,7 @@ alias ff="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/ttyS6"
-alias clip="/c/Windows/SysWOW64/clip.exe"
+alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 
 # Launch neofetch on login
 echo ""
@@ -169,6 +169,7 @@ echo ""
 # export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
 export PATH="${PATH}:/home/scudzy/.local/bin"
 export PATH="${PATH}:/home/scudzy/dotfiles/sh"
+export PATH="${PATH}:/c/Users/scudz/AppData/Local/Programs/Microsoft\ VS\ Code/"
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then

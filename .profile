@@ -4,6 +4,7 @@
 # Add all local binary paths to the system path.
 export PATH="${PATH}:${HOME}/.local/bin"
 export PATH="${PATH}:/c/Windows/System32/"
+export PATH="${PATH}:/c/Users/scudz/AppData/Local/Programs/Microsoft\ VS\ Code/"
 
 # Default programs to run.
 export EDITOR="vim"
@@ -22,4 +23,4 @@ export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
 echo "${0}" | grep "bash$" >/dev/null \
   && [ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
 
-export BROWSER='/mnt/c/Windows/explorer.exe'
+export PATH=$PATH:/usr/local/go/bin
