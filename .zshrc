@@ -159,7 +159,7 @@ alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
-alias code="cmd /c code ."
+alias speed="cmd /c speedtest"
 
 # Launch neofetch on login
 echo ""
