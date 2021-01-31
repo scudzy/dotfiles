@@ -81,15 +81,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh_reload
-  zsh-autosuggestions
   github
   common-aliases
   nmap
   sudo
   colored-man-pages
   colorize
-  zsh-syntax-highlighting
   pip
   python
   github
@@ -101,6 +98,9 @@ plugins=(
   emoji
   ripgrep
   systemd
+  zsh_reload
+  zsh-autosuggestions
+  zsh-syntax-highlighting
   zsh-interactive-cd
   zsh-completions
   )
@@ -154,12 +154,11 @@ alias fast="cmd /c fast -u"
 alias csw="powershell choco upgrade all -y && powershell scoop update && powershell winget upgrade --all && powershell scoop status"
 alias ipgeo="powershell ipgeo"
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-alias ff="nohup firefox >/dev/null 2>&1 & sleep 3"
+alias ffox="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
-alias speed="cmd /c speedtest"
 
 # Launch neofetch on login
 echo ""
@@ -222,6 +221,28 @@ export LIBGL_ALWAYS_INDIRECT=1
 
 # fzf search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Color Gruvbox Dark
+#export FZF_DEFAULT_OPTS='
+#  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+#  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
+
+# Color Ayu Mirage
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:#cbccc6,bg:#1f2430,hl:#707a8c
+    --color=fg+:#707a8c,bg+:#191e2a,hl+:#ffcc66
+    --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
+    --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff'
+
+# fzf with man
+function fman() {
+    man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
+}
+
+# Function lastpass cli
+function lpfz () {
+  lpass show -c --password $(lpass ls  | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+  }
 
 # Functions
 join-lines() {
