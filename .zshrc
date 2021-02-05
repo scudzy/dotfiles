@@ -221,6 +221,9 @@ export LIBGL_ALWAYS_INDIRECT=1
 # fzf search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+
 # Color Gruvbox Dark
 #export FZF_DEFAULT_OPTS='
 #  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
