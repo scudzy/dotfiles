@@ -138,6 +138,7 @@ export EDITOR="vim"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
+alias c="calc"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -aH"
 alias dush="du -sh"
