@@ -11,6 +11,7 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export DOTFILES="/home/scudzy/dotfiles/"
+export BW_SESSION="w4IgpUlxRaBIjZ+Mgi9CTav8aOk/vUWcPpq/0LHO1wSUNgHG8JUtdVlF8kwRE6f90BKCVLT3KHj33VWT3E5TIg=="
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -354,4 +355,3 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
