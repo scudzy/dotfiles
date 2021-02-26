@@ -11,7 +11,10 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export DOTFILES="/home/scudzy/dotfiles/"
+
+# Bitwarden CLI
 export BW_SESSION="w4IgpUlxRaBIjZ+Mgi9CTav8aOk/vUWcPpq/0LHO1wSUNgHG8JUtdVlF8kwRE6f90BKCVLT3KHj33VWT3E5TIg=="
+eval "$(bw completion --shell zsh); compdef _bw bw;"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -139,6 +142,8 @@ export EDITOR="vim"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
+alias speed="cmd /c speedtest"
+alias pyupg="pip3 freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; pip3 install -U \1/p' |sh"
 alias c="calc"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -aH"
