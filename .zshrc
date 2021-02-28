@@ -1,3 +1,4 @@
+#ZSH_DISABLE_COMPFIX=true
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -12,10 +13,6 @@ fi
 export ZSH="/home/scudzy/.oh-my-zsh"
 export DOTFILES="/home/scudzy/dotfiles/"
 
-# Bitwarden CLI
-export BW_SESSION="w4IgpUlxRaBIjZ+Mgi9CTav8aOk/vUWcPpq/0LHO1wSUNgHG8JUtdVlF8kwRE6f90BKCVLT3KHj33VWT3E5TIg=="
-eval "$(bw completion --shell zsh); compdef _bw bw;"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -23,7 +20,6 @@ eval "$(bw completion --shell zsh); compdef _bw bw;"
 
 # ZSH Autocomplete
 #source ~/.oh-my-zsh/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -360,3 +356,7 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+# Bitwarden CLI
+export BW_SESSION="w4IgpUlxRaBIjZ+Mgi9CTav8aOk/vUWcPpq/0LHO1wSUNgHG8JUtdVlF8kwRE6f90BKCVLT3KHj33VWT3E5TIg=="
+eval "$(bw completion --shell zsh) && compdef _bw bw"
