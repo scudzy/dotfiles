@@ -9,3 +9,6 @@
 [user]
 	name = scudzys
 	email = scudzy@icloud.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
