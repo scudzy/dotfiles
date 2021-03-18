@@ -4,7 +4,7 @@
 # Add all local binary paths to the system path.
 export PATH="${PATH}:${HOME}/.local/bin"
 export PATH="${PATH}:/c/Windows/System32/"
-export PATH="${PATH}:/c/Users/scudz/AppData/Local/Programs/Microsoft\ VS\ Code/"
+#export PATH="${PATH}:/c/Users/scudz/AppData/Local/Programs/Microsoft\ VS\ Code/"
 
 # Default programs to run.
 export EDITOR="vim"

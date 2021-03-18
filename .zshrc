@@ -172,7 +172,7 @@ echo ""
 # export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
 export PATH="${PATH}:/home/scudzy/.local/bin"
 export PATH="${PATH}:/home/scudzy/dotfiles/sh"
-export PATH="${PATH}:/home/scudzy/.vscode-server/bin/f30a9b73e8ffc278e71575118b6bf568f04587c8/bin/"
+#export PATH="${PATH}:/home/scudzy/.vscode-server/bin/f30a9b73e8ffc278e71575118b6bf568f04587c8/bin/"
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -356,9 +356,5 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
-# Bitwarden CLI
-export BW_SESSION="w4IgpUlxRaBIjZ+Mgi9CTav8aOk/vUWcPpq/0LHO1wSUNgHG8JUtdVlF8kwRE6f90BKCVLT3KHj33VWT3E5TIg=="
-eval "$(bw completion --shell zsh) && compdef _bw bw"
 
 GITSTATUS_LOG_LEVEL=DEBUG
