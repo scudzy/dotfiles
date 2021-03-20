@@ -10,9 +10,9 @@
 call plug#begin('~/.vim/plugged')
 
 " Atom One Dark / Light theme.
-" Plug 'rakr/vim-one'
+Plug 'rakr/vim-one'
 
-" Gruvbox theme
+" Gruvbox Community theme.
 Plug 'gruvbox-community/gruvbox'
 
 " Integrate fzf with Vim.
@@ -136,9 +136,31 @@ endif
 " Enable syntax highlighting.
 syntax on
 
+" Specific colorscheme settings (must come before setting your colorscheme).
+if !exists('g:gruvbox_contrast_light')
+  let g:gruvbox_contrast_light='hard'
+endif
+
 " Set the color scheme.
 colorscheme gruvbox
 set background=dark
+
+" Specific colorscheme settings (must come after setting your colorscheme).
+if (g:colors_name == 'gruvbox')
+  if (&background == 'dark')
+    hi Visual cterm=NONE ctermfg=NONE ctermbg=237 guibg=#3a3a3a
+  else
+    hi Visual cterm=NONE ctermfg=NONE ctermbg=228 guibg=#f2e5bc
+    hi CursorLine cterm=NONE ctermfg=NONE ctermbg=228 guibg=#f2e5bc
+    hi ColorColumn cterm=NONE ctermfg=NONE ctermbg=228 guibg=#f2e5bc
+  endif
+endif
+
+" Spelling mistakes will be colored up red.
+hi SpellBad cterm=underline ctermfg=203 guifg=#ff5f5f
+hi SpellLocal cterm=underline ctermfg=203 guifg=#ff5f5f
+hi SpellRare cterm=underline ctermfg=203 guifg=#ff5f5f
+hi SpellCap cterm=underline ctermfg=203 guifg=#ff5f5f
 
 " -----------------------------------------------------------------------------
 " Status line
@@ -227,12 +249,6 @@ set wrap
 
 runtime! macros/matchit.vim
 
-" Spelling mistakes will also be colored red if you uncomment the colors.
-hi SpellBad cterm=underline "ctermfg=203 guifg=#ff5f5f
-hi SpellLocal cterm=underline "ctermfg=203 guifg=#ff5f5f
-hi SpellRare cterm=underline "ctermfg=203 guifg=#ff5f5f
-hi SpellCap cterm=underline "ctermfg=203 guifg=#ff5f5f
-
 " -----------------------------------------------------------------------------
 " Basic mappings
 " -----------------------------------------------------------------------------
@@ -309,6 +325,12 @@ noremap <F7> :set list!<CR>
 inoremap <F7> <C-o>:set list!<CR>
 cnoremap <F7> <C-c>:set list!<CR>
 
+" Move 1 more lines up or down in normal and visual selection modes.
+nnoremap K :m .-2<CR>==
+nnoremap J :m .+1<CR>==
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
 " Toggle quickfix window.
 function! QuickFix_toggle()
     for i in range(1, winnr('$'))
@@ -352,7 +374,10 @@ au FocusGained,BufEnter * :checktime
 autocmd InsertLeave * silent! set nopaste
 
 " Make sure all types of requirements.txt files get syntax highlighting.
-autocmd BufNewFile,BufRead requirements*.txt set syntax=python
+autocmd BufNewFile,BufRead requirements*.txt set ft=python
+
+" Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
+autocmd BufNewFile,BufRead .*aliases set ft=sh
 
 " Ensure tabs don't get converted to spaces in Makefiles.
 autocmd FileType make setlocal noexpandtab
@@ -470,10 +495,10 @@ let g:loaded_netrwPlugin = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
-"augroup my-fern-hijack
-  "autocmd!
-  "autocmd BufEnter * ++nested call s:hijack_directory()
-"augroup END
+augroup my-fern-hijack
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
+augroup END
 
 function! s:hijack_directory() abort
   let path = expand('%:p')
@@ -581,7 +606,7 @@ let g:limelight_conceal_ctermfg=244
 
 let g:mkdp_auto_close=0
 let g:mkdp_refresh_slow=1
-let g:mkdp_markdown_css='/home/nick/.local/lib/github-markdown-css/github-markdown.css'
+let g:mkdp_markdown_css=fnameescape($HOME).'/.local/lib/github-markdown-css/github-markdown.css'
 
 " .............................................................................
 " SirVer/ultisnips
@@ -594,10 +619,15 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " janko/vim-test
 " .............................................................................
 
-let test#strategy='vimterminal'
+if has('nvim')
+  let test#strategy='neovim'
+else
+  let test#strategy='vimterminal'
+endif
 
-let test#python#runner='pytest'
 let test#python#pytest#executable='docker-compose exec web py.test'
+
+let test#ruby#rails#executable='docker-compose exec -e RAILS_ENV=test webpacker rails test'
 
 let test#elixir#exunit#executable='docker-compose exec -e MIX_ENV=test web mix test'
 
@@ -605,4 +635,4 @@ nmap <silent> t<C-n> :TestNearest<CR>
 nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-a> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
+nmap <silent> t<C-v> :TestVisit<CR>
