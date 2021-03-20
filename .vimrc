@@ -142,7 +142,7 @@ if !exists('g:gruvbox_contrast_light')
 endif
 
 " Set the color scheme.
-colorscheme gruvbox
+colorscheme one
 set background=dark
 
 " Specific colorscheme settings (must come after setting your colorscheme).
