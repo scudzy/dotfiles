@@ -12,6 +12,10 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export DOTFILES="/home/scudzy/dotfiles/"
+export GOROOT="/usr/lib/go"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+export PYTHONPATH="/usr/bin/python3.7/"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
