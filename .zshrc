@@ -161,7 +161,9 @@ alias fast="cmd /c fast -u"
 alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
 alias ipgeo="powershell ipgeo"
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-alias ffox="nohup firefox >/dev/null 2>&1 & sleep 3"
+alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
+#alias nomido="nohup midori >/dev/null 2>&1 & sleep 3"
+#alias nofalk="nohup falkon >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
@@ -362,7 +364,12 @@ zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
-GITSTATUS_LOG_LEVEL=DEBUG
+# Checking Interactive v.s. Non-Interactive
+[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
+#
+# Checking Login v.s. Non-Login
+[[ -o login ]] && echo "Login" || echo "Non-Login"
+echo ""
 
 # vcxsrv
-export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
+#export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
