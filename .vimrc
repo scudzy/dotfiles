@@ -87,7 +87,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " A bunch of useful language related snippets (ultisnips is the engine).
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Automatically show Vim's complete menu while typing.
 Plug 'vim-scripts/AutoComplPop'
@@ -142,7 +142,7 @@ if !exists('g:gruvbox_contrast_light')
 endif
 
 " Set the color scheme.
-colorscheme one
+colorscheme gruvbox
 set background=dark
 
 " Specific colorscheme settings (must come after setting your colorscheme).
@@ -612,8 +612,8 @@ let g:mkdp_markdown_css=fnameescape($HOME).'/.local/lib/github-markdown-css/gith
 " SirVer/ultisnips
 " .............................................................................
 
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " .............................................................................
 " janko/vim-test

@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
-mv ~/.bashrc ~/.bashrc.old
-mv ~/.profile ~/.profile.old
-mkdir -p ~/.local/share/fonts
-ln -s ~/dotfiles/.aliases ~/.aliases
-ln -s ~/dotfiles/.bashrc ~/.bashrc
-ln -s ~/dotfiles/.gemrc ~/.gemrc
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/.profile ~/.profile
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-sudo ln -s ~/dotfiles/etc/wsl.conf /etc/wsl.conf
-cp -i ~/dotfiles/.gitconfig.user ~/.gitconfig.user
-cp -r ~/dotfiles/.local/share/fonts/Meslo\ LG\ S\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
-fc-cache -Ev
+mv /home/scudzy/.bashrc /home/scudzy/.bashrc.old
+mv /home/scudzy/.profile /home/scudzy/.profile.old
+mkdir -p /home/scudzy/.local/share/fonts
+ln -s /home/scudzy/dotfiles/.aliases /home/scudzy/.aliases
+ln -s /home/scudzy/dotfiles/.bashrc /home/scudzy/.bashrc
+ln -s /home/scudzy/dotfiles/.gemrc /home/scudzy/.gemrc
+ln -s /home/scudzy/dotfiles/.gitconfig /home/scudzy/.gitconfig
+ln -s /home/scudzy/dotfiles/.profile /home/scudzy/.profile
+ln -s /home/scudzy/dotfiles/.tmux.conf /home/scudzy/.tmux.conf
+ln -s /home/scudzy/dotfiles/.vimrc /home/scudzy/.vimrc
+ln -s /home/scudzy/dotfiles/.zshrc /home/scudzy/.zshrc
+sudo ln -s /home/scudzy/dotfiles/etc/wsl.conf /etc/wsl.conf
+cp -i /home/scudzy/dotfiles/.gitconfig.user /home/scudzy/.gitconfig.user
+cp -r /home/scudzy/dotfiles/.local/ /home/scudzy/
+cp -r /home/scudzy/dotfiles/.config/ /home/scudzy/
+cp -r /home/scudzy/dotfiles/.vim/ /home/scudzy/
+cp -r /home/scudzy/dotfiles/.pyvoc/ /home/scudzy/
+fc-cache -fv
