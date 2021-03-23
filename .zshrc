@@ -170,6 +170,7 @@ alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $args"
+alias rclGdrv="rclone --exclude ".git/" copy dotfiles Gdrive:/dotfiles --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
 
 # Launch neofetch on login
 echo ""
