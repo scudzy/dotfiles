@@ -114,6 +114,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
+fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -339,7 +340,7 @@ fi
 autoload -U compinit
 zstyle '.completion:*' menu select
 zmodload zsh/complist
-compinit
+compinit -i
 _comp_options+=(globdots)
 
 # Save history so we get auto suggestions
@@ -373,3 +374,6 @@ echo ""
 
 # vcxsrv
 #export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
+
+# gh cli completion
+gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
