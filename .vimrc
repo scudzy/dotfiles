@@ -495,10 +495,10 @@ let g:loaded_netrwPlugin = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
-augroup my-fern-hijack
-  autocmd!
-  autocmd BufEnter * ++nested call s:hijack_directory()
-augroup END
+"augroup my-fern-hijack
+""  autocmd!
+""  autocmd BufEnter * ++nested call s:hijack_directory()
+"augroup END
 
 function! s:hijack_directory() abort
   let path = expand('%:p')
