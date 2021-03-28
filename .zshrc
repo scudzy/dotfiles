@@ -170,7 +170,7 @@ alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $args"
 alias rclGdrv="rclone --exclude ".git/" copy dotfiles Gdrive:/dotfiles --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
-alias lla="ls -la"
+alias lc="colorls -oA --sd"
 
 # Launch neofetch on login
 #echo ""
@@ -187,7 +187,7 @@ if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
 fi
 
-#typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
@@ -367,4 +367,7 @@ echo ""
 gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
 
 # Turn off power status when using spaceship prompt
-export SPACESHIP_BATTERY_SHOW=false
+#export SPACESHIP_BATTERY_SHOW=false
+
+# Colorls tab completion
+source $(dirname $(gem which colorls))/tab_complete.sh
