@@ -7,7 +7,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep="egrep --color=auto"
 fi
 
-#alias ll="ls -alF"
+#alias lla="ls -al"
 #alias la="ls -A"
 #alias l="ls -CF"
 
@@ -47,28 +47,16 @@ weather () {
 }
 
 alias dew="docker-compose exec web"
-
 alias dpsql="docker-compose exec postgres psql"
-
 alias drun='docker run --rm -it -v "${PWD}":/app'
-
 alias rmpyc="find . -type d -name '__pycache__' -exec rm -rf {} \;"
-
 alias jek="RUBYOPT='-W0' bundle exec jekyll serve --config _config.yml,_config.dev.yml --drafts --livereload"
-
 alias ymp3="youtube-dl --extract-audio --audio-format mp3"
-
 alias octal="stat -c '%a %n'"
-
 alias follow="namei -om"
-
 alias diff="diff --color -u"
-
 alias 755d="find . -type d -exec chmod 755 {} \;"
-
 alias 644f="find . -type f -exec chmod 644 {} \;"
-
-alias open="/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe"
 
 # This is specific to WSL 2. If the WSL 2 VM goes rogue and decides not to free
 # up memory, this command will free your memory after about 20-30 seconds.
@@ -76,5 +64,4 @@ alias open="/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe"
 alias drop_cache="sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'\""
 
 alias toggle-dark-mode="toggle-dark-mode && source ${HOME}/.bashrc"
-
 alias vss="sort -u "${HOME}"/.vim/spell/en.utf-8.add -o "${HOME}"/.vim/spell/en.utf-8.add"

@@ -30,6 +30,7 @@ export PYTHONPATH="/usr/bin/python3.7/"
 # If set to an empty array, this variable will have no effect.
 #ZSH_THEME_RANDOM_CANDIDATES=( "agnoster" "spaceship" )
 ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -169,24 +170,24 @@ alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $args"
 alias rclGdrv="rclone --exclude ".git/" copy dotfiles Gdrive:/dotfiles --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
+alias lla="ls -la"
 
 # Launch neofetch on login
-echo ""
-if [ -f /usr/bin/neofetch ]; then neofetch; fi
-echo ""
+#echo ""
+#if [ -f /usr/bin/neofetch ]; then neofetch; fi
+#echo ""
 
 # PATH
 # export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
 export PATH="${PATH}:/home/scudzy/.local/bin"
 export PATH="${PATH}:/home/scudzy/dotfiles/sh"
-#export PATH="${PATH}:/home/scudzy/.vscode-server/bin/f30a9b73e8ffc278e71575118b6bf568f04587c8/bin/"
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
 fi
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+#typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
@@ -202,7 +203,7 @@ export GPG_TTY=$(tty); # for gpg key management
 # set options for less
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
 # or the short version
-# export LESS='-F -i -J -M -R -W -x4 -X -z-4'
+export LESS='-F -i -J -M -R -W -x4 -X -z-4'
 
 # Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less .
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
@@ -225,20 +226,16 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   alias l='ls -l'
 fi
 
-# x11 forwarding
-export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0.0
-export LIBGL_ALWAYS_INDIRECT=1
-
-# fzf search
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Color Gruvbox Dark
-#export FZF_DEFAULT_OPTS='
-#  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-#  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
+export FZF_DEFAULT_OPTS='
+    --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+    --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
 
 # Color Ayu Mirage
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -251,11 +248,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 function fman() {
     man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
 }
-
-# Function lastpass cli
-function lpfz () {
-  lpass show -c --password $(lpass ls  | fzf | awk '{print $(NF)}' | sed 's/\]//g')
-  }
 
 # Functions
 join-lines() {
@@ -309,16 +301,16 @@ parse_git_branch() {
 }
 
 # Set a non-distracting prompt.
-PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
+#PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
 
 # If it's an xterm compatible terminal, set the title to user@host: dir.
-case "${TERM}" in
-xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]${PS1}"
-    ;;
-*)
-    ;;
-esac
+#case "${TERM}" in
+#xterm*|rxvt*)
+#    PS1="\[\e]0;\u@\h: \w\a\]${PS1}"
+#    ;;
+#*)
+#    ;;
+#esac
 
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
@@ -371,8 +363,8 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 echo ""
 
-# vcxsrv
-#export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
-
 # gh cli completion
 gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
+
+# Turn off power status when using spaceship prompt
+export SPACESHIP_BATTERY_SHOW=false
