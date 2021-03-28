@@ -170,7 +170,7 @@ alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $args"
 alias rclGdrv="rclone --exclude ".git/" copy dotfiles Gdrive:/dotfiles --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
-alias lc="colorls -oA --sd"
+alias ll="colorls -oA --sd"
 
 # Launch neofetch on login
 #echo ""
@@ -222,7 +222,7 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
     command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
   }
   alias ls='ls -F -h --color=always -v --author --time-style=long-iso'
-  alias ll='ls -alF'
+#  alias ll='ls -alF'
   alias l='ls -l'
 fi
 
