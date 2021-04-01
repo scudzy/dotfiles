@@ -1,0 +1,3 @@
+[console_scripts]
+pyvoc = pyvoc.pyvoc:main
+
