@@ -173,9 +173,12 @@ alias rclGdrv="rclone --exclude ".git/" copy dotfiles Gdrive:/dotfiles --transfe
 alias ll="colorls -oA --sd"
 
 # Launch neofetch on login
-#echo ""
+echo ""
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
+if [ -f /usr/bin/lsb_release ]; then lsb_release -a; fi
 #echo ""
+uname -rnv
+echo ""
 
 # PATH
 # export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
