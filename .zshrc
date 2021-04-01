@@ -174,10 +174,15 @@ alias ll="colorls -oA --sd"
 
 # Launch neofetch on login
 echo ""
-#if [ -f /usr/bin/neofetch ]; then neofetch; fi
-if [ -f /usr/bin/lsb_release ]; then lsb_release -a; fi
-#echo ""
-uname -rnv
+if [ -f /usr/bin/neofetch ]; then neofetch; fi
+echo ""
+curl -s 'wttr.in/Kuantan, Malaysia?format=4'
+
+# Checking Interactive v.s. Non-Interactive
+#[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
+#
+# Checking Login v.s. Non-Login
+[[ -o login ]] && echo "Login" || echo "Non-Login"
 echo ""
 
 # PATH
@@ -234,6 +239,12 @@ fi
 
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+
+# Enable a better reverse search experience.
+#   Requires: https://github.com/junegunn/fzf (to use fzf in general)
+#   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+export FZF_DEFAULT_OPTS="--color=dark"
 
 # Color Gruvbox Dark
 export FZF_DEFAULT_OPTS='
@@ -315,12 +326,6 @@ parse_git_branch() {
 #    ;;
 #esac
 
-# Enable a better reverse search experience.
-#   Requires: https://github.com/junegunn/fzf (to use fzf in general)
-#   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-export FZF_DEFAULT_OPTS="--color=dark"
-
 # WSL 2 specific settings.
 if grep -q "microsoft" /proc/version &>/dev/null; then
     # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
@@ -328,6 +333,16 @@ if grep -q "microsoft" /proc/version &>/dev/null; then
 
     # Allows your gpg passphrase prompt to spawn (useful for signing commits).
     export GPG_TTY=$(tty)
+fi
+
+# WSL 1 specific settings.
+if grep -qE "(Microsoft|WSL)" /proc/version &>/dev/null; then
+    if [ "$(umask)" = "0000" ]; then
+        umask 0022
+    fi
+
+    # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
+    export DISPLAY=:0
 fi
 
 # Auto Completion
@@ -358,13 +373,6 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
-# Checking Interactive v.s. Non-Interactive
-[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
-#
-# Checking Login v.s. Non-Login
-[[ -o login ]] && echo "Login" || echo "Non-Login"
-echo ""
 
 # gh cli completion
 gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
