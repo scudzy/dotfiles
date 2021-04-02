@@ -176,7 +176,7 @@ alias ll="colorls -oA --sd"
 echo ""
 if [ -f /usr/bin/neofetch ]; then neofetch; fi
 echo ""
-curl -s 'wttr.in/Kuantan, Malaysia?format=4'
+curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 
 # Checking Interactive v.s. Non-Interactive
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
@@ -315,16 +315,16 @@ parse_git_branch() {
 }
 
 # Set a non-distracting prompt.
-#PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
+PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
 
 # If it's an xterm compatible terminal, set the title to user@host: dir.
-#case "${TERM}" in
-#xterm*|rxvt*)
-#    PS1="\[\e]0;\u@\h: \w\a\]${PS1}"
-#    ;;
-#*)
-#    ;;
-#esac
+case "${TERM}" in
+xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]${PS1}"
+    ;;
+*)
+    ;;
+esac
 
 # WSL 2 specific settings.
 if grep -q "microsoft" /proc/version &>/dev/null; then
@@ -382,3 +382,9 @@ gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
 
 # Colorls tab completion
 source $(dirname $(gem which colorls))/tab_complete.sh
+
+# Windows Terminal Title
+settitle () {
+    export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+      echo -ne '\033]0;'"$1"'\a'
+}
