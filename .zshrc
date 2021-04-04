@@ -167,11 +167,12 @@ alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
-alias cc="currency_converter $args"
+alias cc="currency_converter $@"
 alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
 alias ll="colorls -oA --sd"
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
+alias pyv="pyvoc -w $@"
 
 # Launch neofetch on login
 echo ""
@@ -389,3 +390,6 @@ settitle () {
     export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
       echo -ne '\033]0;'"$1"'\a'
 }
+
+# Vcxsvr
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
