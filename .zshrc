@@ -179,7 +179,6 @@ echo ""
 if [ -f /usr/bin/neofetch ]; then neofetch; fi
 echo ""
 curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
-genie -v -i
 
 # Checking Interactive v.s. Non-Interactive
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
