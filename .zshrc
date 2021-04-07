@@ -172,7 +172,17 @@ alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/do
 alias ll="colorls -oA --sd"
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
-alias pyv="pyvoc -w $@"
+alias vw="pyvoc -w $@"
+alias dpigs20="dpigs --lines=20 -SH"
+alias apti="sudo apt install $@"
+alias aptar="sudo apt autoremove $@"
+
+# Functions
+
+# List installed package in number
+dpkgq () {
+  dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
+}
 
 # Launch neofetch on login
 echo ""
@@ -396,6 +406,7 @@ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # XDG
 export XDG_RUNTIME_DIR=//tmp/service-scudzy.aqX
-export RUNLEVEL=3
+#export RUNLEVEL=3
 
+# Powerlevel9k
 GITSTATUS_LOG_LEVEL=DEBUG
