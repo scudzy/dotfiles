@@ -2,9 +2,14 @@
 # This file runs once at login.
 
 # Add all local binary paths to the system path.
+export DOTFILES="/home/scudzy/dotfiles/"
+export GOROOT="/usr/lib/go"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+export PYTHONPATH="/usr/bin/python3.7/"
+export PATH="${PATH}:/home/scudzy/dotfiles/sh"
 export PATH="${PATH}:${HOME}/.local/bin"
 export PATH="${PATH}:/c/Windows/System32/"
-#export PATH="${PATH}:/c/Users/scudz/AppData/Local/Programs/Microsoft\ VS\ Code/"
 
 # Default programs to run.
 export EDITOR="vim"
@@ -22,5 +27,3 @@ export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
 # If bash is the login shell, then source ~/.bashrc if it exists.
 echo "${0}" | grep "bash$" >/dev/null \
   && [ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
-
-export PATH=$PATH:/usr/local/go/bin
