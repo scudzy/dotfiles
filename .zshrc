@@ -172,6 +172,7 @@ alias apti="sudo apt install $@"
 alias aptar="sudo apt autoremove $@"
 alias zshrc="st3 dotfiles/.zshrc"
 alias gcm="git commit -m $@"
+alias vimrc="st3 dotfiles/.vimrc"
 
 # Functions
 # List installed package in number
