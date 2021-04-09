@@ -11,11 +11,6 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
-export DOTFILES="/home/scudzy/dotfiles/"
-export GOROOT="/usr/lib/go"
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
-export PYTHONPATH="/usr/bin/python3.7/"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -126,7 +121,7 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR="vim"
+#export EDITOR="vim"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -153,8 +148,7 @@ alias dush="du -sh"
 alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
 alias cmd="/c/windows/system32/cmd.exe"
 alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
-alias st3="/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe"
-alias path="echo $PATH"
+alias path="printenv | grep $PATH"
 alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
 alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
 alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
@@ -176,37 +170,66 @@ alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
 alias apti="sudo apt install $@"
 alias aptar="sudo apt autoremove $@"
+alias zshrc="st3 dotfiles/.zshrc"
+alias gcm="git commit -m $@"
 
 # Functions
-
 # List installed package in number
 dpkgq () {
   dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
 }
 
-# Launch neofetch on login
-echo ""
+# Sublime text 3
+function st3() {
+  nohup /c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe "$@" >/dev/null 2>&1 & sleep 3
+}
+
+# Vscode
+function code() {
+  /c/Users/scudzy/scoop/apps/vscode/current/code "$@"
+}
+
+# Irfanview
+function irf() {
+  /c/Program\ Files/Irfanview/i_view64.exe "$@:wq"
+}
+
+# Startup
 if [ -f /usr/bin/neofetch ]; then neofetch; fi
-echo ""
 curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 
 # Checking Interactive v.s. Non-Interactive
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
-#
+
 # Checking Login v.s. Non-Login
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 echo ""
 
+# X11 Display
+export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+export LIBGL_ALWAYS_INDIRECT=1
+
 # PATH
-# export PATH="${PATH}:/C/Users/scudz/AppData/Roaming/npm"
-export PATH="${PATH}:/home/scudzy/.local/bin"
-export PATH="${PATH}:/home/scudzy/dotfiles/sh"
+# Add all local binary paths to the system path.
+export DOTFILES="/home/scudzy/dotfiles/"
+export GOROOT="/usr/lib/go"
+export GOPATH="$HOME/go"
+export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
+export PYTHONPATH="/usr/bin/python3.7/"
+export PATH="${PATH}:${HOME}/dotfiles/sh"
+export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="${PATH}:/c/Windows/System32/"
+
+# Default programs to run.
+export EDITOR="vim"
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
 fi
 
+# Powerlevel9k
+GITSTATUS_LOG_LEVEL=DEBUG
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
@@ -249,14 +272,18 @@ fi
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+# fzf with man
+function fman() {
+    man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
+}
 
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
 #   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-export FZF_DEFAULT_OPTS="--color=dark"
+#export FZF_DEFAULT_OPTS="--color=dark"
+#export FZF_DEFAULT_COMMAND='fd --type f'
+#export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Color Gruvbox Dark
 export FZF_DEFAULT_OPTS='
@@ -270,17 +297,17 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
     --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff'
 
-# fzf with man
-function fman() {
-    man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
-}
-
 # Functions
 join-lines() {
   local item
   while read item; do
     echo -n "${(q)item} "
   done
+}
+
+# Determine git branch.
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
 bind-git-helper() {
@@ -303,28 +330,12 @@ function _update_ps1() {
         PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
-# Limit number of lines and entries in the history. HISTFILESIZE controls the
-# history file on disk and HISTSIZE controls lines stored in memory.
-export HISTFILESIZE=50000
-export HISTSIZE=50000
-
-# Add a timestamp to each command.
-export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
-
-# Duplicate lines and lines starting with a space are not put into the history.
-export HISTCONTROL=ignoreboth
-
 # Improve output of less for binary files.
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Load aliases if they exist.
 #[ -f "${HOME}/.aliases" ] && source "${HOME}/.aliases"
 #[ -f "${HOME}/.aliases.local" ] && source "${HOME}/.aliases.local"
-
-# Determine git branch.
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
 
 # Set a non-distracting prompt.
 PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
@@ -402,11 +413,8 @@ settitle () {
 }
 
 # Vcxsvr
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # XDG
-export XDG_RUNTIME_DIR=//tmp/service-scudzy.aqX
+#export XDG_RUNTIME_DIR=//tmp/service-scudzy.aqX
 #export RUNLEVEL=3
-
-# Powerlevel9k
-GITSTATUS_LOG_LEVEL=DEBUG
