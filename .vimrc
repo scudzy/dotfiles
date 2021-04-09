@@ -15,6 +15,9 @@ Plug 'rakr/vim-one'
 " Gruvbox Community theme.
 Plug 'gruvbox-community/gruvbox'
 
+" Ayu
+Plug 'ayu-theme/ayu-vim'
+
 " Integrate fzf with Vim.
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
@@ -107,7 +110,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'jvirtanen/vim-hcl'
 Plug 'lifepillar/pgsql.vim'
 Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
+Plug 'panglo ss/vim-javascript'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'tmux-plugins/vim-tmux'
@@ -142,7 +145,11 @@ if !exists('g:gruvbox_contrast_light')
 endif
 
 " Set the color scheme.
-colorscheme one
+set termguicolors       " ayu enable true colors support
+let ayucolor="mirage"   " ayu for mirage version of theme
+"let ayucolor="dark"     " for dark version of theme
+"colorscheme gruvbox
+colorscheme ayu
 set background=dark
 
 " Specific colorscheme settings (must come after setting your colorscheme).
@@ -636,3 +643,10 @@ nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-a> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-v> :TestVisit<CR>
+
+" ayu IndentLine {{
+let g:indentLine_char = ''
+let g:indentLine_first_char = ''
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
+" }}
