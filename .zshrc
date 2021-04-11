@@ -173,6 +173,7 @@ alias zshrc="/c/Users/scudzy/sublime_text.exe \\wsl\Debian\home\scudzy\dotfiles\
 alias gcm="git commit -m $@"
 alias vimrc="/c/Users/scudzy/sublime_text.exe ~/dotfiles/.vimrc"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
+alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # FUNCTION
 # fzf
