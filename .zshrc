@@ -164,40 +164,51 @@ alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/
 alias cc="currency_converter $@"
 alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 -u -P -v"
 alias ll="colorls -oA --sd"
-alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
 alias apti="sudo apt install $@"
 alias aptar="sudo apt autoremove $@"
-alias zshrc="st3 dotfiles/.zshrc"
+alias zshrc="/c/Users/scudzy/sublime_text.exe \\wsl\Debian\home\scudzy\dotfiles\.zshrc"
 alias gcm="git commit -m $@"
-alias vimrc="st3 dotfiles/.vimrc"
+alias vimrc="/c/Users/scudzy/sublime_text.exe ~/dotfiles/.vimrc"
+alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 
-# Functions
+# FUNCTION
+# fzf
+function fff () {
+    find / -iname "$1" 2>/dev/null | fzf
+}
 # List installed package in number
-dpkgq () {
+function dpkgq () {
   dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
 }
 
+function intip () {
+  ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1
+}
+
 # Sublime text 3
-function st3() {
-  nohup /c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe "$@" >/dev/null 2>&1 & sleep 3
+function st3 () {
+  "/c/Users/scudzy/sublime_text.exe" $1
 }
 
 # Vscode
 function code() {
-  /c/Users/scudzy/scoop/apps/vscode/current/code "$@"
+  "/c/Users/scudzy/scoop/apps/vscode/current/code.exe" $1
 }
 
 # Irfanview
 function irf() {
-  /c/Program\ Files/Irfanview/i_view64.exe "$@:wq"
+  nohup "/c/Program\ Files/Irfanview/i_view64.exe" $1 >/dev/null 2>&1 & sleep 3
 }
 
 # Startup
 if [ -f /usr/bin/neofetch ]; then neofetch; fi
 curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
+
+# fzf forgit
+[ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # Checking Interactive v.s. Non-Interactive
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
@@ -207,7 +218,9 @@ curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 echo ""
 
 # X11 Display
-export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+# Vcxsvr
+#export DISPLAY=$(intip | awk '{print $1}' 2>/dev/null):0
+#export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
 export LIBGL_ALWAYS_INDIRECT=1
 
 # PATH
@@ -350,25 +363,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# WSL 2 specific settings.
-if grep -q "microsoft" /proc/version &>/dev/null; then
-    # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
-    export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
-
-    # Allows your gpg passphrase prompt to spawn (useful for signing commits).
-    export GPG_TTY=$(tty)
-fi
-
-# WSL 1 specific settings.
-if grep -qE "(Microsoft|WSL)" /proc/version &>/dev/null; then
-    if [ "$(umask)" = "0000" ]; then
-        umask 0022
-    fi
-
-    # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
-    export DISPLAY=:0
-fi
-
 # Auto Completion
 autoload -U compinit
 zstyle '.completion:*' menu select
@@ -413,9 +407,22 @@ settitle () {
       echo -ne '\033]0;'"$1"'\a'
 }
 
-# Vcxsvr
-#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+# VCXSRV
+WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
+export PULSE_SERVER=tcp:"$WSL2IP"
+export XDG_RUNTIME_DIR=/tmp/service-scudzy.7vm
+export LIBGL_ALWAYS_INDIRECT=1
+export DISPLAY=$WSL2IP:0.0
+export NO_AT_BRIDGE=1
+export PULSE_SERVER=tcp:$WSL2IP
+export GPG_TTY=$(tty)
+export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
-# XDG
-#export XDG_RUNTIME_DIR=//tmp/service-scudzy.aqX
-#export RUNLEVEL=3
+# z.lua
+#eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
+eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh enhanced once echo fzf)"
+
+# work around https://github.com/mintty/wsltty/issues/197
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  command -v cmd.exe > /dev/null || exit
+fi
