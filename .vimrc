@@ -146,10 +146,10 @@ endif
 
 " Set the color scheme.
 set termguicolors       " ayu enable true colors support
-let ayucolor="mirage"   " ayu for mirage version of theme
+"let ayucolor="mirage"   " ayu for mirage version of theme
 "let ayucolor="dark"     " for dark version of theme
-"colorscheme gruvbox
-colorscheme ayu
+colorscheme gruvbox
+"colorscheme ayu
 set background=dark
 
 " Specific colorscheme settings (must come after setting your colorscheme).
