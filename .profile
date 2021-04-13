@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # This file runs once at login.
 
+# Note: Bash on Windows does not currently apply umask properly.
+if [[ "$(umask)" = "0000" ]]; then
+    umask 0022
+fi
+
 # Add all local binary paths to the system path.
 export DOTFILES="/home/scudzy/dotfiles/"
 export GOROOT="/usr/lib/go"
