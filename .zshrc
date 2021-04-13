@@ -170,13 +170,12 @@ alias ll="colorls -oA --sd"
 alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
+alias gcm="git commit -m $@"
 alias apti="sudo apt install $@"
 alias aptar="sudo apt autoremove $@"
-alias zshrc="/c/Users/scudzy/sublime_text.exe \\wsl\Debian\home\scudzy\dotfiles\.zshrc"
-alias gcm="git commit -m $@"
-alias vimrc="/c/Users/scudzy/sublime_text.exe ~/dotfiles/.vimrc"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+alias gitmoji="cmd /c gitmoji $@"
 
 # FUNCTION
 # fzf
@@ -194,12 +193,12 @@ function intip () {
 
 # Sublime text 3
 function st3 () {
-  "/c/Users/scudzy/sublime_text.exe" $1
+  /c/Users/scudzy/sublime_text.exe $@
 }
 
 # Vscode
 function code() {
-  "/c/Users/scudzy/scoop/apps/vscode/current/code.exe" $1
+  /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
 }
 
 # Irfanview
@@ -220,11 +219,6 @@ curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 # Checking Login v.s. Non-Login
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 echo ""
-
-# X11 Display
-# Vcxsvr
-#export DISPLAY=$(intip | awk '{print $1}' 2>/dev/null):0
-#export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
 
 # PATH
 # Add all local binary paths to the system path.
@@ -300,7 +294,7 @@ function fman() {
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 #export FZF_DEFAULT_OPTS="--color=dark"
 #export FZF_DEFAULT_COMMAND='fd --type f'
-#export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Color Gruvbox Dark
 export FZF_DEFAULT_OPTS='
