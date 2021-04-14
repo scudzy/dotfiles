@@ -191,11 +191,6 @@ function intip () {
   ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1
 }
 
-# Sublime text 3
-function st3 () {
-  /c/Users/scudzy/sublime_text.exe $@
-}
-
 # Vscode
 function code() {
   /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
