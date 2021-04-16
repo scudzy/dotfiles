@@ -4,7 +4,7 @@
 	"auto_complete_commit_on_tab": true,
 	"auto_complete_with_fields": true,
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Agila Theme/Markdown/Neon Monocyanide Markdown.tmTheme",
+	"color_scheme": "Packages/ayu/ayu-dark.sublime-color-scheme",
 	"default_encoding": "UTF-8",
 	"detect_indentation": true,
 	"folder_exclude_patterns":
@@ -35,7 +35,7 @@
 	"show_encoding": true,
 	"soda_classic_tabs": true,
 	"soda_folder_icons": false,
-	"theme": "Brogrammer.sublime-theme",
+	"theme": "Agila Dracula.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
