@@ -184,21 +184,21 @@ function fff () {
 }
 # List installed package in number
 function dpkgq () {
-  dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
+    dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
 }
 
 function intip () {
-  ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1
+    ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1
 }
 
 # Vscode
 function code() {
-  /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
+    /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
 }
 
 # Irfanview
 function irf() {
-  nohup "/c/Program\ Files/Irfanview/i_view64.exe" $1 >/dev/null 2>&1 & sleep 3
+    nohup "/c/Program\ Files/Irfanview/i_view64.exe" $1 >/dev/null 2>&1 & sleep 3
 }
 
 # Startup
@@ -228,6 +228,13 @@ export PATH="${PATH}:/c/Windows/System32/"
 
 # Default programs to run.
 export EDITOR="vim"
+
+# sets LESSOPEN and LESSCLOSE variables
+eval "$(SHELL=/bin/sh lesspipe)"
+# interpret color characters
+export LESS='-R'
+# to list available styles: `pygmentize -L styles`
+export PYGMENTIZE_STYLE='paraiso-dark'
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -272,7 +279,7 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   }
   alias ls='ls -F -h --color=always -v --author --time-style=long-iso'
 #  alias ll='ls -alF'
-  alias l='ls -l'
+  alias l='ls -la'
 fi
 
 # fzf
