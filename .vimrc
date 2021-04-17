@@ -90,13 +90,17 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " A bunch of useful language related snippets (ultisnips is the engine).
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Automatically show Vim's complete menu while typing.
 Plug 'vim-scripts/AutoComplPop'
 
 " Run test suites for various languages.
 Plug 'janko/vim-test'
+
+" vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Languages and file types.
 Plug 'cakebaker/scss-syntax.vim'
@@ -110,7 +114,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'jvirtanen/vim-hcl'
 Plug 'lifepillar/pgsql.vim'
 Plug 'othree/html5.vim'
-"Plug 'panglo ss/vim-javascript'
+"Plug 'pangloss/vim-javascript'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'tmux-plugins/vim-tmux'
@@ -144,13 +148,16 @@ if !exists('g:gruvbox_contrast_light')
   let g:gruvbox_contrast_light='hard'
 endif
 
-" Set the color scheme.
-set termguicolors       " ayu enable true colors support
-"let ayucolor="mirage"   " ayu for mirage version of theme
-let ayucolor="dark"     " for dark version of theme
-"colorscheme gruvbox
-colorscheme ayu
 set background=dark
+
+" AirLineTheme
+let g:airline_theme='ayu'
+
+set termguicolors
+let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
 " Specific colorscheme settings (must come after setting your colorscheme).
 if (g:colors_name == 'gruvbox')
@@ -503,8 +510,8 @@ let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
 "augroup my-fern-hijack
-""  autocmd!
-""  autocmd BufEnter * ++nested call s:hijack_directory()
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
 "augroup END
 
 function! s:hijack_directory() abort
@@ -650,3 +657,9 @@ let g:indentLine_first_char = ''
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 0
 " }}
+
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
