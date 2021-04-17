@@ -177,6 +177,7 @@ alias aptar="sudo apt autoremove $@"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 alias gitmoji="cmd /c gitmoji $@"
+alias pip3i="python3 -m pip install $@"
 
 # FUNCTION
 # fzf
@@ -426,3 +427,6 @@ eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh enhanced once echo fzf)"
 if [[ -n "$WSL_DISTRO_NAME" ]]; then
   command -v cmd.exe > /dev/null || exit
 fi
+
+# Powerline
+. /home/scudzy/.local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
