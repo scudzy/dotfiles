@@ -178,6 +178,7 @@ alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --
 alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 alias gitmoji="cmd /c gitmoji $@"
 alias pip3i="python3 -m pip install $@"
+alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # FUNCTION
 # fzf
