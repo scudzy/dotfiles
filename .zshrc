@@ -144,10 +144,10 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # Custom Aliases
 alias speed="cmd /c speedtest"
 alias pyupg="pip3 freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; pip3 install -U \1/p' |sh"
-alias c="calc"
+alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
-alias dfah="df -aH"
-alias dush="du -sh"
+alias dfah="df -h $@"
+alias dush="du -csh $@"
 alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
 alias cmd="/c/windows/system32/cmd.exe"
 alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
@@ -167,7 +167,9 @@ alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/
 alias cc="currency_converter $@"
 alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"
 alias cless="vim -u /usr/share/vim/vim81/macros/less.vim"
-alias ll="colorls -oA --sd"
+alias ll="colorls -oA --sd $@"
+alias llf="colorls -oAf $@"
+alias lld="colorls -oAd --sd $@"
 alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
@@ -179,6 +181,7 @@ alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {
 alias gitmoji="cmd /c gitmoji $@"
 alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias stats='stat -c "%a" $@'
 
 # FUNCTION
 # fzf
@@ -416,8 +419,6 @@ export XDG_RUNTIME_DIR=/tmp/service-scudzy.7vm
 export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
-export PULSE_SERVER=tcp:$WSL2IP
-export GPG_TTY=$(tty)
 export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # z.lua
