@@ -18,6 +18,9 @@ Plug 'gruvbox-community/gruvbox'
 " Ayu
 Plug 'ayu-theme/ayu-vim'
 
+" Dracula theme
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 " Integrate fzf with Vim.
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
@@ -151,13 +154,15 @@ endif
 set background=dark
 
 " AirLineTheme
-let g:airline_theme='ayu'
+let g:airline_theme='ayu_dark'
 
-set termguicolors
-let ayucolor="light"  " for light version of theme
+"set termguicolors
+"let ayucolor="light"  " for light version of theme
 let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+"let ayucolor="dark"   " for dark version of theme
+"colorscheme ayu
+"colorscheme gruvbox
+colorscheme dracula
 
 " Specific colorscheme settings (must come after setting your colorscheme).
 if (g:colors_name == 'gruvbox')
@@ -510,8 +515,8 @@ let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
 "augroup my-fern-hijack
-  autocmd!
-  autocmd BufEnter * ++nested call s:hijack_directory()
+"  autocmd!
+"  autocmd BufEnter * ++nested call s:hijack_directory()
 "augroup END
 
 function! s:hijack_directory() abort
