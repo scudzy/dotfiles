@@ -142,8 +142,14 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
+alias potp="pass otp $@"
+alias pc="pass -c $@"
+alias ps="pass show $@"
+alias pi="pass insert -m $@"
+alias pgen="pass generate $@"
+alias prm="pass rm $@"
 alias speed="cmd /c speedtest"
-alias pyupg="pip3 freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; pip3 install -U \1/p' |sh"
+alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"
 alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -h $@"
@@ -166,7 +172,6 @@ alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $@"
 alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"
-alias cless="vim -u /usr/share/vim/vim81/macros/less.vim"
 alias ll="colorls -oA --sd $@"
 alias llf="colorls -oAf $@"
 alias lld="colorls -oAd --sd $@"
@@ -182,7 +187,9 @@ alias gitmoji="cmd /c gitmoji $@"
 alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
+alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
+eval $(thefuck --alias FUCK)
 # FUNCTION
 # fzf
 function fff () {
@@ -193,18 +200,9 @@ function dpkgq () {
     dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
 }
 
-function intip () {
-    ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1
-}
-
 # Vscode
 function code() {
     /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
-}
-
-# Irfanview
-function irf() {
-    nohup "/c/Program\ Files/Irfanview/i_view64.exe" $1 >/dev/null 2>&1 & sleep 3
 }
 
 # Startup
@@ -221,6 +219,14 @@ curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 echo ""
 
+# grc
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+  cmd="${cmd##*conf.}"
+  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+done
+
 # PATH
 # Add all local binary paths to the system path.
 export DOTFILES="/home/scudzy/dotfiles/"
@@ -231,6 +237,7 @@ export PYTHONPATH="/usr/bin/python3.7/"
 export PATH="${PATH}:${HOME}/dotfiles/sh"
 export PATH="${PATH}:${HOME}/.local/bin"
 export PATH="${PATH}:/c/Windows/System32/"
+export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 
 # Default programs to run.
 export EDITOR="vim"
@@ -252,7 +259,7 @@ GITSTATUS_LOG_LEVEL=DEBUG
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
-export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
+#export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
 export HISTSIZE=32768; # Larger bash history (allow 32³ entries; default is 500)
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
@@ -415,7 +422,7 @@ settitle () {
 # VCXSRV
 WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 export PULSE_SERVER=tcp:"$WSL2IP"
-export XDG_RUNTIME_DIR=/tmp/service-scudzy.7vm
+export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.Cfb'
 export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
@@ -432,3 +439,5 @@ fi
 
 # Powerline
 . /home/scudzy/.local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
+
+eval $(thefuck --alias)
