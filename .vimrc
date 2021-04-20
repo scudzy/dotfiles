@@ -158,11 +158,11 @@ let g:airline_theme='ayu_dark'
 
 "set termguicolors
 "let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
-"let ayucolor="dark"   " for dark version of theme
-"colorscheme ayu
+"let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 "colorscheme gruvbox
-colorscheme dracula
+"colorscheme dracula
 
 " Specific colorscheme settings (must come after setting your colorscheme).
 if (g:colors_name == 'gruvbox')
