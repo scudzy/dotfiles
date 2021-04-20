@@ -1,0 +1,10 @@
+deb http://deb.debian.org/debian buster main
+deb-src http://deb.debian.org/debian buster main
+deb http://deb.debian.org/debian buster-updates main
+deb-src http://deb.debian.org/debian buster-updates main
+deb http://security.debian.org/debian-security/ buster/updates main
+deb-src http://security.debian.org/debian-security/ buster/updates main
+deb https://cli.github.com/packages buster main
+# deb-src https://cli.github.com/packages buster main
+# deb http://ftp.tw.debian.org/debian/ bullseye main contrib non-free
+deb https://access.patrickwu.space/wslu/debian buster main
