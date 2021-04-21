@@ -14,6 +14,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
+export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -142,14 +143,15 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
+alias passgp="pass git push -u --all"
 alias potp="pass otp $@"
-alias pc="pass -c $@"
-alias ps="pass show $@"
-alias pi="pass insert -m $@"
+alias pcp="pass -c $@"
+alias psh="pass show $@"
+alias pins="pass insert -m $@"
 alias pgen="pass generate $@"
 alias prm="pass rm $@"
-alias pf="pass find $@"
-alias pg="pass grep $@"
+alias pfd="pass find $@"
+alias pgp="pass grep $@"
 alias speed="cmd /c speedtest"
 alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"
 alias c="calc $@"
@@ -189,7 +191,6 @@ alias gitmoji="cmd /c gitmoji $@"
 alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
-alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
 eval $(thefuck --alias FUCK)
 # FUNCTION
@@ -426,7 +427,7 @@ WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 export PULSE_SERVER=tcp:"$WSL2IP"
 export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.Cfb'
 export LIBGL_ALWAYS_INDIRECT=1
-export DISPLAY=$WSL2IP:0.0
+export DISPLAY=$WSL2IP:0
 export NO_AT_BRIDGE=1
 export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
@@ -443,3 +444,5 @@ fi
 . /home/scudzy/.local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 eval $(thefuck --alias)
+
+export PASSWORD_STORE_EXTENSIONS_DIR=$HOME/.password-store/.extensions
