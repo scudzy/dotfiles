@@ -1,7 +1,3 @@
-# Note: Bash on Windows does not currently apply umask properly.
-if [[ "$(umask)" = "0000" ]]; then
-  umask 0022
-fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -20,16 +16,14 @@ export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# ZSH Autocomplete
-#source ~/.oh-my-zsh/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-#ZSH_THEME_RANDOM_CANDIDATES=( "agnoster" "spaceship" )
-ZSH_THEME="powerlevel10k/powerlevel10k"
-#ZSH_THEME="robbyrussell"
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -60,6 +54,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -125,7 +121,6 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # else
 #   export EDITOR='mvim'
 # fi
-#export EDITOR="vim"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -138,9 +133,6 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Aliases
 alias passgp="pass git push -u --all"
@@ -192,7 +184,6 @@ alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
 
-eval $(thefuck --alias FUCK)
 # FUNCTION
 # fzf
 function fff () {
@@ -231,26 +222,29 @@ for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); 
 done
 
 # PATH
+
+# VCXSRV
+WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
+export PULSE_SERVER=tcp:"$WSL2IP"
+export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.uSG'
+export LIBGL_ALWAYS_INDIRECT=1
+export DISPLAY=$WSL2IP:0.0
+export NO_AT_BRIDGE=1
+export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
+
 # Add all local binary paths to the system path.
 export DOTFILES="/home/scudzy/dotfiles/"
-export GOROOT="/usr/lib/go"
-export GOPATH="$HOME/go"
-export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
+export GOROOT="/usr/local/go"
+export GOPATH="$PATH:/usr/local/go/bin"
+#export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
 export PYTHONPATH="/usr/bin/python3.7/"
 export PATH="${PATH}:${HOME}/dotfiles/sh"
 export PATH="${PATH}:${HOME}/.local/bin"
-export PATH="${PATH}:/c/Windows/System32/"
-export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
+export PASSWORD_STORE_ENABLE_EXTENSIONS='true'
+export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
 
 # Default programs to run.
 export EDITOR="vim"
-
-# sets LESSOPEN and LESSCLOSE variables
-eval "$(SHELL=/bin/sh lesspipe)"
-# interpret color characters
-export LESS='-R'
-# to list available styles: `pygmentize -L styles`
-export PYGMENTIZE_STYLE='paraiso-dark'
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -262,7 +256,7 @@ GITSTATUS_LOG_LEVEL=DEBUG
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
-#export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
 export HISTSIZE=32768; # Larger bash history (allow 32³ entries; default is 500)
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
@@ -285,18 +279,6 @@ export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-
-# Set ls color
-if ls --color -d . >/dev/null 2>&1; then  # GNU ls
-  export COLUMNS  # Remember columns for subprocesses.
-  eval "$(dircolors)"
-  function ls {
-    command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
-  }
-  alias ls='ls -F -h --color=always -v --author --time-style=long-iso'
-#  alias ll='ls -alF'
-  alias l='ls -la'
-fi
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -350,99 +332,20 @@ bind-git-helper() {
 bind-git-helper f b t r h
 unset -f bind-git-helper
 
-## Powerline
-GOPATH=$HOME/go
-function _update_ps1() {
-    PS1="$($GOPATH/bin/powerline-go -error $?)"
-    }
-    if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
-        PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+# ruby rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
-# Improve output of less for binary files.
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Load aliases if they exist.
-#[ -f "${HOME}/.aliases" ] && source "${HOME}/.aliases"
-#[ -f "${HOME}/.aliases.local" ] && source "${HOME}/.aliases.local"
-
-# Set a non-distracting prompt.
-PS1='\[[01;32m\]\u@\h\[[00m\]:\[[01;34m\]\w\[[00m\] \[[01;33m\]$(parse_git_branch)\[[00m\]\$ '
-
-# If it's an xterm compatible terminal, set the title to user@host: dir.
-case "${TERM}" in
-xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]${PS1}"
-    ;;
-*)
-    ;;
-esac
-
-# Auto Completion
-autoload -U compinit
-zstyle '.completion:*' menu select
-zmodload zsh/complist
-compinit -i
-_comp_options+=(globdots)
-
-# Save history so we get auto suggestions
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=100000
-SAVEHIST=$HISTSIZE
-
-# Options
-setopt auto_cd # cd by typing directory name if it's not a command
-setopt auto_list # automatically list choices on ambiguous completion
-setopt auto_menu # automatically use menu completion
-setopt always_to_end # move cursor to end if word had one match
-setopt hist_ignore_all_dups # remove older duplicate entries from history
-setopt hist_reduce_blanks # remove superfluous blanks from history items
-setopt inc_append_history # save history entries as soon as they are entered
-setopt share_history # share history between different instances
-setopt correct_all # autocorrect commands
-setopt interactive_comments # allow comments in interactive shells
-
-# Improve autocompletion style
-zstyle ':completion:*' menu select # select completions with arrow keys
-zstyle ':completion:*' group-name '' # group results by category
-zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
-# gh cli completion
-gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
-
-# Turn off power status when using spaceship prompt
-#export SPACESHIP_BATTERY_SHOW=false
-
-# Colorls tab completion
-source $(dirname $(gem which colorls))/tab_complete.sh
-
-# Windows Terminal Title
-settitle () {
-    export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      echo -ne '\033]0;'"$1"'\a'
-}
-
-# VCXSRV
-WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
-export PULSE_SERVER=tcp:"$WSL2IP"
-export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.Cfb'
-export LIBGL_ALWAYS_INDIRECT=1
-export DISPLAY=$WSL2IP:0
-export NO_AT_BRIDGE=1
-export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
+# powerline-status
+. /home/scudzy/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
-eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh enhanced once echo fzf)"
+eval "$(lua ~/z.lua/z.lua --init zsh enhanced once echo fzf)"
 
-# work around https://github.com/mintty/wsltty/issues/197
-if [[ -n "$WSL_DISTRO_NAME" ]]; then
-  command -v cmd.exe > /dev/null || exit
-fi
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Powerline
-. /home/scudzy/.local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
-
-eval $(thefuck --alias)
-
-export PASSWORD_STORE_EXTENSIONS_DIR=$HOME/.password-store/.extensions
+# Auto Completion
+autoload -U compinit
+compinit -i
