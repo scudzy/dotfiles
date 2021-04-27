@@ -11,7 +11,6 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -135,6 +134,9 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom Aliases
+alias pip="pip3"
+alias pip3u="pip3 uninstall $#"
+alias p3="python3"
 alias passgp="pass git push -u --all"
 alias potp="pass otp $@"
 alias pcp="pass -c $@"
@@ -145,7 +147,8 @@ alias prm="pass rm $@"
 alias pfd="pass find $@"
 alias pgp="pass grep $@"
 alias speed="cmd /c speedtest"
-alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"
+alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
+#alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -h $@"
@@ -234,14 +237,15 @@ export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # Add all local binary paths to the system path.
 export DOTFILES="/home/scudzy/dotfiles/"
-export GOROOT="/usr/local/go"
-export GOPATH="$PATH:/usr/local/go/bin"
+#export GOROOT="/usr/lib/go-1.13/"
+#export GOPATH="$PATH:/usr/lib/go-1.13/bin"
 #export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
-export PYTHONPATH="/usr/bin/python3.7/"
+export PYTHONPATH="/usr/bin/python3.8/"
 export PATH="${PATH}:${HOME}/dotfiles/sh"
 export PATH="${PATH}:${HOME}/.local/bin"
 export PASSWORD_STORE_ENABLE_EXTENSIONS='true'
 export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
+export PATH="${PATH}:${HOME}/.local/lib/python3.8/site-packages"
 
 # Default programs to run.
 export EDITOR="vim"
@@ -250,10 +254,6 @@ export EDITOR="vim"
 if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
 fi
-
-# Powerlevel9k
-GITSTATUS_LOG_LEVEL=DEBUG
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Nicer shell experience
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
@@ -279,6 +279,11 @@ export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+# Save history so we get auto suggestions
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -343,9 +348,36 @@ eval "$(rbenv init -)"
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
 eval "$(lua ~/z.lua/z.lua --init zsh enhanced once echo fzf)"
 
+function j() {
+    if [[ "$argv[1]" == "-"* ]]; then
+        z "$@"
+    else
+        cd "$@" 2> /dev/null || z "$@"
+    fi
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Auto Completion
 autoload -U compinit
 compinit -i
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+# Options
+setopt auto_cd # cd by typing directory name if it's not a command
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+setopt hist_ignore_all_dups # remove older duplicate entries from history
+setopt hist_reduce_blanks # remove superfluous blanks from history items
+setopt inc_append_history # save history entries as soon as they are entered
+setopt share_history # share history between different instances
+setopt correct_all # autocorrect commands
+setopt interactive_comments # allow comments in interactive shells
+
+# Improve autocompletion style
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
