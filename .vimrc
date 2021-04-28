@@ -14,7 +14,8 @@ Plug 'rakr/vim-one'
 
 " Gruvbox Community theme.
 Plug 'gruvbox-community/gruvbox'
-
+" Tender theme
+Plug 'jacoborus/tender.vim'
 " Ayu
 Plug 'ayu-theme/ayu-vim'
 
@@ -155,7 +156,8 @@ set background=dark
 
 " AirLineTheme
 let g:airline_theme='ayu_dark'
-
+" set airline theme
+" let g:airline_theme = 'tender'
 "set termguicolors
 "let ayucolor="light"  " for light version of theme
 "let ayucolor="mirage" " for mirage version of theme
