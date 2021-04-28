@@ -229,7 +229,7 @@ done
 # VCXSRV
 WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 export PULSE_SERVER=tcp:"$WSL2IP"
-export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.uSG'
+export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.uSG/'
 export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
