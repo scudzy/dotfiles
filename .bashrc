@@ -118,6 +118,11 @@ if ! shopt -oq posix; then
   fi
 fi
 source /google/devshell/bashrc.google
+
+sudo apt install grc
+sudo dpkg -i /home/scudzys/dotfiles/deb/bat-musl_0.18.0_amd64.deb
+sudo dpkg -i /home/scudzys/dotfiles/deb/git-delta-musl_0.7.1_amd64.deb
+
 # nvm node
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
