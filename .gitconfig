@@ -26,8 +26,10 @@
     file-style = bold yellow ul
     file-decoration-style = none
     hunk-header-decoration-style = yellow box
-[include]
-	path = ~/.gitconfig.user
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
 [credential "https://github.com"]
 	helper =
 	helper = !/usr/bin/gh auth git-credential
