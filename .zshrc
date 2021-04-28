@@ -134,6 +134,7 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom Aliases
+alias genpass="head -c 12 /dev/random | base64"
 alias pip="pip3"
 alias pip3u="pip3 uninstall $#"
 alias p3="python3"
@@ -146,7 +147,6 @@ alias pgen="pass generate $@"
 alias prm="pass rm $@"
 alias pfd="pass find $@"
 alias pgp="pass grep $@"
-alias speed="cmd /c speedtest"
 alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 alias c="calc $@"
@@ -171,10 +171,10 @@ alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $@"
 alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"
-alias ll="colorls -oA --sd $@"
-alias llf="colorls -oAf $@"
-alias lld="colorls -oAd --sd $@"
-alias ipjson="curljson http://ip-api.com/json/ && curljson http://edns.ip-api.com/json/"
+alias ll="colorls -logA --sd --report $@"
+alias llf="colorls -oAf --report $@"
+alias lld="colorls -oAd --sd --report $@"
+alias ipgeo="curl -s http://ip-api.com/json/ | jq && curljson -s xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
 alias gcm="git commit -m $@"
@@ -236,6 +236,7 @@ export NO_AT_BRIDGE=1
 export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # Add all local binary paths to the system path.
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export DOTFILES="/home/scudzy/dotfiles/"
 #export GOROOT="/usr/lib/go-1.13/"
 #export GOPATH="$PATH:/usr/lib/go-1.13/bin"
@@ -264,7 +265,6 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"; # Make some commands not 
 export LANG="en_US.UTF-8"; # Language formatting is still important
 export LC_ALL="en_US.UTF-8"; # byte-wise sorting and force language for those pesky apps
 export MANPAGER="less -X"; # Less is more
-export GPG_TTY=$(tty); # for gpg key management
 
 # set options for less
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
@@ -364,6 +364,33 @@ autoload -U compinit
 compinit -i
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+# start gpg-agent on login
+#if [[ -a $HOME/.zshrc-ssh ]]; then
+#    . $HOME/.zshrc-ssh
+#    export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
+#fi
+#kill -0 $SSH_AGENT_PID &> /dev/null
+#if [[ $? -eq 1 ]]; then
+#  eval $( gpg-agent --daemon --enable-ssh-support --write-env-file "$HOME/.zshrc-ssh" >/dev/null >2&1 )
+#fi
+
+#GPG_TTY=$(tty)
+#export GPG_TTY
+
+# Enable gpg-agent if it is not running
+GPG_AGENT_SOCKET="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+if [ ! -S $GPG_AGENT_SOCKET ]; then
+  gpg-agent --daemon >/dev/null 2>&1
+  export GPG_TTY=$(tty)
+fi
+
+# Set SSH to use gpg-agent if it is configured to do so
+GNUPGCONFIG=${GNUPGHOME:-"$HOME/.gnupg/gpg-agent.conf"}
+if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+  unset SSH_AGENT_PID
+  export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+fi
 
 # Options
 setopt auto_cd # cd by typing directory name if it's not a command
