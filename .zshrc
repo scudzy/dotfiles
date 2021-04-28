@@ -174,7 +174,7 @@ alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/do
 alias ll="colorls -logA --sd --report $@"
 alias llf="colorls -oAf --report $@"
 alias lld="colorls -oAd --sd --report $@"
-alias ipgeo="curl -s http://ip-api.com/json/ | jq && curljson -s xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json"
+alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
 alias gcm="git commit -m $@"
@@ -186,6 +186,7 @@ alias gitmoji="cmd /c gitmoji $@"
 alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
+alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
 
 # FUNCTION
 # fzf
