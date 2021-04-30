@@ -164,13 +164,15 @@ alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
 alias fast="cmd /c fast -u"
 alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
+#alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
+alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $@"
-alias rclGdrv="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"
+alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
+alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
 alias ll="colorls -logA --sd --report $@"
 alias llf="colorls -oAf --report $@"
 alias lld="colorls -oAd --sd --report $@"
@@ -187,6 +189,7 @@ alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
 alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
+alias lg="lazygit"
 
 # FUNCTION
 # fzf
@@ -239,9 +242,9 @@ export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 # Add all local binary paths to the system path.
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export DOTFILES="/home/scudzy/dotfiles/"
-#export GOROOT="/usr/lib/go-1.13/"
-#export GOPATH="$PATH:/usr/lib/go-1.13/bin"
-#export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
+export GOROOT="$PATH:/usr/local/go"
+export GOPATH="$PATH:/home/scudzy/go"
+export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
 export PYTHONPATH="/usr/bin/python3.8/"
 export PATH="${PATH}:${HOME}/dotfiles/sh"
 export PATH="${PATH}:${HOME}/.local/bin"
@@ -298,8 +301,6 @@ function fman() {
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
 #   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-#export FZF_DEFAULT_OPTS="--color=dark"
-#export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Color Gruvbox Dark
@@ -343,7 +344,8 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # powerline-status
-. /home/scudzy/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+powerline-daemon -q
+. ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
@@ -360,38 +362,27 @@ function j() {
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Auto Completion
-autoload -U compinit
-compinit -i
-
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
-# start gpg-agent on login
-#if [[ -a $HOME/.zshrc-ssh ]]; then
-#    . $HOME/.zshrc-ssh
-#    export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
-#fi
-#kill -0 $SSH_AGENT_PID &> /dev/null
-#if [[ $? -eq 1 ]]; then
-#  eval $( gpg-agent --daemon --enable-ssh-support --write-env-file "$HOME/.zshrc-ssh" >/dev/null >2&1 )
-#fi
-
-#GPG_TTY=$(tty)
-#export GPG_TTY
-
 # Enable gpg-agent if it is not running
 GPG_AGENT_SOCKET="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 if [ ! -S $GPG_AGENT_SOCKET ]; then
-  gpg-agent --daemon >/dev/null 2>&1
-  export GPG_TTY=$(tty)
+    gpgconf --kill gpg-agent
+    gpg-agent --daemon --enable-ssh-support >/dev/null 2>&1
+    export GPG_TTY=$(tty)
 fi
 
 # Set SSH to use gpg-agent if it is configured to do so
 GNUPGCONFIG=${GNUPGHOME:-"$HOME/.gnupg/gpg-agent.conf"}
 if grep -q enable-ssh-support "$GNUPGCONFIG"; then
-  unset SSH_AGENT_PID
-  export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+    unset SSH_AGENT_PID
+    export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 fi
+
+# Auto Completion
+autoload -U compinit
+compinit -i
+
+# powerline9k prompt
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 # Options
 setopt auto_cd # cd by typing directory name if it's not a command
