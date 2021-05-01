@@ -134,6 +134,7 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom Aliases
+alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
 alias genpass="head -c 12 /dev/random | base64"
 alias pip="pip3"
 alias pip3u="pip3 uninstall $#"
