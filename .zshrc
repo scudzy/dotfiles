@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/c/Windows/System32:/c/Program\ Files/Powershell/7:/c/Windows/System32/WindowsPowershell/v1.0/:${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.8/site-packages:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
@@ -166,6 +166,7 @@ alias csu="powershell choco upgrade all -y && powershell scoop update && powersh
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
 #alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
+alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
@@ -181,6 +182,7 @@ alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
 alias gcm="git commit -m $@"
 alias apti="sudo apt install $@"
+alias aptinir="sudo apt install --no-install-recommends $@"
 alias aptar="sudo apt autoremove $@"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
@@ -192,6 +194,14 @@ alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header '
 alias lg="lazygit"
 
 # FUNCTION
+# execution time
+tm() {
+  local start=$(date +%s)
+  $@
+  local exit_code=$?
+  echo >&2 "took ~$(($(date +%s)-${start})) seconds. exited with ${exit_code}"
+  return $exit_code
+}
 # fzf
 function fff () {
     find / -iname "$1" 2>/dev/null | fzf
@@ -241,16 +251,15 @@ export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # Add all local binary paths to the system path.
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export DOTFILES="/home/scudzy/dotfiles/"
-export GOROOT="$PATH:/usr/local/go"
-export GOPATH="$PATH:/home/scudzy/go"
-export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
-export PYTHONPATH="/usr/bin/python3.8/"
-export PATH="${PATH}:${HOME}/dotfiles/sh"
-export PATH="${PATH}:${HOME}/.local/bin"
+export DOTFILES="/home/scudzy/dotfiles/:$DOTFILES"
+export GOROOT="/usr/local/go:$GOROOT"
+export GOPATH="$HOME/go:$GOPATH"
+export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+export PYTHONPATH="/usr/bin/python3.8/:$PYTHONPATH"
 export PASSWORD_STORE_ENABLE_EXTENSIONS='true'
 export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
-export PATH="${PATH}:${HOME}/.local/lib/python3.8/site-packages"
+export XDG_DATA_DIRS="/home/scudzy/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+#export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 
 # Default programs to run.
 export EDITOR="vim"
