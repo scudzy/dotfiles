@@ -231,15 +231,14 @@ curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 echo ""
 
 # grc
-#[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
-#for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-#  cmd="${cmd##*conf.}"
-#  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-#done
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+  cmd="${cmd##*conf.}"
+  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+done
 
 # PATH
-
 # VCXSRV
 WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 export PULSE_SERVER=tcp:"$WSL2IP"
@@ -251,14 +250,14 @@ export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # Add all local binary paths to the system path.
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export DOTFILES="/home/scudzy/dotfiles/:$DOTFILES"
-export GOROOT="/usr/local/go:$GOROOT"
-export GOPATH="$HOME/go:$GOPATH"
+export DOTFILES="/home/scudzy/dotfilesS"
+export GOROOT="/usr/local/go"
+export GOPATH="${HOME}/go"
 export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
-export PYTHONPATH="/usr/bin/python3.8/:$PYTHONPATH"
+export PYTHONPATH="$PATH:/usr/bin/python3.8/"
 export PASSWORD_STORE_ENABLE_EXTENSIONS='true'
 export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
-export XDG_DATA_DIRS="/home/scudzy/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS="$PATH:/home/scudzy/.local/share/flatpak/exports/share"
 #export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 
 # Default programs to run.
@@ -352,6 +351,14 @@ unset -f bind-git-helper
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# Powerline
+function _update_ps1() {
+    PS1="$($GOPATH/bin/powerline-go -error $?)"
+}
+if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+
 # powerline-status
 powerline-daemon -q
 . ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
@@ -411,3 +418,8 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+settitle () {
+  export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  echo -ne '\033]0;'"$1"'\a'
+}
