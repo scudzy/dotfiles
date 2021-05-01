@@ -15,9 +15,9 @@ export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
+#ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
+#eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/hotstick.minimal.omp.json)"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -110,7 +110,6 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -232,12 +231,12 @@ curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 echo ""
 
 # grc
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+#[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
-for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-  cmd="${cmd##*conf.}"
-  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-done
+#for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+#  cmd="${cmd##*conf.}"
+#  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+#done
 
 # PATH
 
@@ -390,6 +389,8 @@ fi
 # Auto Completion
 autoload -U compinit
 compinit -i
+#autoload -U promptinit;
+#promptinit prompt spaceship
 
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
