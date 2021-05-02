@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+start=$(date +%s%N)
 file="$1"
 
 if [ -r $file ]
@@ -56,3 +57,8 @@ then
 else
     echo "File is not a symbolic link"
 fi
+end=$(date +%s%N)
+exit_code=$?
+total=$end-$start
+echo ""
+echo -e "Run time is \e[1;32m$((total/1000000))\e[0m ms with exit code ${exit_code}."
