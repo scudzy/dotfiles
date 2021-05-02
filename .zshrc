@@ -1,3 +1,4 @@
+start=$(date +%s%N)
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -11,12 +12,10 @@ export PATH=/c/Windows/System32:/c/Program\ Files/Powershell/7:/c/Windows/System
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
-export BW_SESSION="5fbsheOyzJx9/pYPfinjLsW6TuvDzwaL7oTsSDV8GT+mHdZyqVIPbaZZuek8dNyZ6UtTD/hsnC86Vlcgqur2VQ=="
-eval "$(bw completion --shell zsh); compdef _bw bw;"
 
+eval "$(bw completion --shell zsh); compdef _bw bw;"
 alias bwlf="bw list folders 0ba2d6e8-8bbf-4be4-be0b-acd8013adc5b | jq"
 alias bwscudzyatgmail="bw get item e2af9f3c-0ab8-4890-8331-acd8013adc5b | jq"
-
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -143,8 +142,11 @@ fpath=(/usr/local/share/zsh/site-functions/_gh $fpath)
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
 alias genpass="head -c 12 /dev/random | base64"
 alias pip="pip3"
+alias pip3i="python3 -m pip install $@"
 alias pip3u="pip3 uninstall $#"
 alias p3="python3"
+alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
+#alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 alias passgp="pass git push -u --all"
 alias potp="pass otp $@"
 alias pcp="pass -c $@"
@@ -154,8 +156,6 @@ alias pgen="pass generate $@"
 alias prm="pass rm $@"
 alias pfd="pass find $@"
 alias pgp="pass grep $@"
-alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
-#alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -h $@"
@@ -163,7 +163,7 @@ alias dush="du -csh $@"
 alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
 alias cmd="/c/windows/system32/cmd.exe"
 alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
-alias path="printenv | grep $PATH"
+alias path="printenv | rg $PATH"
 alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
 alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
 alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
@@ -174,6 +174,7 @@ alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
 #alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
 alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
+alias ff="flatpak run org.mozilla.firefox"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
@@ -193,28 +194,32 @@ alias aptinir="sudo apt install --no-install-recommends $@"
 alias aptar="sudo apt autoremove $@"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-alias gitmoji="cmd /c gitmoji $@"
-alias pip3i="python3 -m pip install $@"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
 alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
 alias lg="lazygit"
+alias time="/usr/bin/time -f'Loading in %e ms' $@"
 
 # FUNCTION
 # execution time
-tm() {
-  local start=$(date +%s)
+function tm() {
+  local start=$(date +%s%N)
   $@
+  local end=$(date +%s%N)
   local exit_code=$?
-  echo >&2 "took ~$(($(date +%s)-${start})) seconds. exited with ${exit_code}"
+  local total=$end-$start
+  echo ""
+  echo -e "Took \e[1;32m$((total/1000000))\e[0m ms. Exit code ${exit_code}."
   return $exit_code
 }
+
 # fzf
-function fff () {
+function fff() {
     find / -iname "$1" 2>/dev/null | fzf
 }
+
 # List installed package in number
-function dpkgq () {
+function dpkgq() {
     dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
 }
 
@@ -224,7 +229,7 @@ function code() {
 }
 
 # Startup
-if [ -f /usr/bin/neofetch ]; then neofetch; fi
+#if [ -f /usr/bin/neofetch ]; then neofetch; fi
 curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 
 # fzf forgit
@@ -253,7 +258,7 @@ export XDG_RUNTIME_DIR='/home/scudzy/.local/service-scudzy.uSG/'
 export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
-export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
+#export PULSE_COOKIE=/c/Users/$USER/.pulse-cookie
 
 # Add all local binary paths to the system path.
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -331,7 +336,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff'
 
 # Functions
-join-lines() {
+function join-lines() {
   local item
   while read item; do
     echo -n "${(q)item} "
@@ -339,11 +344,11 @@ join-lines() {
 }
 
 # Determine git branch.
-parse_git_branch() {
+function parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-bind-git-helper() {
+function bind-git-helper() {
   local c
   for c in $@; do
     eval "fzf-g$c-widget() { local result=\$(g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
@@ -351,6 +356,7 @@ bind-git-helper() {
     eval "bindkey '^g^$c' fzf-g$c-widget"
   done
 }
+
 bind-git-helper f b t r h
 unset -f bind-git-helper
 
@@ -359,15 +365,15 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # Powerline
-function _update_ps1() {
-    PS1="$($GOPATH/bin/powerline-go -error $?)"
-}
-if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+#function _update_ps1() {
+#    PS1="$($GOPATH/bin/powerline-go -error $?)"
+#}
+#if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
+#    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+#fi
 
 # powerline-status
-powerline-daemon -q
+# powerline-daemon -q
 . ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # z.lua
@@ -426,7 +432,13 @@ zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
-settitle () {
-  export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-  echo -ne '\033]0;'"$1"'\a'
-}
+#settitle () {
+#  export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$'
+#  echo -ne '\033]0;'"$1"'\a'
+#}
+
+# Execution time
+end=$(date +%s%N)
+exit_code=$?
+total=$end-$start
+echo -e '\tLoading in \e[1;32m$((total/1000000))\e[0m ms'
