@@ -11,6 +11,13 @@ export PATH=/c/Windows/System32:/c/Program\ Files/Powershell/7:/c/Windows/System
 # Path to your oh-my-zsh installation.
 export ZSH="/home/scudzy/.oh-my-zsh"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
+export BW_SESSION="5fbsheOyzJx9/pYPfinjLsW6TuvDzwaL7oTsSDV8GT+mHdZyqVIPbaZZuek8dNyZ6UtTD/hsnC86Vlcgqur2VQ=="
+eval "$(bw completion --shell zsh); compdef _bw bw;"
+
+alias bwlf="bw list folders 0ba2d6e8-8bbf-4be4-be0b-acd8013adc5b | jq"
+alias bwscudzyatgmail="bw get item e2af9f3c-0ab8-4890-8331-acd8013adc5b | jq"
+
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
