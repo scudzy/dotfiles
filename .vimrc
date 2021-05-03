@@ -106,6 +106,9 @@ Plug 'janko/vim-test'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
 " Languages and file types.
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'chr4/nginx.vim'

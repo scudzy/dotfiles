@@ -19,3 +19,87 @@ tags
 [._]*.un~/
 
 .aliases.local
+~*
+.*history
+.antigen
+.cache
+.zcompdump*
+.zdirs
+.zgen
+*.bak
+*.local
+*.zwc
+*.zwc.old
+*history
+zplugins/
+.zprezto/
+.antibody/
+.zcompcache/
+.zsh_sessions/
+.ohmyzsh/
+.oh-my-zsh/
+.zsh_custom/
+plugins/
+
+# Swap
+    2   [._]*.s[a-v][a-z]
+    3   [._]*.sw[a-p]
+    4   [._]s[a-rt-v][a-z]
+    5   [._]ss[a-gi-z]
+    6   [._]sw[a-p]
+    7
+    8   # Session
+    9   Session.vim
+   10
+   11   # Temporary
+   12   .netrwhist
+   13   *~
+   14
+   15   # Auto-generated tag files
+   16   tags
+   17
+   18   # Persistent undo
+   19   [._]*.un~/
+   20
+   21   .aliases.local
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Temporary files #
+###################
+*.swp
+*.swo
+*~
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Editor files #
+################
+.vscode
