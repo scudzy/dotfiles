@@ -173,99 +173,105 @@ XDG_APPS=(
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Keybindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[[3~' delete-char
+bindkey '^[3;5~' delete-char
+
 # Custom Aliases
-alias ld="exa -laD --icons"
-alias ll="exa -la --icons --group-directories-first"
-alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
-alias genpass="head -c 12 /dev/random | base64"
-alias pip="pip3"
-alias pip3i="python3 -m pip install $@"
-alias pip3u="pip3 uninstall $#"
-alias p3="python3"
-alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
-#alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
-alias passgp="pass git push -u --all"
-alias potp="pass otp $@"
-alias pcp="pass -c $@"
-alias psh="pass show $@"
-alias pins="pass insert -m $@"
-alias pgen="pass generate $@"
-alias prm="pass rm $@"
-alias pfd="pass find $@"
-alias pgp="pass grep $@"
-alias c="calc $@"
-alias suu="sudo apt update && sudo apt upgrade -y"
-alias dfah="df -h $@"
-alias dush="du -csh $@"
-alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
-alias cmd="/c/windows/system32/cmd.exe"
-alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
-alias path="printenv | rg $PATH"
-alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
-alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
-alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
-alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
-alias fast="cmd /c fast -u"
-alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
-alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-#alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
-alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
-alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
-alias ff="flatpak run org.mozilla.firefox"
-alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
-alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
-alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
-alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
-alias cc="currency_converter $@"
-alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
-alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
-#alias ll="colorls -logA --sd --report $@"
-#alias llf="colorls -oAf --report $@"
-#alias lld="colorls -oAd --sd --report $@"
-alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
-alias vw="pyvoc -w $@"
-alias dpigs20="dpigs --lines=20 -SH"
-alias gcm="git commit -m $@"
-alias apti="sudo apt install $@"
-alias aptinir="sudo apt install --no-install-recommends $@"
-alias aptar="sudo apt autoremove $@"
-alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
-alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias stats='stat -c "%a" $@'
-alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
-alias lg="lazygit"
-alias time="/usr/bin/time -f'Loading in %e ms' $@"
-alias speed="speedtest --selection-details -v"
-alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
+# alias ld="exa -laD --icons"
+# alias ll="exa -la --icons --group-directories-first"
+# alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
+# alias genpass="head -c 12 /dev/random | base64"
+# alias pip="pip3"
+# alias pip3i="python3 -m pip install $@"
+# alias pip3u="pip3 uninstall $#"
+# alias p3="python3"
+# alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
+# #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
+# alias passgp="pass git push -u --all"
+# alias potp="pass otp $@"
+# alias pcp="pass -c $@"
+# alias psh="pass show $@"
+# alias pins="pass insert -m $@"
+# alias pgen="pass generate $@"
+# alias prm="pass rm $@"
+# alias pfd="pass find $@"
+# alias pgp="pass grep $@"
+# alias c="calc $@"
+# alias suu="sudo apt update && sudo apt upgrade -y"
+# alias dfah="df -h $@"
+# alias dush="du -csh $@"
+# alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
+# alias cmd="/c/windows/system32/cmd.exe"
+# alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
+# alias path="printenv | rg $PATH"
+# alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
+# alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
+# alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
+# alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
+# alias fast="cmd /c fast -u"
+# alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
+# alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
+# #alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
+# alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
+# alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
+# alias ff="flatpak run org.mozilla.firefox"
+# alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
+# alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
+# alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
+# alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
+# alias cc="currency_converter $@"
+# alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
+# alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
+# #alias ll="colorls -logA --sd --report $@"
+# #alias llf="colorls -oAf --report $@"
+# #alias lld="colorls -oAd --sd --report $@"
+# alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
+# alias vw="pyvoc -w $@"
+# alias dpigs20="dpigs --lines=20 -SH"
+# alias gcm="git commit -m $@"
+# alias apti="sudo apt install $@"
+# alias aptinir="sudo apt install --no-install-recommends $@"
+# alias aptar="sudo apt autoremove $@"
+# alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
+# alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+# alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+# alias stats='stat -c "%a" $@'
+# alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
+# alias lg="lazygit"
+# alias time="/usr/bin/time -f'Loading in %e ms' $@"
+# alias speed="speedtest --selection-details -v"
+# alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
 
 # FUNCTION
 # execution time
-function tm() {
-  local start=$(date +%s%N)
-  $@
-  local end=$(date +%s%N)
-  local exit_code=$?
-  local total=$end-$start
-    echo ""
-    echo -e "Took \e[1;32m$((total/1000000))\e[0m ms. Exit code ${exit_code}."
-  return $exit_code
-}
+# function tm() {
+#   local start=$(date +%s%N)
+#   $@
+#   local end=$(date +%s%N)
+#   local exit_code=$?
+#   local total=$end-$start
+#     echo ""
+#     echo -e "Took \e[1;32m$((total/1000000))\e[0m ms. Exit code ${exit_code}."
+#   return $exit_code
+# }
 
-# fzf
-function fff() {
-    find / -iname "$1" 2>/dev/null | fzf
-}
+# # fzf
+# function fff() {
+#     find / -iname "$1" 2>/dev/null | fzf
+# }
 
-# List installed package in number
-function dpkgq() {
-    dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
-}
+# # List installed package in number
+# function dpkgq() {
+#     dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
+# }
 
-# Vscode
-function code() {
-    /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
-}
+# # Vscode
+# function code() {
+#     /c/Users/scudzy/scoop/apps/vscode/current/code.exe $@
+# }
 
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
@@ -326,9 +332,9 @@ SAVEHIST=$HISTSIZE
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # fzf with man
-function fman() {
-    man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
-}
+# function fman() {
+#     man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
+# }
 
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
@@ -349,26 +355,26 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff'
 
 # Functions
-function join-lines() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
+# function join-lines() {
+#   local item
+#   while read item; do
+#     echo -n "${(q)item} "
+#   done
+# }
 
 # Determine git branch.
 function parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-function bind-git-helper() {
-  local c
-  for c in $@; do
-    eval "fzf-g$c-widget() { local result=\$(g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
-    eval "zle -N fzf-g$c-widget"
-    eval "bindkey '^g^$c' fzf-g$c-widget"
-  done
-}
+# function bind-git-helper() {
+#   local c
+#   for c in $@; do
+#     eval "fzf-g$c-widget() { local result=\$(g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
+#     eval "zle -N fzf-g$c-widget"
+#     eval "bindkey '^g^$c' fzf-g$c-widget"
+#   done
+# }
 
 bind-git-helper f b t r h
 unset -f bind-git-helper

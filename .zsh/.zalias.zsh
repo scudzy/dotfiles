@@ -1,0 +1,170 @@
+### aliases ---------------------------------------------------------------- {{{
+# https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789#.vh7hhm6th
+# https://github.com/webpro/dotfiles/blob/master/system/.alias
+# https://github.com/mathiasbynens/dotfiles/blob/master/.aliases
+
+# zsh only aliases
+if [[ -n $ZSH_VERSION ]]; then
+  alias 1='cd -'
+  alias 2='cd -2'
+  alias 3='cd -3'
+  alias 4='cd -4'
+  alias 5='cd -5'
+  alias 6='cd -6'
+  alias 7='cd -7'
+  alias 8='cd -8'
+  alias 9='cd -9'
+
+  alias cd..='cd ..'
+  alias -g ..2='../..'
+  alias -g ..3='../../..'
+  alias -g ..4='../../../..'
+  alias -g ..5='../../../../..'
+  alias -g ...='../..'
+  alias -g ....='../../..'
+  alias -g .....='../../../..'
+  alias -g ......='../../../../..'
+
+  alias zshrc='edit "${ZDOTDIR:-$HOME}"/.zshrc'
+  alias reload='source "${ZDOTDIR:-$HOME}"/.zshrc'
+  alias zbench='export LAZY_PROMPT=false; for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done; unset LAZY_PROMPT'
+  alias zdot='cd $ZDOTDIR'
+
+  # zsh pipes
+  alias -g H='| head'
+  alias -g T='| tail'
+  alias -g G='| grep -E'
+  alias -g S='| sort'
+  alias -g L='| less'
+  alias -g M='| more'
+fi
+
+# mask built-ins with better defaults
+# alias cp='cp -i'
+# alias mv='mv -i'
+# alias rm='rm -i'
+alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias ping='ping -c 5'
+
+# be safe
+alias cpi='cp -i'
+alias mvi='mv -i'
+alias rmi='rm -i'
+
+# single character shortcuts - be sparing!
+alias _='sudo'
+alias c='clear'
+alias d='dirs -v | head -10'
+alias v='vim'
+alias h='history'
+
+# shortcuts
+alias vi='vim'
+alias nv='nvim'
+alias afind='ack -il'
+alias md='mkdir -p'
+alias rd=rmdir
+alias please=sudo
+alias po=popd
+alias pu=pushd
+alias globurl='noglob urlglobber '
+alias zz=exit
+
+# fix typos
+alias quit='exit'
+
+# tools
+alias te="$EDITOR"
+alias ide="$VISUAL"
+
+# network
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
+alias pinging="command ping"
+
+# other aliases
+alias tarls="tar -tvf"
+alias untar="tar -xf"
+alias biggest='du -s ./* | sort -nr | awk '\''{print $2}'\'' | xargs du -sh'
+alias dux='du -x --max-depth=1 | sort -n'
+alias path='echo -e ${PATH//:/\\n}'
+alias linecount="grep -c '^'"
+alias ds="date +%Y%m%d"
+alias ts="date +%Y%m%d%H%M%S"
+alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
+alias datestamp="date '+%Y-%m-%d'"
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+
+# auto-orient images based on exif tags
+alias autorotate="jhead -autorot"
+
+# Custom Aliases
+alias ld="exa -laD --icons"
+alias ll="exa -la --icons --group-directories-first"
+alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
+alias genpass="head -c 12 /dev/random | base64"
+alias pip="pip3"
+alias pip3i="python3 -m pip install $@"
+alias pip3u="pip3 uninstall $#"
+alias p3="python3"
+alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
+#alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
+alias passgp="pass git push -u --all"
+alias potp="pass otp $@"
+alias pcp="pass -c $@"
+alias psh="pass show $@"
+alias pins="pass insert -m $@"
+alias pgen="pass generate $@"
+alias prm="pass rm $@"
+alias pfd="pass find $@"
+alias pgp="pass grep $@"
+alias c="calc $@"
+alias suu="sudo apt update && sudo apt upgrade -y"
+alias dfah="df -h $@"
+alias dush="du -csh $@"
+alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
+alias cmd="/c/windows/system32/cmd.exe"
+alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
+alias path="printenv | rg $PATH"
+alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
+alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
+alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
+alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
+alias fast="cmd /c fast -u"
+alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
+alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
+#alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
+alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
+alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
+alias ff="flatpak run org.mozilla.firefox"
+alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
+alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
+alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
+alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
+alias cc="currency_converter $@"
+alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
+alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
+#alias ll="colorls -logA --sd --report $@"
+#alias llf="colorls -oAf --report $@"
+#alias lld="colorls -oAd --sd --report $@"
+alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
+alias vw="pyvoc -w $@"
+alias dpigs20="dpigs --lines=20 -SH"
+alias gcm="git commit -m $@"
+alias apti="sudo apt install $@"
+alias aptinir="sudo apt install --no-install-recommends $@"
+alias aptar="sudo apt autoremove $@"
+alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
+alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias stats='stat -c "%a" $@'
+alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
+alias lg="lazygit"
+alias time="/usr/bin/time -f'Loading in %e ms' $@"
+alias speed="speedtest --selection-details -v"
+alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
