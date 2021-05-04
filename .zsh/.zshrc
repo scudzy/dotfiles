@@ -174,6 +174,8 @@ XDG_APPS=(
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom Aliases
+alias ld="exa -laD --icons"
+alias ll="exa -la --icons --group-directories-first"
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
 alias genpass="head -c 12 /dev/random | base64"
 alias pip="pip3"
@@ -217,9 +219,9 @@ alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/
 alias cc="currency_converter $@"
 alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
 alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
-alias ll="colorls -logA --sd --report $@"
-alias llf="colorls -oAf --report $@"
-alias lld="colorls -oAd --sd --report $@"
+#alias ll="colorls -logA --sd --report $@"
+#alias llf="colorls -oAf --report $@"
+#alias lld="colorls -oAd --sd --report $@"
 alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"

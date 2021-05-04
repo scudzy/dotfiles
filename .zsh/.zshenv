@@ -36,3 +36,5 @@ export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 # Default programs to run.
 export EDITOR="vim"
+
+HISTTIMEFORMAT='%F-%T '
