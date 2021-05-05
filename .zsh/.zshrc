@@ -232,8 +232,8 @@ pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
 pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
-pz prompt romkatv/powerlevel10k
-#pz prompt sindresorhus/pure
+#pz prompt romkatv/powerlevel10k
+pz prompt sindresorhus/pure
 
 ### Added by Zinit's installer
 if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
@@ -265,17 +265,17 @@ zinit light sindresorhus/pure
 ### End of Zinit's installer chunk
 
 # pure prompt
-#autoload -Uz promptinit
-#promptinit
-#prompt pure
+autoload -Uz promptinit
+promptinit
+prompt pure
 # optionally define some options
-#PURE_CMD_MAX_EXEC_TIME=10
+PURE_CMD_MAX_EXEC_TIME=10
 # change the path color
-#zstyle :prompt:pure:path color white
+zstyle :prompt:pure:path color white
 # change the color for both `prompt:success` and `prompt:error`
-#zstyle ':prompt:pure:prompt:*' color cyan
+zstyle ':prompt:pure:prompt:*' color cyan
 # turn on git stash status
-#zstyle :prompt:pure:git:stash show yes
+zstyle :prompt:pure:git:stash show yes
 
 ## Auto Completion - source before this line -------------
 autoload -Uz compinit

@@ -1,3 +1,9 @@
 [submodule ".zsh/.zinit/bin"]
 	path = .zsh/.zinit/bin
 	url = https://github.com/zdharma/zinit.git
+[submodule ".zsh/.zinit/plugins/jeffreytse---zsh-vi-mode"]
+	path = .zsh/.zinit/plugins/jeffreytse---zsh-vi-mode
+	url = https://github.com/jeffreytse/zsh-vi-mode.git
+[submodule ".zsh/.zinit/plugins/sindresorhus---pure"]
+	path = .zsh/.zinit/plugins/sindresorhus---pure
+	url = https://github.com/sindresorhus/pure.git
