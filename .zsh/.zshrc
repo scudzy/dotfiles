@@ -17,7 +17,7 @@ export DOTFILES=~/dotfiles
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-#eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/hotstick.minimal.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 ## Nicer shell experience
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
 export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
@@ -233,7 +233,7 @@ pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
 #pz prompt romkatv/powerlevel10k
-pz prompt sindresorhus/pure
+#pz prompt sindresorhus/pure
 
 ### Added by Zinit's installer
 if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
@@ -259,23 +259,23 @@ zinit light-mode for \
 # zsh-vi-mode
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
-# prompt pure
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
-### End of Zinit's installer chunk
 
+# prompt pure
+#zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+#zinit light sindresorhus/pure
+### End of Zinit's installer chunk
 # pure prompt
-autoload -Uz promptinit
-promptinit
-prompt pure
+#autoload -Uz promptinit
+#promptinit
+#prompt pure
 # optionally define some options
-PURE_CMD_MAX_EXEC_TIME=10
+#PURE_CMD_MAX_EXEC_TIME=10
 # change the path color
-zstyle :prompt:pure:path color white
+#zstyle :prompt:pure:path color white
 # change the color for both `prompt:success` and `prompt:error`
-zstyle ':prompt:pure:prompt:*' color cyan
+#zstyle ':prompt:pure:prompt:*' color cyan
 # turn on git stash status
-zstyle :prompt:pure:git:stash show yes
+#zstyle :prompt:pure:git:stash show yes
 
 ## Auto Completion - source before this line -------------
 autoload -Uz compinit
