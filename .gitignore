@@ -39,6 +39,7 @@ zplugins/
 .zsh_custom/
 */plugins/
 *.gpg
+plugins/
 
 # Swap
 		2   [._]*.s[a-v][a-z]

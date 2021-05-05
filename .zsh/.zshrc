@@ -17,7 +17,7 @@ export DOTFILES=~/dotfiles
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
+#eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 ## Nicer shell experience
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
 export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
@@ -232,7 +232,7 @@ pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
 pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
-#pz prompt romkatv/powerlevel10k
+pz prompt romkatv/powerlevel10k
 #pz prompt sindresorhus/pure
 
 ### Added by Zinit's installer
