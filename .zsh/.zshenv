@@ -18,23 +18,4 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export XDG_VIDEOS_DIR=~/Users/Videos
 fi
 
-export SHELL_SESSIONS_DISABLE=1
-
 [[ -d ~/dotfiles ]] && export DOTFILES=~/dotfiles
-
-# Add all local binary paths to the system path.
-export DOTFILES="/home/scudzy/dotfiles"
-export ZDOTDIR="/home/scudzy/dotfiles/.zsh"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export GOROOT="/usr/local/go"
-export GOPATH="${HOME}/go"
-export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
-export PYTHONPATH="$PATH:/usr/bin/python3.8/"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PASSWORD_STORE_ENABLE_EXTENSIONS='true'
-export PASSWORD_STORE_EXTENSIONS_DIR='$HOME/.password-store/.extensions'
-export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
-# Default programs to run.
-export EDITOR="vim"
-
-HISTTIMEFORMAT='%F-%T '

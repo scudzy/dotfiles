@@ -27,7 +27,6 @@ tags
 .zdirs
 .zgen
 *.bak
-*.local
 *.zwc
 *.zwc.old
 *history

@@ -25,10 +25,10 @@ if [[ -n $ZSH_VERSION ]]; then
   alias -g .....='../../../..'
   alias -g ......='../../../../..'
 
-  alias zshrc='edit "${ZDOTDIR:-$HOME}"/.zshrc'
-  alias reload='source "${ZDOTDIR:-$HOME}"/.zshrc'
-  alias zbench='export LAZY_PROMPT=false; for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done; unset LAZY_PROMPT'
-  alias zdot='cd $ZDOTDIR'
+  alias zshrc="subl '${ZDOTDIR:-$HOME}'/.zshrc"
+  alias zshenv="subl '${ZDOTDIR:-$HOME}'/.zshenv"
+  alias zalias="subl '${ZDOTDIR:-$HOME}'/zshrc.d/aliases.sh"
+  alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 
   # zsh pipes
   alias -g H='| head'
@@ -40,9 +40,6 @@ if [[ -n $ZSH_VERSION ]]; then
 fi
 
 # mask built-ins with better defaults
-# alias cp='cp -i'
-# alias mv='mv -i'
-# alias rm='rm -i'
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias ping='ping -c 5'
 
@@ -68,14 +65,10 @@ alias please=sudo
 alias po=popd
 alias pu=pushd
 alias globurl='noglob urlglobber '
-alias zz=exit
+alias qq=exit
 
 # fix typos
 alias quit='exit'
-
-# tools
-alias te="$EDITOR"
-alias ide="$VISUAL"
 
 # network
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -136,22 +129,17 @@ alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
 alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
 alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
 alias fast="cmd /c fast -u"
-alias csu="powershell choco upgrade all -y && powershell scoop update && powershell scoop status"
+alias csu="powershell.exe -Command { choco upgrade all -y; scoop update; scoop status }"
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-#alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
 alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
 alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
 alias ff="flatpak run org.mozilla.firefox"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
-alias pm2021="cd '/d/OneDrive/Documents/Business Doc/JPNM Pahang/PM 2021/PM2021/'"
 alias cc="currency_converter $@"
 alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
 alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
-#alias ll="colorls -logA --sd --report $@"
-#alias llf="colorls -oAf --report $@"
-#alias lld="colorls -oAd --sd --report $@"
 alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
 alias vw="pyvoc -w $@"
 alias dpigs20="dpigs --lines=20 -SH"
@@ -160,11 +148,14 @@ alias apti="sudo apt install $@"
 alias aptinir="sudo apt install --no-install-recommends $@"
 alias aptar="sudo apt autoremove $@"
 alias apts="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
-alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+alias fzfb="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias stats='stat -c "%a" $@'
 alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
 alias lg="lazygit"
-alias time="/usr/bin/time -f'Loading in %e ms' $@"
+#alias time="/usr/bin/time -f'Loading in %e secomds' $@"
 alias speed="speedtest --selection-details -v"
-alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
+alias dot="cd $DOTFILES"
+alias zz="cd $ZDOTDIR"
+alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
+alias gst="git status"
