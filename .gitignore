@@ -38,6 +38,7 @@ zplugins/
 .oh-my-zsh/
 .zsh_custom/
 */plugins/
+*.gpg
 
 # Swap
 		2   [._]*.s[a-v][a-z]
