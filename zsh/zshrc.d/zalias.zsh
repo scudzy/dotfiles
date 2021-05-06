@@ -27,7 +27,7 @@ if [[ -n $ZSH_VERSION ]]; then
 
   alias zshrc="subl '${ZDOTDIR:-$HOME}'/.zshrc"
   alias zshenv="subl '${ZDOTDIR:-$HOME}'/.zshenv"
-  alias zalias="subl '${ZDOTDIR:-$HOME}'/zshrc.d/aliases.sh"
+  alias zalias="subl '${ZDOTDIR:-$HOME}'/zshrc.d/.zlias.zsh"
   alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 
   # zsh pipes
@@ -74,7 +74,7 @@ alias quit='exit'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
-alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
+alias speedtestw="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 alias pinging="command ping"
 
 # other aliases
@@ -133,7 +133,7 @@ alias csu="powershell.exe -Command { choco upgrade all -y; scoop update; scoop s
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
 alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
 alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
-alias ff="flatpak run org.mozilla.firefox"
+alias mff="flatpak run org.mozilla.firefox"
 alias tio-com3="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty3"
 alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty4"
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
@@ -160,3 +160,4 @@ alias zz="cd $ZDOTDIR"
 alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
 alias gst="git status"
 alias gp="git push"
+alias term-size='echo "Rows=$(tput lines) Cols=$(tput cols)"'
