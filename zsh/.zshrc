@@ -279,8 +279,8 @@ zinit light-mode for \
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # # pure prompt
-# autoload -Uz promptinit
-# promptinit
+autoload -Uz promptinit
+promptinit
 # prompt pure
 # # optionally define some options
 # PURE_CMD_MAX_EXEC_TIME=10
