@@ -1,14 +1,19 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #
-# 7zz foobar scripts
-
-echo -n "Please enter a filename: "
+# 7zz scripts
+start=$(date +%s)
+echo -n "Please enter a filename [specify fullpath]: "
 read filename
-nlines=$filename
-
+nline=$filename
+target=$1
 datetime=$(date +"%d%m%Y-%H%M")
 file=$filename-$datetime.7z
+printf "\n"
+printf "Zipping \e[0;31m$file\e[0m"
+7zz a -t7z $file -m0=lzma2 -mmt=2 -mx=5 -p065195 -mhe=on -bt $target '-xr!.git' '-ax!*.7z'
+7zz h -scrcsha256 $file
 
-# Run the scripts
-echo "Zipping $1"
-7zz a -t7z -m0=lzma2 -mmt=2 -mx=9 -mfb=273 -md=96m -p065195 -mhe=on -ms=512m -bt $file $1
+# Execution time
+end=$(date +%s)
+total=$(expr $end - $start)
+printf "Running in \e[1;32m$total\e[0m seconds"
