@@ -54,8 +54,6 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 #ZSH_THEME="powerlevel10k/powerlevel10k"
 eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 source $ZSH/oh-my-zsh.sh
-#source $HOME/.fzf.zsh
-#source $ZDOTDIR/zshrc.d/zalias.zsh
 
 # Default programs to run.
 ## Which plugins would you like to load?
@@ -66,26 +64,6 @@ source $ZSH/oh-my-zsh.sh
 plugins=(
     notify
     )
-# #   git
-# #   github
-# #   common-aliases
-# #   nmap
-# #   sudo
-# #   colored-man-pages
-#    fzf
-# #   pip
-# #   python
-# #   github
-# #   tmux
-# #   nvm
-# #   command-not-found
-# #   ripgrep
-# #   systemd
-# #   zsh_reload
-# #   zsh-interactive-cd
-# #   fast-syntax-highlighting
-# #   zsh-xdg-basedirs
-# )
 
 # User configuration
 
@@ -125,10 +103,6 @@ fi
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-# # # Color Gruvbox Dark
-# export FZF_DEFAULT_OPTS='
-#     --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-#     --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
 
 # Color Ayu Mirage
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -243,8 +217,8 @@ pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
 pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
-#pz prompt romkatv/powerlevel10k
-#pz prompt sindresorhus/pure
+pz prompt romkatv/powerlevel10k
+pz prompt sindresorhus/pure
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 #[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
@@ -271,8 +245,8 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 
 # # prompt pure
-# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-# zinit light sindresorhus/pure
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
 ## End of Zinit's installer chunk
 
 # fzf
@@ -282,14 +256,14 @@ zinit light-mode for \
 autoload -Uz promptinit
 promptinit
 # prompt pure
-# # optionally define some options
-# PURE_CMD_MAX_EXEC_TIME=10
-# # change the path color
-# zstyle :prompt:pure:path color blue
-# # change the color for both `prompt:success` and `prompt:error`
-# zstyle ':prompt:pure:prompt:*' color cyan
-# # turn on git stash status
-# zstyle :prompt:pure:git:stash show yes
+# optionally define some options
+PURE_CMD_MAX_EXEC_TIME=10
+# change the path color
+zstyle :prompt:pure:path color blue
+# change the color for both `prompt:success` and `prompt:error`
+zstyle ':prompt:pure:prompt:*' color cyan
+# turn on git stash status
+zstyle :prompt:pure:git:stash show yes
 
 # Git
 autoload -Uz vcs_info
@@ -331,8 +305,8 @@ zstyle ':notify:*' app-name sh
 zstyle ':notify:*' error-log /dev/null
 
 # load function folders
-fpath=( $ZDOTDIR/functions $fpath )
-autoload -Uz code dpkgq fff fman term-resize time-n-cmd tm
+fpath=( $ZDOTDIR/functions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
 
 # Execution time
 end=$(date +%s)
