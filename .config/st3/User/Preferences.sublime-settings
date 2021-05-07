@@ -4,7 +4,7 @@
 	"auto_complete_commit_on_tab": true,
 	"auto_complete_with_fields": true,
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Agila Theme/Agila Neon Monocyanide.tmTheme",
+	"color_scheme": "Packages/Agila Theme/Markdown/Neon Monocyanide Markdown.tmTheme",
 	"default_encoding": "UTF-8",
 	"detect_indentation": true,
 	"folder_exclude_patterns":
