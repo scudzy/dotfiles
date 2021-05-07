@@ -25,9 +25,9 @@ if [[ -n $ZSH_VERSION ]]; then
   alias -g .....='../../../..'
   alias -g ......='../../../../..'
 
-  alias zshrc="subl '${ZDOTDIR:-$HOME}'/.zshrc"
-  alias zshenv="subl '${ZDOTDIR:-$HOME}'/.zshenv"
-  alias zalias="subl '${ZDOTDIR:-$HOME}'/zshrc.d/.zlias.zsh"
+  alias zshrc="subl '${ZDOTDIR}'/.zshrc"
+  alias zshenv="subl '${ZDOTDIR}'/.zshenv"
+  alias zalias="subl '${ZDOTDIR}'/zshrc.d/zalias.zsh"
   alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 
   # zsh pipes
@@ -71,7 +71,7 @@ alias qq=exit
 alias quit='exit'
 
 # network
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 alias speedtestw="wget -O /dev/null http://speed.transip.nl/10mb.bin"
@@ -88,8 +88,8 @@ alias ds="date +%Y%m%d"
 alias ts="date +%Y%m%d%H%M%S"
 alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
 alias datestamp="date '+%Y-%m-%d'"
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
+#alias fd='find . -type d -name'
+#alias ff='find . -type f -name'
 alias dud='du -d 1 -h'
 alias duf='du -sh *'
 
@@ -161,3 +161,11 @@ alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
 alias gst="git status"
 alias gp="git push"
 alias term-size='echo "Rows=$(tput lines) Cols=$(tput cols)"'
+alias del="trash-put $@"
+alias tempty="trash-empty $@"
+alias trestore="restore-trash $@"
+alias tlist="trash-list"
+alias cat="bat --pager"
+alias tl="tldr $@"
+alias cloudflare="echo nameserver 1.1.1.1 | sudo tee /etc/resolv.conf"
+alias gdns="echo nameserver 8.8.8.8 | sudo tee /etc/resolv.conf"

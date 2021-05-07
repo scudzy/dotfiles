@@ -46,6 +46,9 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
+export EDITOR=vim
+export VISUAL=subl
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -83,7 +86,7 @@ source $ZSH/oh-my-zsh.sh
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
 
 # Checking Login v.s. Non-Login
-[[ -o login ]] && echo "Login" || echo "Non-Login"
+[[ -o login ]] && echo "*** Login" || echo "*** Non-Login"
 
 # grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
@@ -336,4 +339,4 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end=$(date +%s)
 total=$(expr $end - $start)
-printf "Loading your blazing fast shell in \033[32;5m$total seconds\033[0m\n"
+printf " \e[0;31m** Loading your blazing fast shell in\e[0m \e[1;33;5m$total\e[0m \e[0;31mseconds\e[39m\n"
