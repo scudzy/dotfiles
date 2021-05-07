@@ -1,6 +1,6 @@
-start=$(date +%s)
+start="$(date +%s)"
 #zmodload zsh/zprof
-zmodload -i zsh/complist
+#zmodload -i zsh/complist
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -81,7 +81,7 @@ source $ZSH/oh-my-zsh.sh
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
 
 # Checking Login v.s. Non-Login
-[[ -o login ]] && printf " *** Login\n" || printf " *** Non-Login\n"
+[[ -o login ]] && echo "Login" || echo "Non-Login"
 
 # grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
@@ -95,30 +95,10 @@ if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
 fi
 
-# powerline-go prompt
-function powerline_precmd() {
-    PS1="$($GOPATH/bin/powerline-go -error $? -jobs ${${(%):%j}:-0})"
-
 # Uncomment the following line to automatically clear errors after showing
 # them once. This not only clears the error for powerline-go, but also for
 # everything else you run in that shell. Don't enable this if you're not
 # sure this is what you want.
-
-set "?"
- }
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
-    install_powerline_precmd
-fi
 
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
@@ -142,10 +122,6 @@ join-lines() {
     echo -n "${(q)item} "
   done
 }
-
-fzf-gt-widget() { LBUFFER+=$(gt | join-lines) }
-zle -N fzf-gt-widget
-bindkey '^g^t' fzf-gt-widget
 
 # Determine git branch.
 parse_git_branch() {
@@ -173,14 +149,6 @@ source ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 # ruby rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - --no-rehash)"
-
-# Powerline
-function _update_ps1() {
-    PS1="$($GOPATH/bin/powerline-go -error $?)"
-}
-if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
@@ -214,6 +182,8 @@ if grep -q enable-ssh-support "$GNUPGCONFIG"; then
     unset SSH_AGENT_PID
     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 fi
+
+eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -279,7 +249,7 @@ zinit light-mode for \
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
+
 
 # # pure prompt
 # autoload -Uz promptinit
@@ -296,7 +266,7 @@ eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 
 # Git
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
+precmd_vcs_info() vcs_info
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
@@ -338,4 +308,4 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-printf " \e[0;31m** Loading your blazing fast shell in\e[39m \e[1;33;5m$total\e[39m \e[0;31mseconds\e[0m\n"
+printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
