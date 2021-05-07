@@ -61,19 +61,19 @@ source $ZSH/oh-my-zsh.sh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    notify
-    )
+# plugins=(
+#     notify
+#     )
 
 # User configuration
 
 # plugin variables
-XDG_APPS=(
-  gnupg
-  pass
-  tmux
-  wget
-  )
+# XDG_APPS=(
+#   gnupg
+#   pass
+#   tmux
+#   wget
+#   )
 
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
@@ -95,6 +95,31 @@ done
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
       export TERM=xterm-256color
+fi
+
+# powerline-go prompt
+function powerline_precmd() {
+    PS1="$($GOPATH/bin/powerline-go -error $? -jobs ${${(%):%j}:-0})"
+
+    # Uncomment the following line to automatically clear errors after showing
+    # them once. This not only clears the error for powerline-go, but also for
+    # everything else you run in that shell. Don't enable this if you're not
+    # sure this is what you want.
+
+    #set "?"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
+    install_powerline_precmd
 fi
 
 # Enable a better reverse search experience.
@@ -138,7 +163,7 @@ unset -f bind-git-helper
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # powerline-status
-powerline-daemon -q
+/home/scudzy/.local/bin/powerline-daemon -q
 source ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # ruby rbenv
@@ -172,19 +197,19 @@ function settitle () {
 }
 
 # Enable gpg-agent if it is not running
-GPG_AGENT_SOCKET="${XDG_DATA_HOME}/gnupg/S.gpg-agent.ssh"
+GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
 if [ ! -S $GPG_AGENT_SOCKET ]; then
     gpgconf --kill gpg-agent
     gpg-agent --daemon --enable-ssh-support >/dev/null 2>&1
     export GPG_TTY=$(tty)
 fi
 
-# # Set SSH to use gpg-agent if it is configured to do so
-# GNUPGCONFIG=${GNUPGHOME:-"${XDG_DATA_HOME}/gnupg/gpg-agent.conf"}
-# if grep -q enable-ssh-support "$GNUPGCONFIG"; then
-#     unset SSH_AGENT_PID
-#     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
-# fi
+# Set SSH to use gpg-agent if it is configured to do so
+GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
+if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+    unset SSH_AGENT_PID
+    export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+fi
 
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -218,10 +243,9 @@ pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
 pz prompt romkatv/powerlevel10k
-pz prompt sindresorhus/pure
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
+[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
 
 ### Added by Zinit's installer
 if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
@@ -245,16 +269,16 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 
 # # prompt pure
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
+# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
 ## End of Zinit's installer chunk
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # # pure prompt
-autoload -Uz promptinit
-promptinit
+# autoload -Uz promptinit
+# promptinit
 # prompt pure
 # optionally define some options
 PURE_CMD_MAX_EXEC_TIME=10
@@ -276,7 +300,8 @@ zstyle ':vcs_info:git:*' formats '%b'
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
-## Auto Completion - source before this line -------------
+## Auto Completion -------------- SOURCE BEFORE THIS LINE
+
 ### zsh builtin AUTOLOAD
 autoload -Uz compinit
 compinit -i
@@ -304,7 +329,7 @@ zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
 zstyle ':notify:*' app-name sh
 zstyle ':notify:*' error-log /dev/null
 
-# load function folders
+# load function folders ----------- NEVER DELETE BELOW RHIS LINE
 fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
