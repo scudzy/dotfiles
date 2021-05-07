@@ -55,7 +55,10 @@ export VISUAL=subl
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
+
+# powerline9k prompt
+#typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
 source $ZSH/oh-my-zsh.sh
 
 # Default programs to run.
@@ -70,14 +73,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# plugin variables
-# XDG_APPS=(
-#   gnupg
-#   pass
-#   tmux
-#   wget
-#   )
-
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
 #ssscurl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
@@ -86,7 +81,7 @@ source $ZSH/oh-my-zsh.sh
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
 
 # Checking Login v.s. Non-Login
-[[ -o login ]] && echo "*** Login" || echo "*** Non-Login"
+[[ -o login ]] && printf " *** Login\n" || printf " *** Non-Login\n"
 
 # grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
@@ -104,13 +99,13 @@ fi
 function powerline_precmd() {
     PS1="$($GOPATH/bin/powerline-go -error $? -jobs ${${(%):%j}:-0})"
 
-    # Uncomment the following line to automatically clear errors after showing
-    # them once. This not only clears the error for powerline-go, but also for
-    # everything else you run in that shell. Don't enable this if you're not
-    # sure this is what you want.
+# Uncomment the following line to automatically clear errors after showing
+# them once. This not only clears the error for powerline-go, but also for
+# everything else you run in that shell. Don't enable this if you're not
+# sure this is what you want.
 
-    #set "?"
-}
+set "?"
+ }
 
 function install_powerline_precmd() {
   for s in "${precmd_functions[@]}"; do
@@ -128,6 +123,8 @@ fi
 # Enable a better reverse search experience.
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
 #   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
+
+# fzf customization
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
@@ -145,6 +142,10 @@ join-lines() {
     echo -n "${(q)item} "
   done
 }
+
+fzf-gt-widget() { LBUFFER+=$(gt | join-lines) }
+zle -N fzf-gt-widget
+bindkey '^g^t' fzf-gt-widget
 
 # Determine git branch.
 parse_git_branch() {
@@ -245,10 +246,10 @@ pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
 pz source ohmyzsh lib/git
 pz source ohmyzsh lib/theme-and-appearance
 # set your prompt
-pz prompt romkatv/powerlevel10k
+#pz prompt romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
+#[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
 
 ### Added by Zinit's installer
 if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
@@ -278,19 +279,20 @@ zinit light-mode for \
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 
 # # pure prompt
 # autoload -Uz promptinit
 # promptinit
 # prompt pure
 # optionally define some options
-PURE_CMD_MAX_EXEC_TIME=10
-# change the path color
-zstyle :prompt:pure:path color blue
-# change the color for both `prompt:success` and `prompt:error`
-zstyle ':prompt:pure:prompt:*' color cyan
-# turn on git stash status
-zstyle :prompt:pure:git:stash show yes
+# PURE_CMD_MAX_EXEC_TIME=10
+# # change the path color
+# zstyle :prompt:pure:path color blue
+# # change the color for both `prompt:success` and `prompt:error`
+# zstyle ':prompt:pure:prompt:*' color cyan
+# # turn on git stash status
+# zstyle :prompt:pure:git:stash show yes
 
 # Git
 autoload -Uz vcs_info
@@ -299,9 +301,6 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
-
-# powerline9k prompt
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
@@ -337,6 +336,6 @@ fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
 # Execution time
-end=$(date +%s)
-total=$(expr $end - $start)
-printf " \e[0;31m** Loading your blazing fast shell in\e[0m \e[1;33;5m$total\e[0m \e[0;31mseconds\e[39m\n"
+end="$(date +%s)"
+total="$(( end - start ))"
+printf " \e[0;31m** Loading your blazing fast shell in\e[39m \e[1;33;5m$total\e[39m \e[0;31mseconds\e[0m\n"
