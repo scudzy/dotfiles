@@ -236,10 +236,10 @@ pz source mattmc3/zshrc.d
 # source ohmyzsh plugins
 pz source ohmyzsh/ohmyzsh plugins/sudo
 pz source ohmyzsh/ohmyzsh plugins/colored-man-pages
-pz source ohmyzsh/ohmyzsh plugins/fzf
+#pz source ohmyzsh/ohmyzsh plugins/fzf
 pz source ohmyzsh/ohmyzsh plugins/python
-pz source ohmyzsh/ohmyzsh plugins/tmux
-pz source ohmyzsh/ohmyzsh plugins/command-not-found
+#pz source ohmyzsh/ohmyzsh plugins/tmux
+#pz source ohmyzsh/ohmyzsh plugins/command-not-found
 pz source ohmyzsh/ohmyzsh plugins/systemd
 pz source ohmyzsh/ohmyzsh plugins/zsh_reload
 pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
