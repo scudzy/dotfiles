@@ -4,7 +4,6 @@
 		".wgetrc",
 		".env.production.local",
 		".envrc",
-		".gitignore_global",
 		".env.local",
 		".exports",
 		".inputrc",
@@ -31,7 +30,6 @@
 		".env.dusk.local",
 		".zprofile",
 		".env.dusk.testing",
-		".gitconfig",
 		"symlink",
 		".env.development",
 		".zpreztorc",
@@ -48,10 +46,8 @@
 		".hushlogin",
 		".osx",
 		".jsbeautifyrc",
-		".gitattributes",
 		".brew",
 		".env.test.local",
-		".git",
 		".zsh-theme",
 		".env.test",
 		".zlogin",
@@ -59,12 +55,8 @@
 		".npmignore",
 		".bashrc",
 		".env.testing",
-		".gitignore",
 		".bash_prompt",
-		".gitmodules",
 		"zlogout",
 		".env"
-	],
-	//"color_scheme": "Packages/Theme - Monokai Pro/Monokai Pro.sublime-color-scheme"
-	//"color_scheme": "Packages/Theme - Gravity/One Dark Gravity.sublime-color-scheme",
+	]
 }
