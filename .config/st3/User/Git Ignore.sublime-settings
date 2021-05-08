@@ -1,8 +1,7 @@
 {
 	"extensions":
 	[
-		".gitignore",
-		".gitconfig",
-        ".gitconfig-user"
-	]
+		".gitignore"
+	],
+    "word_wrap": "true"
 }
