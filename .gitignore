@@ -86,3 +86,6 @@ Thumbs.db
 # Editor files #
 ################
 .vscode
+
+# Custom
+circle_icon_ffffffff.png
