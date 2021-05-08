@@ -27,7 +27,13 @@ if [[ -n $ZSH_VERSION ]]; then
 
   alias zshrc="subl '${ZDOTDIR}'/.zshrc"
   alias zshenv="subl '${ZDOTDIR}'/.zshenv"
+  alias zlogin="subl '${ZDOTDIR}'/.zlogin"
+  alias zsprofile="subl '${ZDOTDIR}'/.zprofile"
   alias zalias="subl '${ZDOTDIR}'/zshrc.d/zalias.zsh"
+  alias resolvrc="subl /etc/resolv.conf"
+  alias wslrc="subl /etc/wsl.conf"
+  alias tmuxrc="subl '${DOTFILES}'/.tmux.conf"
+  alias vimrc="subl '${DOTFILES}'/.vimrc"
   alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 
   # zsh pipes
@@ -84,14 +90,14 @@ alias biggest='du -s ./* | sort -nr | awk '\''{print $2}'\'' | xargs du -sh'
 alias dux='du -x --max-depth=1 | sort -n'
 alias path='echo -e ${PATH//:/\\n}'
 alias linecount="grep -c '^'"
-alias ds="date +%Y%m%d"
-alias ts="date +%Y%m%d%H%M%S"
-alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
-alias datestamp="date '+%Y-%m-%d'"
+#alias ds="date +%Y%m%d"
+alias ts="date +%d%m%Y-%H%M%S"
+#alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
+#alias datestamp="date '+%Y-%m-%d'"
 #alias fd='find . -type d -name'
 #alias ff='find . -type f -name'
-alias dud='du -d 1 -h'
-alias duf='du -sh *'
+#alias dud='du -d 1 -h'
+#alias duf='du -sh *'
 
 # auto-orient images based on exif tags
 alias autorotate="jhead -autorot"
@@ -167,6 +173,12 @@ alias trestore="restore-trash $@"
 alias tlist="trash-list"
 alias cat="bat --pager"
 alias tl="tldr $@"
-alias cloudflare="echo nameserver 1.1.1.1 | sudo tee /etc/resolv.conf"
-alias gdns="echo nameserver 8.8.8.8 | sudo tee /etc/resolv.conf"
+alias cloudflare="echo nameserver 1.1.1.1 | sudo tee -a /etc/resolv.conf"
+alias gdns="echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
 alias gdun="gdu -n $@"
+alias s256="sha256sum $@"
+
+# bat alias
+alias bwsl="bat /etc/wsl.conf"
+alias bresolv="bat /etc/resolv.conf"
+alias bgenie="bat /etc/genie.ini"
