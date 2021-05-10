@@ -58,5 +58,7 @@
 		"zshenv",
 		"zshrc"
 	],
+	//"color_scheme": "Packages/Agila Theme/Markdown/Dracula Markdown.tmTheme",
+	//"color_scheme": "Packages/Agila Theme/Agila Monokai Extended.tmTheme",
 	"word_wrap": true
 }
