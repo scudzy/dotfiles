@@ -131,7 +131,7 @@ alias cmd="/c/windows/system32/cmd.exe"
 alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
 alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
 alias fast="cmd /c fast -u"
-alias csu="powershell.exe -Command { choco upgrade all -y; scoop update; scoop status }"
+alias csu="powershell.exe -Command { choco upgrade all -y; sudo scoop update; sudo scoop status }"
 
 # nohup
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
@@ -203,6 +203,8 @@ alias tl="tldr $@"
 # dns
 alias dns1="echo nameserver 1.1.1.1 | sudo tee -a /etc/resolv.conf"
 alias dns8="echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
+
+# others
 alias gdun="gdu -n $@"
 alias s256="sha256sum $@"
 
