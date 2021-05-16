@@ -107,7 +107,10 @@ fi
 # fzf customization
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
-export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+
+# Ripgrep
+#export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
 
 # Color Ayu Mirage
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -146,9 +149,9 @@ unset -f bind-git-helper
 /home/scudzy/.local/bin/powerline-daemon -q
 source ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# ruby rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - --no-rehash)"
+# # ruby rbenv
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init - --no-rehash)"
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
