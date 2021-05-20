@@ -253,6 +253,8 @@ zinit light-mode for \
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# fix wsl2 resolv.conf
+echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf > /dev/null
 
 # # pure prompt
 # autoload -Uz promptinit
