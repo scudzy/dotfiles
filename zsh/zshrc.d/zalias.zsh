@@ -201,10 +201,11 @@ alias cat="bat --pager"
 alias tl="tldr $@"
 
 # dns
-alias dns1="echo nameserver 1.1.1.1 | sudo tee -a /etc/resolv.conf"
+alias dns1='echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf'
 alias dns8="echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
 
 # others
+alias ipa="ip address show eth0"
 alias gdun="gdu -n $@"
 alias s256="sha256sum $@"
 
