@@ -22,15 +22,15 @@ alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
 # st3
-alias zshrc="subl '${ZDOTDIR}'/.zshrc"
-alias zshenv="subl '${ZDOTDIR}'/.zshenv"
-alias zlogin="subl '${ZDOTDIR}'/.zlogin"
-alias zsprofile="subl '${ZDOTDIR}'/.zprofile"
-alias zalias="subl '${ZDOTDIR}'/zshrc.d/zalias.zsh"
-alias resolvrc="subl /etc/resolv.conf"
-alias wslrc="subl /etc/wsl.conf"
-alias tmuxrc="subl '${DOTFILES}'/.tmux.conf"
-alias vimrc="subl '${DOTFILES}'/.vimrc"
+alias zshrc="vim ~/dotfiles/zsh/.zshrc"
+alias zshenv="vim ~/dotfiles/zsh/.zshenv"
+alias zlogin="vim ~/dotfiles/zsh/.zlogin"
+alias zsprofile="vim ~/dotfiles/zsh/.zprofile"
+alias zalias="vim ~/dotfiles/zsh/zshrc.d/zalias.zsh"
+alias resolvrc="vim /etc/resolv.conf"
+alias wslrc="vim /etc/wsl.conf"
+alias tmuxrc="vim ~/dotfiles/.tmux.conf"
+alias vimrc="vim ~/dotfiles/.vimrc"
 alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 
 # zsh pipes
