@@ -188,6 +188,9 @@ fi
 
 eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
 
+# the fuck alias
+eval $(thefuck --alias)
+
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 ### Path ref XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
