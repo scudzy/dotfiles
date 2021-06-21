@@ -213,3 +213,6 @@ alias s256="sha256sum $@"
 alias bwsl="bat /etc/wsl.conf"
 alias bresolv="bat /etc/resolv.conf"
 alias bgenie="bat /etc/genie.ini"
+
+# pass
+alias myBSN="pass garbage/personal/My/myBSN"
