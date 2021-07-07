@@ -113,7 +113,12 @@ alias pgen="pass generate $@"
 alias prm="pass rm $@"
 alias pfd="pass find $@"
 alias pgp="pass grep $@"
-alias genpass="head -c 12 /dev/random | base64"
+alias genpass="head -c 16 /dev/random | base64"
+
+alias myBSN="pass garbage/personal/My/myBSN"
+alias 2u="pass garbage/personal/My/Maybank2u"
+alias gscudzy="pass garbage/eMail/Google-scudzy"
+alias halimi="pass garbage/eMail/Google-halimi@barikatech.com"
 
 # others
 alias c="calc $@"
@@ -213,6 +218,3 @@ alias s256="sha256sum $@"
 alias bwsl="bat /etc/wsl.conf"
 alias bresolv="bat /etc/resolv.conf"
 alias bgenie="bat /etc/genie.ini"
-
-# pass
-alias myBSN="pass garbage/personal/My/myBSN"
