@@ -49,7 +49,8 @@ Plug 'will133/vim-dirdiff'
 Plug 'AndrewRadev/linediff.vim'
 
 " Add spelling errors to the quickfix list (vim-ingo-library is a dependency).
-Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-SpellCheck'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-SpellCheck'
 
 " Briefly highlight which text was yanked.
 Plug 'machakann/vim-highlightedyank'
