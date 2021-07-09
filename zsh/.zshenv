@@ -26,6 +26,7 @@ export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
 export PYTHONPATH="/usr/bin/python3.8"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
+export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 
 # If you come from bash you might have to change your $PATH.
