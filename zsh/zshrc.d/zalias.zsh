@@ -32,6 +32,7 @@ alias wslrc="vim /etc/wsl.conf"
 alias tmuxrc="vim ~/dotfiles/.tmux.conf"
 alias vimrc="vim ~/dotfiles/.vimrc"
 alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
+alias streecpu="for i in $(seq $(getconf _NPROCESSORS_ONLN)); do yes > /dev/null & done"
 
 # zsh pipes
 alias -g H='| head'
