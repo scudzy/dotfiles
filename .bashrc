@@ -151,7 +151,7 @@ for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); 
 done
 # alias
 alias src="source ~/.bashrc"
-alias ll="ls -la"
+alias ll="ls -la --group-directories-first"
 alias fzfb="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 alias bashrc="vim ~/.bashrc"
 
