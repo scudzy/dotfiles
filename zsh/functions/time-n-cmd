@@ -1,0 +1,19 @@
+# Usage: time-n-cmd TIMES CMD
+#
+time-n-cmd() {
+
+  # params
+  #
+  local times=$1
+  local command=$2
+
+  # Time the command by running multiple times
+  #
+  time (
+  for run in {1..$times}
+  do
+    sh -c $command 2>&1 > /dev/null
+  done
+  )
+
+}

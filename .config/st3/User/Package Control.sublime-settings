@@ -1,0 +1,28 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Agila Theme",
+		"Alignment",
+		"All Autocomplete",
+		"ayu",
+		"Color Highlighter",
+		"ColorPicker",
+		"DocBlockr",
+		"Dracula Color Scheme",
+		"Emmet",
+		"Git",
+		"GitGutter",
+		"MarkdownPreview",
+		"Package Control",
+		"Restart",
+		"Terminal",
+		"Theme - Brogrammer",
+		"Theme - Monokai Pro",
+		"Theme - Soda"
+	]
+}

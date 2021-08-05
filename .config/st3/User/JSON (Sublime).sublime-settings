@@ -1,0 +1,6 @@
+// These settings override both User and Default settings for the JSON (Sublime) syntax
+{
+    "color_scheme": "Packages/Theme - Monokai Pro/Monokai Pro.sublime-color-scheme",
+    "trim_trailing_white_space_on_save": true,
+    "word_wrap": true
+}

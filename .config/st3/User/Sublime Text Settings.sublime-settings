@@ -1,0 +1,13 @@
+{
+	"extensions":
+	[
+    "sublime-settings",
+    "sublime-commands",
+    "sublime-keymap",
+    "sublime-color-scheme"
+	],
+    //"color_scheme": "Packages/Theme - Monokai Pro/Monokai Pro (Filter Machine).sublime-color-scheme",
+    "color_scheme": "Packages/Theme - Monokai Pro/Monokai Pro.sublime-color-scheme",
+    "word_wrap": true,
+    "trim_trailing_white_space_on_save": false
+}
