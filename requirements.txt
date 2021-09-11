@@ -99,7 +99,7 @@ pyRFC3339==1.1
 pyrsistent==0.15.5
 pyserial==3.4
 pyte==0.4.8
-python-apt==2.0.0+ubuntu0.20.4.5
+python-apt==2.0.0+ubuntu0.20.4.6
 python-crontab==2.5.1
 python-dateutil==2.8.1
 python-debian===0.1.36ubuntu1
@@ -135,6 +135,7 @@ thefuck==3.31
 tinycss2==1.1.0
 toml==0.10.2
 Twisted==18.9.0
+ubuntu-advantage-tools==27.2
 ubuntu-drivers-common==0.0.0
 ufw==0.36
 urllib3==1.25.8
