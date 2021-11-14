@@ -54,7 +54,10 @@ export VISUAL=vim
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
-#ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# # # To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
+# [[ ! -f ~/dotfiles/zsh/.p10k.zsh ]] || source ~/dotfiles/zsh/.p10k.zsh
 
 # powerline9k prompt
 #typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
@@ -67,9 +70,17 @@ source $ZSH/oh-my-zsh.sh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(
-#     notify
-#     )
+plugins=(
+         tmux
+         fzf
+         sudo
+         python
+         git
+         colored-man-pages
+         command-not-found
+         zsh-interactive-cd
+         systemd
+        )
 
 # User configuration
 
@@ -146,8 +157,12 @@ unset -f bind-git-helper
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # powerline-status
-/home/scudzy/.local/bin/powerline-daemon -q
-source ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+
+# powerline-daemon -q
+# source ~/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
+
+/usr/bin/powerline-daemon -q
+source /usr/share/powerline/bindings/zsh/powerline.zsh
 
 # # ruby rbenv
 # export PATH="$HOME/.rbenv/bin:$PATH"
@@ -155,7 +170,7 @@ source ~/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
-eval "$(lua ~/z.lua/z.lua --init zsh enhanced once fzf)"
+eval "$(lua ~/dotfiles/z.lua/z.lua --init zsh enhanced once fzf)"
 
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
@@ -171,22 +186,22 @@ function settitle () {
   echo -ne '\033]0;'"$1"'\a'
 }
 
-# Enable gpg-agent if it is not running
-GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
-if [ ! -S $GPG_AGENT_SOCKET ]; then
-    gpgconf --kill gpg-agent
-    gpg-agent --daemon --enable-ssh-support >/dev/null 2>&1
-    export GPG_TTY=$(tty)
-fi
+# # Enable gpg-agent if it is not running
+# GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
+# if [ ! -S $GPG_AGENT_SOCKET ]; then
+#     gpgconf --kill gpg-agent
+#     gpg-agent --daemon --enable-ssh-support >/dev/null 2>&1
+#     export GPG_TTY=$(tty)
+# fi
 
-# Set SSH to use gpg-agent if it is configured to do so
-GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
-if grep -q enable-ssh-support "$GNUPGCONFIG"; then
-    unset SSH_AGENT_PID
-    export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
-fi
+# # Set SSH to use gpg-agent if it is configured to do so
+# GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
+# if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+#     unset SSH_AGENT_PID
+#     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+# fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/.poshthemes/pure.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/pure.omp.json)"
 
 # the fuck alias
 eval $(thefuck --alias)
@@ -196,36 +211,12 @@ eval $(thefuck --alias)
 ### Path ref XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 ### Load pz plugins
-PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
+PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/dotfiles/zsh}/plugins"
 [[ -d $PZ_PLUGIN_HOME/pz ]] ||
   git clone https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
 source $PZ_PLUGIN_HOME/pz/pz.zsh
 
-# source plugins from github
-pz source zsh-users/zsh-autosuggestions
-pz source zsh-users/zsh-history-substring-search
-pz source zsh-users/zsh-completions
-pz source dharma/fast-syntax-highlighting
-pz source mattmc3/zsh-xdg-basedirs
 pz source mattmc3/zshrc.d
-
-# source ohmyzsh plugins
-pz source ohmyzsh/ohmyzsh plugins/sudo
-pz source ohmyzsh/ohmyzsh plugins/colored-man-pages
-#pz source ohmyzsh/ohmyzsh plugins/fzf
-pz source ohmyzsh/ohmyzsh plugins/python
-#pz source ohmyzsh/ohmyzsh plugins/tmux
-#pz source ohmyzsh/ohmyzsh plugins/command-not-found
-pz source ohmyzsh/ohmyzsh plugins/systemd
-pz source ohmyzsh/ohmyzsh plugins/zsh_reload
-pz source ohmyzsh/ohmyzsh plugins/zsh-interactive-cd
-pz source ohmyzsh lib/git
-pz source ohmyzsh lib/theme-and-appearance
-# set your prompt
-#pz prompt romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[ ! -f ~/.p10k.zsh ] || source ~/.p10k.zsh
 
 ### Added by Zinit's installer
 if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
@@ -240,13 +231,48 @@ source "$ZDOTDIR/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# Two regular plugins loaded without investigating.
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit load zdharma-continuum/history-search-multi-word
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-history-substring-search
+
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+
+## Zinit Setting plugins
+# zinit snippet OMZP::git
+# zinit snippet OMZP::tmux
+# zinit snippet OMZP::fzf
+# zinit snippet OMZP::sudo
+# zinit snippet OMZP::colored-man-pages
+# zinit snippet OMZP::command-not-found
+# zinit snippet OMZP::python
+# zinit snippet OMZP::systemd
+# zinit snippet OMZP::zsh-interactive-cd
+
+# # omz lib
+# zinit snippet OMZL::git.zsh
+# zinit snippet OMZL::functions.zsh
+# zinit snippet OMZL::clipboard.zsh
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
+  zinit-zsh/z-a-rust \
+  zinit-zsh/z-a-as-monitor \
+  zinit-zsh/z-a-patch-dl \
+  zinit-zsh/z-a-bin-gem-node
+
+# # Load powerlevel10k theme
+# zinit ice depth"1" # git clone depth
+# zinit light romkatv/powerlevel10k
 
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
@@ -317,3 +343,4 @@ autoload -Uz $fpath[1]/*(.:t)
 end="$(date +%s)"
 total="$(( end - start ))"
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
+

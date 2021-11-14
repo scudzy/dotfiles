@@ -215,6 +215,7 @@ alias dns8="echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
 alias ipa="ip address show eth0"
 alias gdun="gdu -n $@"
 alias s256="sha256sum $@"
+alias rld="omz reload"
 
 # bat alias
 alias bwsl="bat /etc/wsl.conf"
