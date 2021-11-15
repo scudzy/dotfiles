@@ -259,7 +259,6 @@ zinit wait lucid for \
 
 # # omz lib
 # zinit snippet OMZL::git.zsh
-# zinit snippet OMZL::functions.zsh
 # zinit snippet OMZL::clipboard.zsh
 
 # Load a few important annexes, without Turbo
