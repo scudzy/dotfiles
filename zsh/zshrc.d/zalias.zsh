@@ -21,7 +21,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
-# st3
+# sublime text
 alias zshrc="vim ~/dotfiles/zsh/.zshrc"
 alias zshenv="vim ~/dotfiles/zsh/.zshenv"
 alias zlogin="vim ~/dotfiles/zsh/.zlogin"
@@ -140,9 +140,9 @@ alias fast="cmd /c fast -u"
 alias csu="powershell.exe -Command { choco upgrade all -y; sudo scoop update; sudo scoop status }"
 
 # nohup
-alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3"
-alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3"
-alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3"
+alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3s"
+alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3s"
+alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3s"
 alias mff="flatpak run org.mozilla.firefox"
 
 # weather
