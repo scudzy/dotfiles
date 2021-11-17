@@ -70,17 +70,17 @@ source $ZSH/oh-my-zsh.sh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-         tmux
-         fzf
-         sudo
-         python
-         git
-         colored-man-pages
-         command-not-found
-         zsh-interactive-cd
-         systemd
-        )
+# plugins=(
+#          tmux
+#          fzf
+#          sudo
+#          python
+#          git
+#          colored-man-pages
+#          command-not-found
+#          zsh-interactive-cd
+#          systemd
+#         )
 
 # User configuration
 
@@ -247,19 +247,19 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions
 
 ## Zinit Setting plugins
-# zinit snippet OMZP::git
-# zinit snippet OMZP::tmux
-# zinit snippet OMZP::fzf
-# zinit snippet OMZP::sudo
-# zinit snippet OMZP::colored-man-pages
-# zinit snippet OMZP::command-not-found
-# zinit snippet OMZP::python
-# zinit snippet OMZP::systemd
-# zinit snippet OMZP::zsh-interactive-cd
+#zinit snippet OMZP::git
+zinit snippet OMZP::tmux
+zinit snippet OMZP::fzf
+zinit snippet OMZP::sudo
+zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::python
+zinit snippet OMZP::systemd
+zinit snippet OMZP::zsh-interactive-cd
 
 # # omz lib
 # zinit snippet OMZL::git.zsh
-# zinit snippet OMZL::clipboard.zsh
+zinit snippet OMZL::functions.zsh
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
@@ -322,6 +322,7 @@ setopt inc_append_history # save history entries as soon as they are entered
 setopt share_history # share history between different instances
 setopt correct_all # autocorrect commands
 setopt interactive_comments # allow comments in interactive shells
+setopt nohup
 
 # Improve autocompletion style
 zstyle ':completion:*' menu select # select completions with arrow keys
@@ -342,4 +343,3 @@ autoload -Uz $fpath[1]/*(.:t)
 end="$(date +%s)"
 total="$(( end - start ))"
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-
