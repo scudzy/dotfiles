@@ -8,6 +8,7 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_RUNTIME_DIR="${HOME}/.xdg"
+export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export XDG_DESKTOP_DIR="${HOME}/Users/Desktop"
@@ -30,5 +31,5 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:/c/Windows/System32/:${HOME}/.local/share/flatpak/exports/share:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:/c/Windows/System32/:$PATH"
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
