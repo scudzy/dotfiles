@@ -116,8 +116,13 @@ fi
 #   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
 
 # fzf customization
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+# fd
+export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
+export FZF_DEFAULT_OPTS="--ansi"
+
+# rg
+#export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+#export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Ripgrep
 #export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
