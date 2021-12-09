@@ -12,6 +12,7 @@ fi
 export ZSH=~/.oh-my-zsh
 export DOTFILES=~/dotfiles
 export ZDOTDIR=~/dotfiles/zsh
+export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:$PATH"
 
 # VCXSRV
 WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
@@ -209,7 +210,7 @@ function settitle () {
 eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/pure.omp.json)"
 
 # the fuck alias
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
 
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -261,6 +262,7 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::python
 zinit snippet OMZP::systemd
 zinit snippet OMZP::zsh-interactive-cd
+zinit snippet OMZP::thefuck
 
 # # omz lib
 # zinit snippet OMZL::git.zsh
