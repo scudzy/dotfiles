@@ -21,9 +21,9 @@ fi
 
 # Add all local binary paths to the system path.
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-#export GOROOT="/usr/local/go"
-#export GOPATH="${HOME}/go"
-#export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+export GOROOT="/usr/local/go1.17.4/"
+export GOPATH="${HOME}/go"
+export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
 export PYTHONPATH="${HOME}/.local/lib/python3.9/site-packages"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
