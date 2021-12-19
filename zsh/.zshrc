@@ -217,20 +217,36 @@ function settitle () {
   echo -ne '\033]0;'"$1"'\a'
 }
 
-# # Enable gpg-agent if it is not running
-# GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
-# if [ ! -S $GPG_AGENT_SOCKET ]; then
-#     gpgconf --kill gpg-agent
-#     gpg-agent --daemon --enable-ssh-support >/dev/null 2>&1
+# # browserpass gnupg
+# export GPGKEY=065195surfer # set prefered gpg signing key
+# PIDFOUND=$(pgrep gpg-agent)
+# if [ -n "$PIDFOUND" ]; then
+#     export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:$PIDFOUND:1"
 #     export GPG_TTY=$(tty)
-# fi
-
-# # Set SSH to use gpg-agent if it is configured to do so
-# GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
-# if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+#     export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
 #     unset SSH_AGENT_PID
-#     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
+# PIDFOUND=$(pgrep dirmngr)
+# if [ -n "$PIDFOUND" ]; then
+#     export DIRMNGR_INFO="$HOME/.gnupg/S.dirmngr:$PIDFOUND:1"
+# fi
+# unset PIDFOUND
+
+# # browserpass gnupg
+# Enable gpg-agent if it is not running
+GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
+if [ ! -S $GPG_AGENT_SOCKET ]; then
+    gpgconf --kill gpg-agent
+    gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
+    export GPG_TTY=$(tty)
+fi
+
+# Set SSH to use gpg-agent if it is configured to do so
+GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
+if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+    unset SSH_AGENT_PID
+    export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+fi
 
 eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
 
