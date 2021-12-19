@@ -143,7 +143,8 @@ alias csu="powershell.exe -Command { choco upgrade all -y; sudo scoop update; su
 alias noxterm="nohup xfce4-terminal >/dev/null 2>&1 & sleep 3s"
 alias nothun="nohup thunar >/dev/null 2>&1 & sleep 3s"
 alias noqt="nohup qtpass >/dev/null 2>&1 & sleep 3s"
-alias mff="flatpak run org.mozilla.firefox"
+#alias mff="flatpak run org.mozilla.firefox"
+alias noff="nohup firefox >/dev/null 2>&1 & sleep 3"
 
 # weather
 alias wttr="curl -s 'wttr.in/Kuantan?0qTm'"
