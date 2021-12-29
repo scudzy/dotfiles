@@ -1,6 +1,7 @@
 start="$(date +%s)"
 zmodload zsh/zprof
 zmodload -i zsh/complist
+zstyle ':omz:update' mode auto
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -232,21 +233,21 @@ function settitle () {
 # fi
 # unset PIDFOUND
 
-# # browserpass gnupg
-# Enable gpg-agent if it is not running
-GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
-if [ ! -S $GPG_AGENT_SOCKET ]; then
-    gpgconf --kill gpg-agent
-    gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
-    export GPG_TTY=$(tty)
-fi
+# # # browserpass gnupg
+# # Enable gpg-agent if it is not running
+# GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
+# if [ ! -S $GPG_AGENT_SOCKET ]; then
+#     gpgconf --kill gpg-agent
+#     gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
+#     export GPG_TTY=$(tty)
+# fi
 
-# Set SSH to use gpg-agent if it is configured to do so
-GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
-if grep -q enable-ssh-support "$GNUPGCONFIG"; then
-    unset SSH_AGENT_PID
-    export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
-fi
+# # Set SSH to use gpg-agent if it is configured to do so
+# GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
+# if grep -q enable-ssh-support "$GNUPGCONFIG"; then
+#     unset SSH_AGENT_PID
+#     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
+# fi
 
 eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
 
