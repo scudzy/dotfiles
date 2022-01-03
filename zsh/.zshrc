@@ -249,7 +249,7 @@ function settitle () {
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/clean-detailed.omp.json)"
 
 # the fuck alias
 eval $(thefuck --alias)
