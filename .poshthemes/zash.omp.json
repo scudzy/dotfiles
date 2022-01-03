@@ -10,9 +10,8 @@
           "style": "plain",
           "foreground": "#E36464",
           "properties": {
-            "user_info_separator": "",
-            "display_host": false,
-            "prefix": "@"
+            "prefix": "@",
+            "template": "{{ .UserName }}"
           }
         },
         {
@@ -40,9 +39,9 @@
           "foreground": "#D4AAFC",
           "properties": {
             "branch_icon": "",
-            "display_status": false,
             "prefix": " <#DDB15F>git(</>",
-            "postfix": "<#DDB15F>)</>"
+            "postfix": "<#DDB15F>)</>",
+            "template": "{{ .HEAD }}"
           }
         },
         {
@@ -50,8 +49,7 @@
           "style": "plain",
           "foreground": "#DCB977",
           "properties": {
-            "prefix": "\uF119",
-            "display_exit_code": false,
+            "template": "\uF119",
             "postfix": ""
           }
         }

@@ -26,8 +26,7 @@
           "foreground": "#26C6DA",
           "background": "#546E7A",
           "properties": {
-            "style": "full",
-            "postfix": " "
+            "style": "full"
           }
         },
         {
@@ -36,7 +35,8 @@
           "foreground": "#D4E157",
           "background": "#546E7A",
           "properties": {
-            "prefix": "<#26C6DA>\uE0B1 </>"
+            "prefix": "<#26C6DA>\uE0B1 </>",
+            "template": "{{ .HEAD }}"
           }
         },
         {
@@ -63,7 +63,8 @@
           "background": "#546E7A",
           "leading_diamond": "\uE0B2",
           "properties": {
-            "postfix": " <#26C6DA>\uE0B3</> "
+            "postfix": " <#26C6DA>\uE0B3</> ",
+            "template": "{{ .UserName }}@{{ .ComputerName }}"
           }
         },
         {
@@ -87,11 +88,11 @@
           "type": "exit",
           "style": "plain",
           "foreground": "#D4E157",
+          "foreground_templates": ["{{ if gt .Code 0 }}#FF5252{{ end }}"],
           "properties": {
-            "prefix": "\u276F",
-            "always_enabled": true,
-            "error_color": "#FF5252",
-            "display_exit_code": false
+            "template": "\u276F",
+            "prefix": "",
+            "always_enabled": true
           }
         }
       ]

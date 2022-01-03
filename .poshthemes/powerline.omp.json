@@ -13,7 +13,10 @@
         {
           "type": "session",
           "style": "plain",
-          "foreground": "#ffffff"
+          "foreground": "#ffffff",
+          "properties": {
+            "template": "{{ .UserName }}@{{ .ComputerName }}"
+          }
         },
         {
           "type": "path",
@@ -30,7 +33,10 @@
           "style": "powerline",
           "powerline_symbol": "\uE0B0",
           "foreground": "#193549",
-          "background": "#95ffa4"
+          "background": "#95ffa4",
+          "properties": {
+            "template": "{{ .HEAD }}"
+          }
         },
         {
           "type": "python",
@@ -49,7 +55,7 @@
           "foreground": "#ffffff",
           "background": "#ff8080",
           "properties": {
-            "prefix": "\uE20F"
+            "template": "\uE20F"
           }
         }
       ]
