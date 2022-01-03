@@ -252,7 +252,7 @@ function settitle () {
 eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
 
 # the fuck alias
-#eval $(thefuck --alias)
+eval $(thefuck --alias)
 
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
