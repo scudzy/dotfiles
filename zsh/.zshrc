@@ -218,20 +218,19 @@ function settitle () {
   echo -ne '\033]0;'"$1"'\a'
 }
 
-# # browserpass gnupg
-# export GPGKEY=065195surfer # set prefered gpg signing key
-# PIDFOUND=$(pgrep gpg-agent)
-# if [ -n "$PIDFOUND" ]; then
-#     export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:$PIDFOUND:1"
-#     export GPG_TTY=$(tty)
-#     export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
-#     unset SSH_AGENT_PID
-# fi
-# PIDFOUND=$(pgrep dirmngr)
-# if [ -n "$PIDFOUND" ]; then
-#     export DIRMNGR_INFO="$HOME/.gnupg/S.dirmngr:$PIDFOUND:1"
-# fi
-# unset PIDFOUND
+# browserpass gnupg
+PIDFOUND=$(pgrep gpg-agent)
+if [ -n "$PIDFOUND" ]; then
+    export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:$PIDFOUND:1"
+    export GPG_TTY=$(tty)
+    export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+    unset SSH_AGENT_PID
+fi
+PIDFOUND=$(pgrep dirmngr)
+if [ -n "$PIDFOUND" ]; then
+    export DIRMNGR_INFO="$HOME/.gnupg/S.dirmngr:$PIDFOUND:1"
+fi
+unset PIDFOUND
 
 # # # browserpass gnupg
 # # Enable gpg-agent if it is not running
@@ -249,7 +248,7 @@ function settitle () {
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/clean-detailed.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
 
 # the fuck alias
 eval $(thefuck --alias)
