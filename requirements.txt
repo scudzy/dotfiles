@@ -18,6 +18,7 @@ docopt==0.6.2
 dulwich==0.20.15
 fastbencode==0.0.5
 fastimport==0.9.8
+gpg===1.16.0-unknown
 hglib==2.6.1
 httplib2==0.18.1
 i3ipc==2.2.1
