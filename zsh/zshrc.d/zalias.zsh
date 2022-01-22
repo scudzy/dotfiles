@@ -93,6 +93,7 @@ alias ts="date +%d%m%Y-%H%M%S"
 #alias ff='find . -type f -name'
 #alias dud='du -d 1 -h'
 #alias duf='du -sh *'
+alias dus="du -had 1 | sort -rh"
 
 # auto-orient images based on exif tags
 alias autorotate="jhead -autorot"
