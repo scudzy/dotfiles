@@ -1,8 +1,8 @@
 # ${HOME}/.zshenv should only be a one-liner that sources this file
 # echo "source ${HOME}/.config/zsh/.zshenv" >| ${HOME}/.zshenv
 
-export ZDOTDIR="${HOME}/dotfiles/zsh"
-export DOTFILES="${HOME}/dotfiles"
+export ZDOTDIR="${HOME}/.dotfiles/zsh"
+export DOTFILES="${HOME}/.dotfiles"
 # Set XDG dirs
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_CACHE_HOME="${HOME}/.cache"
@@ -24,7 +24,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GOROOT="/usr/local/go1.17.4/"
 export GOPATH="${HOME}/go"
 export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
-export PYTHONPATH="${HOME}/.local/lib/python3.9/site-packages"
+export PYTHONPATH="${HOME}/.local/lib/python3.8/site-packages"
 export PASSWORD_STORE_DIR="${HOME}/.password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
@@ -32,5 +32,5 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:/c/Windows/System32/:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32/:$PATH"
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"

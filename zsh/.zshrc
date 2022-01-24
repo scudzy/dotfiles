@@ -11,9 +11,9 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
-export DOTFILES=~/dotfiles
-export ZDOTDIR=~/dotfiles/zsh
-export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:$PATH"
+export DOTFILES=~/.dotfiles
+export ZDOTDIR=~/.dotfiles/zsh
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:$PATH"
 
 # VCXSRV
 WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
@@ -202,7 +202,7 @@ source /usr/share/powerline/bindings/zsh/powerline.zsh
 
 # z.lua
 #eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
-eval "$(lua ~/dotfiles/z.lua/z.lua --init zsh enhanced once fzf)"
+eval "$(lua ~/.dotfiles/z.lua/z.lua --init zsh enhanced once fzf)"
 
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
@@ -248,7 +248,7 @@ unset PIDFOUND
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.dotfiles/.poshthemes/craver.omp.json)"
 
 # the fuck alias
 eval $(thefuck --alias)
@@ -258,23 +258,14 @@ eval $(thefuck --alias)
 ### Path ref XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 ### Load pz plugins
-PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/dotfiles/zsh}/plugins"
+PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.dotfiles/zsh}/plugins"
 [[ -d $PZ_PLUGIN_HOME/pz ]] ||
   git clone https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
 source $PZ_PLUGIN_HOME/pz/pz.zsh
 
 pz source mattmc3/zshrc.d
 
-### Added by Zinit's installer
-if [[ ! -f ${ZDOTDIR}/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$ZDOTDIR/.zinit" && command chmod g-rwX "$ZDOTDIR/.zinit"
-    command git clone https://github.com/zdharma/zinit "$ZDOTDIR/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$ZDOTDIR/.zinit/bin/zinit.zsh"
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -309,13 +300,16 @@ zinit snippet OMZP::thefuck
 # zinit snippet OMZL::git.zsh
 zinit snippet OMZL::functions.zsh
 
+### Install forgit
+zinit load wfxr/forgit
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-zinit light-mode for \
-  zinit-zsh/z-a-rust \
-  zinit-zsh/z-a-as-monitor \
-  zinit-zsh/z-a-patch-dl \
-  zinit-zsh/z-a-bin-gem-node
+# zinit light-mode for \
+#   zinit-zsh/z-a-rust \
+#   zinit-zsh/z-a-as-monitor \
+#   zinit-zsh/z-a-patch-dl \
+#   zinit-zsh/z-a-bin-gem-node
 
 # # Load powerlevel10k theme
 # zinit ice depth"1" # git clone depth
