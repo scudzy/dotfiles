@@ -1,4 +1,7 @@
+#!/usr/bin/env zsh
+
 # Vscode
-code() {
+
+function code() {
     /c/Users/scudzy/scoop/apps/vscode/current/Code.exe "$@"
 }
