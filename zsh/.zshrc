@@ -23,7 +23,7 @@ export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
 
 ## Nicer shell experience
-export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
+#export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
 export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
