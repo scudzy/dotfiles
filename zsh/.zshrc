@@ -112,7 +112,8 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias ll="exa -lah --group-directories-first"
+alias ll="exa -la --icons --group-directories-first"
+alias ld="exa -laD --icons"
 alias cc="currency_converter"
 alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json\?userId\=1 | jq"
 alias speed="./speedtest"

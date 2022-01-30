@@ -95,7 +95,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " A bunch of useful language related snippets (ultisnips is the engine).
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Automatically show Vim's complete menu while typing.
 Plug 'vim-scripts/AutoComplPop'
@@ -680,6 +680,6 @@ set showtabline=2 " Always display the tabline, even if there is only one tab
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 
 " powerline-status
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
