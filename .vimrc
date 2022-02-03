@@ -14,16 +14,9 @@ Plug 'rakr/vim-one'
 
 " Gruvbox Community theme.
 Plug 'gruvbox-community/gruvbox'
-" Tender theme
-Plug 'jacoborus/tender.vim'
-" Ayu
-Plug 'ayu-theme/ayu-vim'
-
-" Dracula theme
-Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Integrate fzf with Vim.
-Plug '~/.fzf'
+Plug '$XDG_DATA_HOME/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Better manage Vim sessions.
@@ -49,8 +42,7 @@ Plug 'will133/vim-dirdiff'
 Plug 'AndrewRadev/linediff.vim'
 
 " Add spelling errors to the quickfix list (vim-ingo-library is a dependency).
-Plug 'inkarkat/vim-ingo-library'
-Plug 'inkarkat/vim-SpellCheck'
+Plug 'inkarkat/vim-ingo-library' | Plug 'inkarkat/vim-SpellCheck'
 
 " Briefly highlight which text was yanked.
 Plug 'machakann/vim-highlightedyank'
@@ -103,13 +95,6 @@ Plug 'vim-scripts/AutoComplPop'
 " Run test suites for various languages.
 Plug 'janko/vim-test'
 
-" vim-airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" editorconfig
-Plug 'editorconfig/editorconfig-vim'
-
 " Languages and file types.
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'chr4/nginx.vim'
@@ -117,12 +102,15 @@ Plug 'chrisbra/csv.vim'
 Plug 'ekalinin/dockerfile.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'fatih/vim-go'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'godlygeek/tabular' | Plug 'tpope/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'jvirtanen/vim-hcl'
 Plug 'lifepillar/pgsql.vim'
 Plug 'othree/html5.vim'
-"Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'tmux-plugins/vim-tmux'
@@ -132,6 +120,8 @@ Plug 'tpope/vim-rails'
 Plug 'vim-python/python-syntax'
 Plug 'vim-ruby/vim-ruby'
 Plug 'wgwoods/vim-systemd-syntax'
+Plug 'towolf/vim-helm'
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
@@ -156,19 +146,9 @@ if !exists('g:gruvbox_contrast_light')
   let g:gruvbox_contrast_light='hard'
 endif
 
+" Set the color scheme.
+colorscheme gruvbox
 set background=dark
-
-" AirLineTheme
-let g:airline_theme='ayu_dark'
-" set airline theme
-" let g:airline_theme = 'tender'
-"set termguicolors
-"let ayucolor="light"  " for light version of theme
-"let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
-"colorscheme gruvbox
-"colorscheme dracula
 
 " Specific colorscheme settings (must come after setting your colorscheme).
 if (g:colors_name == 'gruvbox')
@@ -214,11 +194,28 @@ let &statusline = s:statusline_expr()
 let mapleader=" "
 let maplocalleader=" "
 
+" Use a line cursor within insert mode and a block cursor everywhere else.
+"
+" Using iTerm2? Go-to preferences / profile / colors and disable the smart bar
+" cursor color. Then pick a cursor and highlight color that matches your theme.
+" That will ensure your cursor is always visible within insert mode.
+"
+" Reference chart of values:
+"   Ps = 0  -> blinking block.
+"   Ps = 1  -> blinking block (default).
+"   Ps = 2  -> steady block.
+"   Ps = 3  -> blinking underline.
+"   Ps = 4  -> steady underline.
+"   Ps = 5  -> blinking bar (xterm).
+"   Ps = 6  -> steady bar (xterm).
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
 set autoindent
 set autoread
 set backspace=indent,eol,start
 set backupdir=/tmp//,.
-set clipboard=unnamedplus
+set clipboard=unnamedplus,unnamed
 set colorcolumn=80
 set complete+=kspell
 set completeopt=menuone,longest
@@ -244,7 +241,7 @@ set nostartofline
 set number relativenumber
 set regexpengine=1
 set ruler
-set scrolloff=3
+set scrolloff=0
 set shiftwidth=2
 set showcmd
 set showmatch
@@ -319,9 +316,10 @@ map <Leader><Space> :let @/=''<CR>
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 
-" Prevent x from overriding what's in the clipboard.
+" Prevent x and the delete key from overriding what's in the clipboard.
 noremap x "_x
 noremap X "_x
+noremap <Del> "_x
 
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
@@ -341,6 +339,9 @@ map <F5> :setlocal spell!<CR>
 " Toggle relative line numbers and regular line numbers.
 nmap <F6> :set invrelativenumber<CR>
 
+" Copy the current buffer's path to your clipboard.
+nmap cp :let @+ = expand("%")<CR>
+
 " Automatically fix the last misspelled word and jump back to where you were.
 "   Taken from this talk: https://www.youtube.com/watch?v=lwD8G1P52Sk
 nnoremap <leader>sp :normal! mz[s1z=`z<CR>
@@ -351,10 +352,14 @@ inoremap <F7> <C-o>:set list!<CR>
 cnoremap <F7> <C-c>:set list!<CR>
 
 " Move 1 more lines up or down in normal and visual selection modes.
-nnoremap K :m .-2<CR>==
-nnoremap J :m .+1<CR>==
-vnoremap K :m '<-2<CR>gv=gv
-vnoremap J :m '>+1<CR>gv=gv
+nnoremap <C-k> :m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+nnoremap <C-Up> :m .-2<CR>==
+nnoremap <C-Down> :m .+1<CR>==
+vnoremap <C-Up> :m '<-2<CR>gv=gv
+vnoremap <C-Down> :m '>+1<CR>gv=gv
 
 " Toggle quickfix window.
 function! QuickFix_toggle()
@@ -402,7 +407,10 @@ autocmd InsertLeave * silent! set nopaste
 autocmd BufNewFile,BufRead requirements*.txt set ft=python
 
 " Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
-autocmd BufNewFile,BufRead .*aliases set ft=sh
+autocmd BufNewFile,BufRead .*aliases* set ft=sh
+
+" Make sure Kubernetes yaml files end up being set as helm files.
+au BufNewFile,BufRead *.{yaml,yml} if getline(1) =~ '^apiVersion:' || getline(2) =~ '^apiVersion:' | setlocal filetype=helm | endif
 
 " Ensure tabs don't get converted to spaces in Makefiles.
 autocmd FileType make setlocal noexpandtab
@@ -428,6 +436,9 @@ endfunction
 " ----------------------------------------------------------------------------
 " Basic commands
 " ----------------------------------------------------------------------------
+
+" Allow files to be saved as root when forgetting to start Vim using sudo.
+command Sw :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 " Add all TODO items to the quickfix list relative to where you opened Vim.
 function! s:todo() abort
@@ -520,10 +531,10 @@ let g:loaded_netrwPlugin = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
-"augroup my-fern-hijack
-"  autocmd!
-"  autocmd BufEnter * ++nested call s:hijack_directory()
-"augroup END
+augroup my-fern-hijack
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
+augroup END
 
 function! s:hijack_directory() abort
   let path = expand('%:p')
@@ -536,8 +547,9 @@ endfunction
 
 " Custom settings and mappings.
 let g:fern#disable_default_mappings = 1
+let g:fern#default_hidden = 1
 
-noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR><C-w>=
+noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
 
 function! FernInit() abort
   nmap <buffer><expr>
@@ -565,7 +577,7 @@ endfunction
 
 augroup FernGroup
   autocmd!
-  autocmd FileType fern call FernInit()
+  autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call FernInit()
 augroup END
 
 " .............................................................................
@@ -637,8 +649,8 @@ let g:mkdp_markdown_css=fnameescape($HOME).'/.local/lib/github-markdown-css/gith
 " SirVer/ultisnips
 " .............................................................................
 
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " .............................................................................
 " janko/vim-test
