@@ -190,11 +190,11 @@ unset -f bind-git-helper
 
 # powerline-status
 
-# powerline-daemon -q
-# source ~/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
+/home/scudzy/.local/bin/powerline-daemon -q
+source /home/scudzy/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
-/usr/bin/powerline-daemon -q
-source /usr/share/powerline/bindings/zsh/powerline.zsh
+# /usr/bin/powerline-daemon -q
+# source /usr/share/powerline/bindings/zsh/powerline.zsh
 
 # # ruby rbenv
 # export PATH="$HOME/.rbenv/bin:$PATH"
@@ -248,7 +248,7 @@ unset PIDFOUND
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/.dotfiles/.poshthemes/craver.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.dotfiles/.poshthemes/negligible.omp.json)"
 
 # the fuck alias
 eval $(thefuck --alias)
@@ -286,7 +286,7 @@ zinit wait lucid for \
 
 ## Zinit Setting plugins
 #zinit snippet OMZP::git
-zinit snippet OMZP::tmux
+#zinit snippet OMZP::tmux
 zinit snippet OMZP::fzf
 zinit snippet OMZP::sudo
 zinit snippet OMZP::colored-man-pages
@@ -388,4 +388,3 @@ printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;
 echo ""
 fortune wisdom
 echo ""
-
