@@ -218,7 +218,7 @@ alias ipa="ip address show eth0"
 alias gdun="gdu -n $@"
 alias s256="sha256sum $@"
 alias rld="omz reload"
-alias gpgpwd="gpg --gen-random --armor 1 14"
+alias gpgpwd="gpg --gen-random --armor 1 8"
 
 # bat alias
 alias bwsl="bat /etc/wsl.conf"
