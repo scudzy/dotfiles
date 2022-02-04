@@ -28,3 +28,4 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip3
 # pip zsh completion end
+eval "$(/home/scudzy/.linuxbrew/bin/brew shellenv)"
