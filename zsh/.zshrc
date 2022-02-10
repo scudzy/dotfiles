@@ -286,7 +286,7 @@ zinit wait lucid for \
 
 ## Zinit Setting plugins
 #zinit snippet OMZP::git
-#zinit snippet OMZP::tmux
+zinit snippet OMZP::tmux
 zinit snippet OMZP::fzf
 zinit snippet OMZP::sudo
 zinit snippet OMZP::colored-man-pages
