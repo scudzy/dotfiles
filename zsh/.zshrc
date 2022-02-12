@@ -119,6 +119,7 @@ alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://xp5hx81e5m34
 alias speed="./speedtest"
 alias src="omz reload"
 alias stats='stat -c "%a" $@'
+alias gcm='git commit -m $@'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -131,3 +132,6 @@ alias stats='stat -c "%a" $@'
 
 # bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# z.lua
+eval "$(lua ~/z.lua/z.lua --init zsh)"
