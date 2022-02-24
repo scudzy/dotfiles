@@ -125,6 +125,7 @@ alias pkguu="pkg update && pkg upgrades -y"
 alias pkgs="pkg search $@"
 alias pkgin="pkg install $@"
 alias dot="cd ~/dotfiles/"
+alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
