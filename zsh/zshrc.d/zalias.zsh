@@ -22,15 +22,15 @@ alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
 # sublime text
-alias zshrc="vim ~/dotfiles/zsh/.zshrc"
-alias zshenv="vim ~/dotfiles/zsh/.zshenv"
-alias zlogin="vim ~/dotfiles/zsh/.zlogin"
-alias zsprofile="vim ~/dotfiles/zsh/.zprofile"
-alias zalias="vim ~/dotfiles/zsh/zshrc.d/zalias.zsh"
+alias zshrc="vim $ZDOTDIR/.zshrc"
+alias zshenv="vim $ZDOTDIR/.zshenv"
+alias zlogin="vim $ZDOTDIR/.zlogin"
+alias zsprofile="vim $ZDOTDIR/.zprofile"
+alias zalias="vim $ZDOTDIR/zshrc.d/zalias.zsh"
 alias resolvrc="vim /etc/resolv.conf"
 alias wslrc="vim /etc/wsl.conf"
-alias tmuxrc="vim ~/dotfiles/.tmux.conf"
-alias vimrc="vim ~/dotfiles/.vimrc"
+alias tmuxrc="vim $DOTFILES/.tmux.conf"
+alias vimrc="vim $DOTFILES/.vimrc"
 alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 alias stresscpu="for i in $(seq $(getconf _NPROCESSORS_ONLN)); do yes > /dev/null & done"
 
@@ -224,3 +224,6 @@ alias gpgpwd="gpg --gen-random --armor 1 8"
 alias bwsl="bat /etc/wsl.conf"
 alias bresolv="bat /etc/resolv.conf"
 alias bgenie="bat /etc/genie.ini"
+
+# sed
+alias sedhtml="sed 's/<\/*[^>]*>//g'"
