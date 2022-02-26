@@ -215,7 +215,9 @@ alias dns8="echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
 
 # others
 alias ipa="ip address show eth0"
-alias gdun="gdu -n $@"
+alias gduns="gdu -ns --si $@"
+alias gduna="gdu -na --si $@"
+alias rmrf="rm -rfv $@"
 alias s256="sha256sum $@"
 alias rld="omz reload"
 alias gpgpwd="gpg --gen-random --armor 1 8"
