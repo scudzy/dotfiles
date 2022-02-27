@@ -248,7 +248,7 @@ unset PIDFOUND
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config ~/.dotfiles/.poshthemes/negligible.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/patriksvensson.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
