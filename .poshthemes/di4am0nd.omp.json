@@ -5,24 +5,24 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#E06C75",
+          "foreground": "#FFBD00",
           "properties": {
-            "template": "root <#ffffff>in</> "
+            "template": "{{ .UserName }}'s "
           },
           "style": "plain",
-          "type": "root"
+          "type": "session"
         },
         {
-          "foreground": "#55B9C4",
+          "foreground": "#00C6F7",
           "properties": {
             "style": "folder",
-            "template": "{{ .Path }} "
+            "template": "{{ .Path }}/ "
           },
           "style": "plain",
           "type": "path"
         },
         {
-          "foreground": "#C678DD",
+          "foreground": "#F62F2E",
           "properties": {
             "fetch_status": true,
             "template": "<#ffffff>on</> {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} "
@@ -38,14 +38,32 @@
           },
           "style": "plain",
           "type": "node"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "foreground": "#85C980",
+          "properties": {
+            "template": "RAM:{{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1000000000.0) }}/{{ (div .PhysicalTotalMemory 1000000000.0) }}GB "
+          },
+          "style": "diamond",
+          "trailing_diamond": " ",
+          "type": "sysinfo"
         },
         {
-          "foreground": "#C94A16",
+          "foreground": "#ffffff",
+          "leading_diamond": "\u250b",
           "properties": {
-            "template": "x "
+            "style": "roundrock",
+            "template": " {{ .FormattedMs }} ",
+            "threshold": 0
           },
-          "style": "plain",
-          "type": "exit"
+          "style": "diamond",
+          "type": "executiontime"
         }
       ],
       "type": "prompt"
@@ -55,9 +73,9 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#63F08C",
+          "foreground": "#FFBD00",
           "properties": {
-            "template": "\u279c "
+            "template": "\u2b9e "
           },
           "style": "plain",
           "type": "text"
@@ -66,5 +84,6 @@
       "type": "prompt"
     }
   ],
+  "final_space": true,
   "version": 1
 }
