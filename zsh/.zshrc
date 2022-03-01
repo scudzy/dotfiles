@@ -248,7 +248,7 @@ unset PIDFOUND
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
-eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/patriksvensson.omp.json')"
+eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
@@ -384,6 +384,7 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
+echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
 fortune | cowsay -f tux
