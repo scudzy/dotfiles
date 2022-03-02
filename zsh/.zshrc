@@ -143,4 +143,4 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 eval "$(lua ~/z.lua/z.lua --init zsh)"
 
 # fortune
-fortune | cowsay
+#fortune | cowsay
