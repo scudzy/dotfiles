@@ -18,7 +18,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Add custom path
-export PATH="/data/data/com.termux/files/usr/bin/:${HOME}/dotfiles/sh/:$PATH"
+export PATH="/data/data/com.termux/files/usr/bin/:${HOME}/dotfiles/sh/:${HOME}/.local/bin/:$PATH"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -134,7 +134,7 @@ alias wttr4="curl -s 'wttr.in/Kuantan?format=4'"
 [ -f ~/forgit/forgit.plugin.zsh ] && source ~/forgit/forgit.plugin.zsh
 
 # omp themes
-#eval "$(oh-my-posh --init --shell zsh --config ~/dotfiles/.poshthemes/craver.omp.json)"
+#eval "$(oh-my-posh --init --shell zsh --config '~/dotfiles/.poshthemes/di4am0nd.omp.json')"
 
 # bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
