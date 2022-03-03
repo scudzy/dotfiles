@@ -229,3 +229,5 @@ alias bgenie="bat /etc/genie.ini"
 
 # sed
 alias sedhtml="sed 's/<\/*[^>]*>//g'"
+alias encode="openssl enc -base64 <<< $@"
+alias decode="openssl enc -base64 -d <<< $@"
