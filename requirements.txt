@@ -90,7 +90,6 @@ termcolor==1.1.0
 testresources==2.0.1
 thefuck==3.32
 Twisted==18.9.0
-ubuntu-advantage-tools==27.6
 ufw==0.36
 unattended-upgrades==0.1
 urllib3==1.25.8
