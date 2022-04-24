@@ -9,10 +9,8 @@
           "foreground": "#ffffff",
           "leading_diamond": "\ue0b6",
           "powerline_symbol": "\ue0b0",
-          "properties": {
-            "template": "\ufcbe {{ .HostName }} "
-          },
           "style": "diamond",
+          "template": "\ufcbe {{ .HostName }} ",
           "type": "session"
         },
         {
@@ -20,23 +18,29 @@
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
           "properties": {
-            "style": "full",
-            "template": " \ue5ff {{ .Path }} "
+            "style": "full"
           },
           "style": "powerline",
+          "template": " \ue5ff {{ .Path }} ",
           "type": "path"
         },
         {
           "background": "#c19c00",
-          "foreground": "#193549",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFA300{{ end }}",
+            "{{ if gt .Ahead 0 }}#FF7070{{ end }}",
+            "{{ if gt .Behind 0 }}#90F090{{ end }}"
+          ],
+          "foreground": "#000000",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "fetch_stash_count": true,
             "fetch_status": true,
-            "fetch_upstream_icon": true,
-            "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} "
+            "fetch_upstream_icon": true
           },
           "style": "powerline",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
           "type": "git"
         },
         {
@@ -46,10 +50,10 @@
           ],
           "foreground": "#ffffff",
           "properties": {
-            "always_enabled": true,
-            "template": "  "
+            "always_enabled": true
           },
           "style": "diamond",
+          "template": "  ",
           "trailing_diamond": "\ue0b4",
           "type": "exit"
         }
@@ -64,10 +68,10 @@
           "foreground": "#ffffff",
           "leading_diamond": "\ue0b6",
           "properties": {
-            "template": " {{ .CurrentDate | date .Format }} ",
             "time_format": "15:04:05"
           },
           "style": "diamond",
+          "template": " {{ .CurrentDate | date .Format }} ",
           "trailing_diamond": "\ue0b4",
           "type": "time"
         }
@@ -80,32 +84,26 @@
       "segments": [
         {
           "foreground": "#ff0000",
-          "properties": {
-            "template": "\ue00a "
-          },
           "style": "plain",
+          "template": "\ue00a ",
           "type": "root"
         },
         {
           "foreground": "#ffffff",
-          "properties": {
-            "template": " {{ .Name }} "
-          },
           "style": "plain",
+          "template": " {{ .Name }} ",
           "type": "shell"
         },
         {
           "foreground": "#ffffff",
-          "properties": {
-            "template": "\uf054 "
-          },
           "style": "plain",
+          "template": "\uf054 ",
           "type": "text"
         }
       ],
       "type": "prompt"
     }
   ],
-  "console_title_style": "folder",
-  "version": 1
+  "console_title_template": "{{ .Folder }}",
+  "version": 2
 }

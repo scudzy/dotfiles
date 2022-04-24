@@ -5,54 +5,58 @@
       "alignment": "left",
       "segments": [
         {
-          "background": "#B4009E",
+          "background": "#6272a4",
           "foreground": "#ffffff",
           "leading_diamond": "\ue0b6",
+          "properties": {
+            "template": "{{ .UserName }} "
+          },
           "style": "diamond",
-          "template": "{{ .UserName }} ",
           "type": "session"
         },
         {
-          "background": "#FFFF00",
-          "foreground": "#000000",
+          "background": "#bd93f9",
+          "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
           "properties": {
-            "style": "folder"
+            "style": "folder",
+            "template": " {{ .Path }} "
           },
           "style": "powerline",
-          "template": " {{ .Path }} ",
           "type": "path"
         },
         {
-          "background": "#4E44FF",
+          "background": "#ffb86c",
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "branch_icon": "",
             "fetch_stash_count": true,
             "fetch_status": false,
-            "fetch_upstream_icon": true
+            "fetch_upstream_icon": true,
+            "template": " \u279c ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }}) "
           },
           "style": "powerline",
-          "template": " \u279c ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }}) ",
           "type": "git"
         },
         {
-          "background": "#4e903d",
+          "background": "#8be9fd",
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
+          "properties": {
+            "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+          },
           "style": "powerline",
-          "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
           "type": "node"
         },
         {
-          "background": "#16C60C",
+          "background": "#ff79c6",
           "foreground": "#ffffff",
           "properties": {
+            "template": " \u2665 {{ .CurrentDate | date .Format }} ",
             "time_format": "15:04"
           },
           "style": "diamond",
-          "template": " \u2665 {{ .CurrentDate | date .Format }} ",
           "trailing_diamond": "\ue0b0",
           "type": "time"
         }
@@ -61,5 +65,5 @@
     }
   ],
   "final_space": true,
-  "version": 2
+  "version": 1
 }

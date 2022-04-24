@@ -5,13 +5,7 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#E06C75",
-          "style": "plain",
-          "template": "root <#ffffff>in</> ",
-          "type": "root"
-        },
-        {
-          "foreground": "#55B9C4",
+          "foreground": "#15C2CB",
           "properties": {
             "style": "folder"
           },
@@ -20,28 +14,34 @@
           "type": "path"
         },
         {
-          "foreground": "#C678DD",
+          "foreground": "#F141A8",
           "properties": {
-            "fetch_status": true
+            "branch_icon": "\ue0a0 "
           },
           "style": "plain",
-          "template": "<#ffffff>on</> {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
+          "template": "<#F3EFF5>on</> {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
           "type": "git"
         },
         {
-          "foreground": "#98C379",
+          "foreground": "#5EADF2",
+          "style": "plain",
+          "template": "{{if .Version}}<#F3EFF5>is</> \uf487 {{.Version}} {{end}}",
+          "type": "project"
+        },
+        {
+          "foreground": "#44FFD2",
           "properties": {
             "fetch_version": true
           },
           "style": "plain",
-          "template": "<#ffffff>via</> \ue781 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
+          "template": "<#F3EFF5>via</> \ue718 {{ .Full }} ",
           "type": "node"
         },
         {
-          "foreground": "#C94A16",
+          "foreground": "#FE4A49",
           "style": "plain",
-          "template": "x ",
-          "type": "exit"
+          "template": "<#F3EFF5>and</> \ue71e {{.Full}} ",
+          "type": "npm"
         }
       ],
       "type": "prompt"
@@ -51,9 +51,9 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#63F08C",
+          "foreground": "#FFE45E",
           "style": "plain",
-          "template": "\u279c ",
+          "template": "\u276f ",
           "type": "text"
         }
       ],

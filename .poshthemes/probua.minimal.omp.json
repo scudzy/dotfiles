@@ -5,45 +5,46 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#CECE04",
-          "style": "plain",
-          "template": "# ",
-          "type": "root"
-        },
-        {
+          "foreground": "#ffdd86",
           "style": "plain",
           "template": "{{ .UserName }}@{{ .HostName }} ",
           "type": "session"
         },
         {
-          "foreground": "#7B68EE",
-          "properties": {
-            "style": "agnoster_short"
-          },
+          "foreground": "#42a9ff",
           "style": "plain",
+          "properties": {
+            "style": "full"
+          },
           "template": "{{ .Path }} ",
           "type": "path"
         },
         {
-          "foreground": "#48D1CC",
           "properties": {
             "branch_icon": "",
-            "fetch_upstream_icon": false
+            "fetch_status": true
           },
           "style": "plain",
-          "template": "HEAD:{{ .UpstreamIcon }}{{ .HEAD }} ",
+          "template": "git:{{ if or (.Working.Changed) (.Staging.Changed) (gt .StashCount 0) }}<#ffdd86>{{ .HEAD }}</>{{ else }}{{ .HEAD }}{{ end }}{{ if .Staging.Changed }} <#98c379>{{ .Staging.String }}</>{{ end }}{{ if .Working.Changed }} <#d16971>{{ .Working.String }}</>{{ end }}",
           "type": "git"
-        },
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
         {
-          "foreground": "#7FFFD4",
+          "foreground": "#ffdd86",
           "foreground_templates": [
-            "{{ if gt .Code 0 }}#E84855{{ end }}"
+            "{{ if gt .Code 0 }}#42a9ff{{ end }}"
           ],
           "properties": {
             "always_enabled": true
           },
           "style": "plain",
-          "template": "<#66CDAA>\u276f</><#76EEC6>\u276f</><foreground>\u276f</> ",
+          "template": "> ",
           "type": "exit"
         }
       ],

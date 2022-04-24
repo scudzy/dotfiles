@@ -6,15 +6,6 @@
       "segments": [
         {
           "background": "#29315A",
-          "foreground": "#E64747",
-          "leading_diamond": "\ue0b6",
-          "style": "diamond",
-          "template": "{{ .UserName }}",
-          "trailing_diamond": "\ue0b4 ",
-          "type": "session"
-        },
-        {
-          "background": "#29315A",
           "foreground": "#3EC669",
           "leading_diamond": "\ue0b6",
           "properties": {
@@ -28,12 +19,21 @@
         {
           "background": "#29315A",
           "foreground": "#43CCEA",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF9248{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}",
+            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+          ],
           "leading_diamond": " \ue0b6",
           "properties": {
-            "branch_icon": ""
+            "branch_max_length": 25,
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true
           },
           "style": "diamond",
-          "template": "{{ .HEAD }}",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
           "trailing_diamond": "\ue0b4",
           "type": "git"
         },
@@ -45,7 +45,7 @@
             "fetch_version": false
           },
           "style": "diamond",
-          "template": "\ue235{{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}",
+          "template": "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}",
           "trailing_diamond": "\ue0b4",
           "type": "python"
         },
@@ -150,10 +150,10 @@
         },
         {
           "background": "#29315A",
-          "foreground": "#7FD5EA",
+          "foreground": "#E64747",
           "leading_diamond": "\ue0b6",
           "style": "diamond",
-          "template": "\u276f",
+          "template": "{{ .UserName }} \u276f",
           "trailing_diamond": "\ue0b4",
           "type": "text"
         }
