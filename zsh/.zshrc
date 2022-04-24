@@ -5,9 +5,9 @@ zstyle ':omz:update' mode auto
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
@@ -65,6 +65,7 @@ export VISUAL=vim
 #typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 source $ZSH/oh-my-zsh.sh
+source $ZDOTDIR/zshrc.d/zalias.zsh
 
 # Default programs to run.
 ## Which plugins would you like to load?
@@ -191,7 +192,7 @@ unset -f bind-git-helper
 # powerline-status
 
 /home/scudzy/.local/bin/powerline-daemon -q
-source /home/scudzy/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # /usr/bin/powerline-daemon -q
 # source /usr/share/powerline/bindings/zsh/powerline.zsh
@@ -258,12 +259,12 @@ eval $(thefuck --alias)
 ### Path ref XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 ### Load pz plugins
-PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.dotfiles/zsh}/plugins"
-[[ -d $PZ_PLUGIN_HOME/pz ]] ||
-  git clone https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
-source $PZ_PLUGIN_HOME/pz/pz.zsh
+#PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.dotfiles/zsh}/plugins"
+#[[ -d $PZ_PLUGIN_HOME/pz ]] ||
+#  git clone https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
+#source $PZ_PLUGIN_HOME/pz/pz.zsh
 
-pz source mattmc3/zshrc.d
+#pz source mattmc3/zshrc.d
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
@@ -381,11 +382,21 @@ zstyle ':notify:*' error-log /dev/null
 fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-echo ""
-fortune | cowsay -f tux
-echo ""
+#echo ""
+#fortune | cowsay -f tux
+neofetch
