@@ -1,4 +1,8 @@
 {
+    "function": "powerline_gitstatus.gitstatus",
+    "priority": 40
+}
+{
 	"segment_data": {
 		"hostname": {
 			"args": {

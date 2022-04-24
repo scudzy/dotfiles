@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /d/Apps/WSL/zenity.exe --unixeol --wslpath "$@"
