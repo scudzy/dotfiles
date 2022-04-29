@@ -115,7 +115,7 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
-#ssscurl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
+#curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
 
 # Checking Interactive v.s. Non-Interactive
 #[[ -o interactive ]] && echo "Interactive" || echo "Non-Interactive"
@@ -191,7 +191,6 @@ unset -f bind-git-helper
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # powerline-status
-
 /home/scudzy/.local/bin/powerline-daemon -q
 source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
 
@@ -250,6 +249,7 @@ unset PIDFOUND
 #     export SSH_AUTH_SOCK=$GPG_AGENT_SOCKET
 # fi
 
+# Load oh-my-posh shell themes
 eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
 
 # the fuck alias
