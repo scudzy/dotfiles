@@ -51,6 +51,7 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 export EDITOR=vim
 export VISUAL=vim
+export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -74,17 +75,17 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(
-#          tmux
-#          fzf
-#          sudo
-#          python
-#          git
-#          colored-man-pages
-#          command-not-found
-#          zsh-interactive-cd
-#          systemd
-#         )
+plugins=(
+         tmux
+         fzf
+         sudo
+         python
+         git
+         colored-man-pages
+         command-not-found
+         zsh-interactive-cd
+         systemd
+        )
 
 # User configuration
 
@@ -125,10 +126,10 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 
 # grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
-for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-    cmd="${cmd##*conf.}"
-    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-done
+#for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+#    cmd="${cmd##*conf.}"
+#    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+#done
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -267,6 +268,8 @@ eval $(thefuck --alias)
 
 #pz source mattmc3/zshrc.d
 
+#ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+#source "${ZINIT_HOME}/zinit.zsh"
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -288,26 +291,26 @@ zinit wait lucid for \
 
 ## Zinit Setting plugins
 #zinit snippet OMZP::git
-zinit snippet OMZP::tmux
-zinit snippet OMZP::fzf
-zinit snippet OMZP::sudo
-zinit snippet OMZP::colored-man-pages
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::python
-zinit snippet OMZP::systemd
-zinit snippet OMZP::zsh-interactive-cd
-zinit snippet OMZP::thefuck
+#zinit snippet OMZP::tmux
+#zinit snippet OMZP::fzf
+#zinit snippet OMZP::sudo
+#zinit snippet OMZP::colored-man-pages
+#zinit snippet OMZP::command-not-found
+#zinit snippet OMZP::python
+#zinit snippet OMZP::systemd
+#zinit snippet OMZP::zsh-interactive-cd
+#zinit snippet OMZP::thefuck
 
 # # omz lib
 # zinit snippet OMZL::git.zsh
 zinit snippet OMZL::functions.zsh
 
 ### Install forgit
-zinit load wfxr/forgit
+#zinit load wfxr/forgit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-# zinit light-mode for \
+#zinit light-mode for \
 #   zinit-zsh/z-a-rust \
 #   zinit-zsh/z-a-as-monitor \
 #   zinit-zsh/z-a-patch-dl \
@@ -383,19 +386,11 @@ zstyle ':notify:*' error-log /dev/null
 fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
 ### End of Zinit's installer chunk
-
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
+neofetch
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
