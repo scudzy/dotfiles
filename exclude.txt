@@ -1,0 +1,14 @@
+desktop*.ico
+sync.ffs_db
+SyncToy_*.dat
+.git/**
+log/**
+logs/**
+desktop.ini
+CachedData/**
+Cache/**
+Cache*/**
+Code Cache/**
+Cached*/**
+Cache Storage/**
+.zcompdump
