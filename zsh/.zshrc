@@ -5,9 +5,9 @@ zstyle ':omz:update' mode auto
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+ source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # Path to your oh-my-zsh installation.
 export PATH=$PATH:/usr/local/go/bin
@@ -60,11 +60,11 @@ export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 #ZSH_THEME="agnoster"
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# # # To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
+# # # # To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
 # [[ ! -f ~/dotfiles/zsh/.p10k.zsh ]] || source ~/dotfiles/zsh/.p10k.zsh
 
 # powerline9k prompt
-#typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 source $ZSH/oh-my-zsh.sh
 source $ZDOTDIR/zshrc.d/zalias.zsh
@@ -75,17 +75,17 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-         tmux
-         fzf
-         sudo
-         python
-         git
-         colored-man-pages
-         command-not-found
-         zsh-interactive-cd
-         systemd
-        )
+# plugins=(
+#          tmux
+#          fzf
+#          sudo
+#          python
+#          git
+#          colored-man-pages
+#          command-not-found
+#          zsh-interactive-cd
+#          systemd
+#         )
 
 # User configuration
 
@@ -251,7 +251,8 @@ unset PIDFOUND
 # fi
 
 # Load oh-my-posh shell themes
-eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
+#eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
+eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/negligible.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
@@ -291,15 +292,15 @@ zinit wait lucid for \
 
 ## Zinit Setting plugins
 #zinit snippet OMZP::git
-#zinit snippet OMZP::tmux
-#zinit snippet OMZP::fzf
-#zinit snippet OMZP::sudo
-#zinit snippet OMZP::colored-man-pages
-#zinit snippet OMZP::command-not-found
-#zinit snippet OMZP::python
-#zinit snippet OMZP::systemd
-#zinit snippet OMZP::zsh-interactive-cd
-#zinit snippet OMZP::thefuck
+zinit snippet OMZP::tmux
+zinit snippet OMZP::fzf
+zinit snippet OMZP::sudo
+zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::python
+zinit snippet OMZP::systemd
+zinit snippet OMZP::zsh-interactive-cd
+zinit snippet OMZP::thefuck
 
 # # omz lib
 # zinit snippet OMZL::git.zsh
@@ -395,3 +396,4 @@ echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
 #fortune | cowsay -f tux
+
