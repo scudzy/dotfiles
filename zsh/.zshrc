@@ -63,6 +63,15 @@ export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 # # # # To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
 # [[ ! -f ~/dotfiles/zsh/.p10k.zsh ]] || source ~/dotfiles/zsh/.p10k.zsh
 
+# brew shell completions
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
@@ -396,4 +405,3 @@ echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
 #fortune | cowsay -f tux
-
