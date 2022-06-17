@@ -233,3 +233,10 @@ alias bgenie="bat /etc/genie.ini"
 alias sedhtml="sed 's/<\/*[^>]*>//g'"
 alias encode="openssl enc -base64 <<< $@"
 alias decode="openssl enc -base64 -d <<< $@"
+
+# brew
+alias brewuu="brew update && brew upgrade && exec zsh"
+alias brewup="brew upgrade $@"
+alias brewl="brew list"
+alias brewi="brew install $@"
+alias brewun="brew uninstall $@"
