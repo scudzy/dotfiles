@@ -35,3 +35,13 @@ export COWPATH="/usr/share/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32/:$PATH"
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
+
+# thefuck
+export THEFUCK_RULES='sudo:no_command'
+export THEFUCK_EXCLUDE_RULES='git_pull:git_push'
+export THEFUCK_REQUIRE_CONFIRMATION='true'
+export THEFUCK_WAIT_COMMAND=10
+export THEFUCK_NO_COLORS='false'
+export THEFUCK_PRIORITY='no_command=9999:apt_get=100'
+export THEFUCK_HISTORY_LIMIT='2000'
+export THEFUCK_NUM_CLOSE_MATCHES='5'
