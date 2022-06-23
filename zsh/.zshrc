@@ -198,7 +198,7 @@ bind-git-helper f b t r h
 unset -f bind-git-helper
 
 # fzf forgit
-[ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
+# [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # powerline-status
 /home/scudzy/.local/bin/powerline-daemon -q
@@ -265,6 +265,7 @@ eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/
 
 # the fuck alias
 eval $(thefuck --alias)
+#eval $(thefuck --alias --enable-experimental-instant-mode)
 
 ### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 ### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -284,6 +285,23 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+## Zinit Setting plugins
+#zinit snippet OMZP::git
+zinit snippet OMZP::tmux
+zinit snippet OMZP::fzf
+zinit snippet OMZP::sudo
+zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::python
+zinit snippet OMZP::systemd
+zinit snippet OMZP::zsh-interactive-cd
+zinit snippet OMZP::thefuck
+
+# # omz lib
+zinit snippet OMZL::git.zsh
+zinit snippet OMZL::functions.zsh
+#zinit cdclear -q # <- forget completions provided up to this moment
+
 # Two regular plugins loaded without investigating.
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -299,28 +317,14 @@ zinit wait lucid for \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
 
-## Zinit Setting plugins
-#zinit snippet OMZP::git
-zinit snippet OMZP::tmux
-zinit snippet OMZP::fzf
-zinit snippet OMZP::sudo
-zinit snippet OMZP::colored-man-pages
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::python
-zinit snippet OMZP::systemd
-zinit snippet OMZP::zsh-interactive-cd
-zinit snippet OMZP::thefuck
-
-# # omz lib
-# zinit snippet OMZL::git.zsh
-zinit snippet OMZL::functions.zsh
-
 ### Install forgit
-#zinit load wfxr/forgit
+zinit load wfxr/forgit
+
+setopt promptsubst
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-#zinit light-mode for \
+# zinit light-mode for \
 #   zinit-zsh/z-a-rust \
 #   zinit-zsh/z-a-as-monitor \
 #   zinit-zsh/z-a-patch-dl \
@@ -358,7 +362,6 @@ echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf >
 autoload -Uz vcs_info
 precmd_vcs_info() vcs_info
 precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
