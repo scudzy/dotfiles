@@ -201,11 +201,11 @@ unset -f bind-git-helper
 # [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
 
 # powerline-status
-/home/scudzy/.local/bin/powerline-daemon -q
-source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
+#/home/scudzy/.local/bin/powerline-daemon -q
+#source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# /usr/bin/powerline-daemon -q
-# source /usr/share/powerline/bindings/zsh/powerline.zsh
+/usr/bin/powerline-daemon -q
+source /usr/share/powerline/bindings/zsh/powerline.zsh
 
 # # ruby rbenv
 # export PATH="$HOME/.rbenv/bin:$PATH"
@@ -403,7 +403,7 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-neofetch
+#neofetch
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
