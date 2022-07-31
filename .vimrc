@@ -535,8 +535,6 @@ function! s:hijack_directory() abort
 endfunction
 
 " Custom settings and mappings.
-let g:fern#disable_default_mappings = 1
-
 noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR><C-w>=
 
 function! FernInit() abort
@@ -679,6 +677,7 @@ set laststatus=2 " Always display the statusline in all windows
 set showtabline=2 " Always display the tabline, even if there is only one tab
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 
+let g:fern_disable_startup_warnings = 1
 " powerline-status
 "python3 from powerline.vim import setup as powerline_setup
 "python3 powerline_setup()
