@@ -135,9 +135,9 @@ alias stats='stat -c "%a" $@'
 alias speed="speedtest --selection-details -v"
 
 # windows
-alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe"
-alias cmd="/c/windows/system32/cmd.exe"
-alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe"
+alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe -c $@"
+alias cmd="/c/windows/system32/cmd.exe /c $@"
+alias powershell="/c/windows/system32/windowspowershell/v1.0/powershell.exe -c $@"
 alias choco="/c/ProgramData/chocolatey/bin/choco.exe"
 alias fast="cmd /c fast -u"
 alias csu="powershell.exe -Command { choco upgrade all -y; sudo scoop update; sudo scoop status }"
