@@ -4,7 +4,7 @@
 -- z.lua - a cd command that learns, by skywind 2018-2022
 -- Licensed under MIT license.
 --
--- Version 1.8.15, Last Modified: 2022/03/27 21:38
+-- Version 1.8.16, Last Modified: 2022/07/21 22:12
 --
 -- * 10x faster than fasd and autojump, 3x faster than z.sh
 -- * available for posix shells: bash, zsh, sh, ash, dash, busybox
@@ -1634,7 +1634,7 @@ function z_cd(patterns)
 	elseif Z_INTERACTIVE == 2 then
 		local fzf = os.environ('_ZL_FZF', 'fzf')
 		local tmpname = '/tmp/zlua.txt'
-		local cmd = '--nth 2.. --reverse --inline-info --tac '
+		local cmd = '--nth 2.. --reverse --info=inline --tac '
 		local flag = os.environ('_ZL_FZF_FLAG', '')
 		flag = (flag == '' or flag == nil) and '+s -e' or flag
 		cmd = ((fzf == '') and 'fzf' or fzf)  .. ' ' .. cmd .. ' ' .. flag
@@ -1855,7 +1855,7 @@ function cd_breadcrumbs(pwd, interactive)
 		retval = io.read('*l')
 	elseif interactive == 2 then
 		local fzf = os.environ('_ZL_FZF', 'fzf')
-		local cmd = '--reverse --inline-info --tac '
+		local cmd = '--reverse --info=inline --tac '
 		local flag = os.environ('_ZL_FZF_FLAG', '')
 		flag = (flag == '' or flag == nil) and '+s -e' or flag
 		cmd = ((fzf == '') and 'fzf' or fzf) .. ' ' .. cmd .. ' ' .. flag
@@ -2287,7 +2287,7 @@ function z_shell_init(opts)
 		end
 		print(script_complete_bash)
 		if opts.fzf ~= nil then
-			fzf_cmd = "fzf --nth 2.. --reverse --inline-info --tac "
+			fzf_cmd = "fzf --nth 2.. --reverse --info=inline --tac "
 			local height = os.environ('_ZL_FZF_HEIGHT', '35%')
 			if height ~= nil and height ~= '' and height ~= '0' then
 				fzf_cmd = fzf_cmd .. ' --height ' .. height .. ' '
