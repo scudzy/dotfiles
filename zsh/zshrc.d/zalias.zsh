@@ -47,7 +47,7 @@ fi
 
 # mask built-ins with better defaults
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
-alias ping='ping -c 5'
+alias ping="ping -c5 $@"
 
 # be safe
 alias cpi='cp -i'
@@ -184,8 +184,7 @@ alias dpigs20="dpigs --lines=20 -SH"
 alias fzfb="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # geo location ip
-alias ipgeo="curl -s http://ip-api.com/json/ | jq ."
-#&& curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json | jq ."
+alias ipgeo="curl -s http://ip-api.com/json/ | jq . && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json | jq ."
 alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
 
 # path
