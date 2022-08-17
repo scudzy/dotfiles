@@ -1,3 +1,4 @@
+argcomplete==2.0.0
 certifi==2022.6.15
 chardet==5.0.0
 charset-normalizer==2.1.0
@@ -18,9 +19,13 @@ pyenchant==3.2.2
 pyparsing==3.0.9
 pyte==0.8.1
 pyvoc==1.4.0
+PyYAML==6.0
 requests==2.28.1
 six==1.16.0
 termcolor==1.1.0
 thefuck==3.32
+toml==0.10.2
 urllib3==1.26.11
 wcwidth==0.2.5
+xmltodict==0.13.0
+yq==3.1.0
