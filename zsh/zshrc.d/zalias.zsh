@@ -184,7 +184,7 @@ alias dpigs20="dpigs --lines=20 -SH"
 alias fzfb="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # geo location ip
-alias ipgeo="curl -s http://ip-api.com/json/ | jq . && curl -s http://xp5hx81e5m34qey52pc13rwtl575yhbe.edns.ip-api.com/json | jq ."
+alias ipgeo="curl -s http://ip-api.com/json/ | jq && curl -s http://wehth53mda2rrq7ui08v2w7dzupzfgy6.edns.ip-api.com/json | jq"
 alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header 'accept: application/json' --header 'content-type: application/json' | jq "
 
 # path
