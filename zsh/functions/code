@@ -3,5 +3,5 @@
 # Vscode
 
 function code() {
-    /c/Users/scudzy/scoop/apps/vscode/current/Code.exe "$@"
+    /c/Users/scudzy/scoop/apps/vscode/current/Code.exe $@
 }
