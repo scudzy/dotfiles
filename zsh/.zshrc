@@ -164,8 +164,8 @@ export FZF_DEFAULT_OPTS="--ansi"
 #export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # Ripgrep
-#export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
+export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+#export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
 
 # Color Ayu Mirage
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
