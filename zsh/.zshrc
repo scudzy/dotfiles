@@ -23,35 +23,35 @@ export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$WSL2IP:0.0
 export NO_AT_BRIDGE=1
 
-## Nicer shell experience
-#export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
-export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
-export HISTFILESIZE=$HISTSIZE;
-export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"; # Make some commands not show up in history
-export HISTTIMEFORMAT='%F-%T ';
-export SAVEHIST=$HISTSIZE;
-export HISTFILE=$HOME/.zsh_history;
-export LANG="en_US.UTF-8"; # Language formatting is still important
-export LC_ALL="en_US.UTF-8"; # byte-wise sorting and force language for those pesky apps
+# ## Nicer shell experience
+# #export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
+# export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
+# export HISTFILESIZE=$HISTSIZE;
+# export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
+# export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"; # Make some commands not show up in history
+# export HISTTIMEFORMAT='%F-%T ';
+# export SAVEHIST=$HISTSIZE;
+# export HISTFILE=$HOME/.zsh_history;
+# export LANG="en_US.UTF-8"; # Language formatting is still important
+# export LC_ALL="en_US.UTF-8"; # byte-wise sorting and force language for those pesky apps
 
-# set options for less
-export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
-# or the short version
-export LESS='-F -i -J -M -R -W -x4 -X -z-4'
+# # set options for less
+# export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
+# # or the short version
+# export LESS='-F -i -J -M -R -W -x4 -X -z-4'
 
-# Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less .
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+# # Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less .
+# export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
+# export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+# export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+# export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+# export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+# export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+# export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-export EDITOR=vim
-export VISUAL=vim
-export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+# export EDITOR=vim
+# export VISUAL=vim
+# export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -154,18 +154,27 @@ fi
 #   Requires: https://github.com/junegunn/fzf (to use fzf in general)
 #   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
 
-# fzf customization
-# fd
+# fzf env var
 export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
 export FZF_DEFAULT_OPTS="--ansi"
 
-# rg
-#export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-#export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+# fzf pass ZSH
+_fzf_complete_pass() {
+  _fzf_complete +m -- "$@" < <(
+    local prefix
+    prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+    command find -L "$prefix" \
+      -name "*.gpg" -type f | \
+      sed -e "s#${prefix}/\{0,1\}##" -e 's#\.gpg##' -e 's#\\#\\\\#' | sort
+  )
+}
 
-# Ripgrep
-export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-#export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
+# fzf integration with z.lua
+#unalias z 2> /dev/null
+#z() {
+#  [ $# -gt 0 ] && _z "$*" && return
+#  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+#}
 
 # Color Ayu Mirage
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
