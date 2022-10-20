@@ -40,7 +40,7 @@ tty = /dev/ttyS4
 log = enable
 log-file = com4.log
 log-strip = enable
-color = 1
+color = 2
 
 #[rpi3]
 #baudrate = 115200
