@@ -32,7 +32,7 @@ tty = /dev/ttyS3
 log = enable
 log-file = com3.log
 log-strip = enable
-color = 1
+color = 9
 
 [com4]
 baudrate = 9600
@@ -40,7 +40,7 @@ tty = /dev/ttyS4
 log = enable
 log-file = com4.log
 log-strip = enable
-color = 2
+color = 10
 
 #[rpi3]
 #baudrate = 115200
