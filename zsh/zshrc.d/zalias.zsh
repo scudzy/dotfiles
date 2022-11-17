@@ -130,7 +130,7 @@ alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfah="df -h $@"
 alias dush="du -csh $@"
 alias path="printenv | rg $PATH"
-alias stats='stat -c "%a" $@'
+alias stats="stat -c '%A %a %n' $@" ### "stat -c '%a' $@"
 #alias time="/usr/bin/time -f'Loading in %e secomds' $@"
 alias speed="speedtest --selection-details -v"
 
