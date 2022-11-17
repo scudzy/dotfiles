@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOMAIN_LIST="barikatech.com happy4us.com"
+DOMAIN_LIST="barikatech.com"
 
 echo "Expiration dates:"
 
