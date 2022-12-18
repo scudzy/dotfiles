@@ -126,7 +126,7 @@ alias halimi="pass garbage/eMail/Google-halimi@barikatech.com"
 
 # others
 alias c="calc $@"
-alias suu="sudo apt update && sudo apt upgrade -y"
+alias suu="sudo apt update && sudo apt upgrade -y && omz update"
 alias dfah="df -h $@"
 alias dush="du -csh $@"
 alias path="printenv | rg $PATH"
