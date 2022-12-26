@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env
 
 function fuck() {
                 TF_PYTHONIOENCODING=$PYTHONIOENCODING;

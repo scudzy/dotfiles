@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-
+#!/usr/bin/env
 # Sublime Text 4
 
 function st4() {

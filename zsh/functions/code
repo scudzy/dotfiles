@@ -1,7 +1,7 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env
 
 # Vscode
 
 function code() {
-    /c/Users/scudzy/scoop/apps/vscode/current/Code.exe $@
+       /c/Users/scudzy/AppData/Local/Programs/Microsoft\ VS\ Code/code.exe
 }
