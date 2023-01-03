@@ -36,6 +36,13 @@ export COWPATH="/usr/share/cowsay/cows/"
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32/:$PATH"
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
 
+# VCXSRV
+#WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
+export DISPLAY=192.168.1.120:0
+export LIBGL_ALWAYS_INDIRECT=1
+export NO_AT_BRIDGE=1
+export PULSE_SERVER=tcp:"$DISPLAY"
+
 # thefuck
 export THEFUCK_RULES='sudo:no_command'
 export THEFUCK_EXCLUDE_RULES='git_pull:git_push'
