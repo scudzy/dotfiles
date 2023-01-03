@@ -17,11 +17,11 @@ export ZDOTDIR=~/.dotfiles/zsh
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:$PATH"
 
 # VCXSRV
-WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
-export PULSE_SERVER=tcp:"$WSL2IP"
-export LIBGL_ALWAYS_INDIRECT=1
-export DISPLAY=$WSL2IP:0.0
-export NO_AT_BRIDGE=1
+#WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
+#export PULSE_SERVER=tcp:"$WSL2IP"
+#export LIBGL_ALWAYS_INDIRECT=1
+#export DISPLAY=$WSL2IP:0.0
+#export NO_AT_BRIDGE=1
 
 # ## Nicer shell experience
 # #export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD; # make ls more colorful as well
