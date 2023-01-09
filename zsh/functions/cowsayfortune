@@ -1,4 +1,5 @@
-# Cow-spoken fortunes every time you open a terminal
+#!/usr/bin/env
+## Cow-spoken fortunes every time you open a terminal
 function cowsayfortune {
     NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
     WHICHCOW=$((RANDOM%$NUMOFCOWS+1))

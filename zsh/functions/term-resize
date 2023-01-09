@@ -1,3 +1,5 @@
+#!/usr/bin/env
+
 # Add function internals here.
 # Do NOT include function definition (ie: omit 'function term-resize() {').
 # See: http://zsh.sourceforge.net/Doc/Release/Functions.html#Autoloading-Functions

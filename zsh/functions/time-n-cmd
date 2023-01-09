@@ -1,3 +1,5 @@
+#!/usr/bin/env
+
 # Usage: time-n-cmd TIMES CMD
 #
 time-n-cmd() {
