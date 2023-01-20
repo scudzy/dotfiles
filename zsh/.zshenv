@@ -33,7 +33,7 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 export COWPATH="/usr/share/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32/:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:$PATH"
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
 
 # VCXSRV
@@ -87,3 +87,7 @@ export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 # Ripgrep
 export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
 #export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
+
+# Glibc
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/glibc/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/glibc/include"
