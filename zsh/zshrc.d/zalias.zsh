@@ -101,8 +101,10 @@ alias dus="du -had 1 | sort -rh"
 alias autorotate="jhead -autorot"
 
 # ls
-alias ld="exa -laD --icons"
-alias ll="exa -la --icons --group-directories-first"
+alias ld="exa -hlaDG --icons"
+alias ll="exa -hlaG --icons --group-directories-first"
+#alias lf="exa "
+alias lgit="exa -hlaG --icons --git --group-directories-first"
 
 # sh
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
