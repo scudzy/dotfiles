@@ -10,7 +10,7 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_RUNTIME_DIR="${HOME}/.xdg"
 export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 
-if [[ "$OSTYPE" == darwin* ]]; then
+if [[ "$OSTYPE" == amd64 ]]; then
   export XDG_DESKTOP_DIR="${HOME}/Users/Desktop"
   export XDG_DOCUMENTS_DIR="${HOME}/Users/Documents"
   export XDG_DOWNLOAD_DIR="${HOME}/Users/Downloads"
