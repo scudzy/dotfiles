@@ -1,4 +1,6 @@
 start="$(date +%s)"
+module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
+zmodload zdharma_continuum/zinit
 zmodload zsh/zprof
 zmodload -i zsh/complist
 #zstyle ':omz:update' mode auto
@@ -57,7 +59,7 @@ autoload -Uz $fpath[1]/*(.:t)
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' auto-descitiption 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
@@ -122,7 +124,7 @@ configure_prompt() {
     case "$PROMPT_ALTERNATIVE" in
         twoline)
             PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-            # Right-side prompt with exit codes and background processes
+            # Right-side prompt with exit codes and background rocesses
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
         oneline)
@@ -326,12 +328,14 @@ zinit load zdharma-continuum/history-search-multi-word
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
+zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
+
 # omz lib
 zinit ice svn pick"completion.zsh" #src"git.zsh"
 zinit snippet OMZ::lib
 
 # omz
-# setopt promptsubst
+setopt promptsubst
 
 zinit wait lucid for \
         OMZL::functions.zsh
@@ -345,6 +349,8 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::python
 zinit snippet OMZP::systemd
 zinit snippet OMZP::zsh-interactive-cd
+zinit snippet OMZP::docker
+zinit snippet OMZP::brew
 
 # Download the package with the default ice list + set up the key bindings
 # sharkdp/fd
@@ -369,6 +375,42 @@ zinit wait"1" lucid from"gh-r" as"null" for \
 zinit ice wait lucid
 zinit load 'wfxr/forgit'
 
+# lsd
+zinit ice as"program" from"gh-r" mv"lsd* -> lsd" pick"lsd/lsd"
+zinit light Peltoche/lsd
+
+# ripgrep
+zinit ice as"program" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg"
+zinit light BurntSushi/ripgrep
+
+# git-delta
+zinit ice as"command" from"gh-r" mv"*x86_64-unknown-linux-musl/delta -> delta" bpick"*x86_64-unknown-linux-musl*" pick"delta"
+zinit light dandavison/delta
+
+# ogham/dog
+zinit ice as"command" from"gh-r" bpick"*x86_64-unknown-linux-gnu*" pick"bin/dog"
+zinit light ogham/dog
+
+# b4b4r07/httpstat
+zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
+zinit light b4b4r07/httpstat
+
+# dalance/procs
+zinit ice as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
+zinit light dalance/procs
+
+# dbrgn/tealdeer
+zinit ice as"command" from"gh-r" mv"tealdeer* -> tldr" bpick"tealdeer-linux-x86_64-musl" pick"dbrgn/tealdeer"
+zinit light dbrgn/tealdeer
+
+# charmbracelet/glow
+zinit ice as"command" from"gh-r" bpick"*_linux_x86_64.tar.gz" pick"glow"
+zinit light charmbracelet/glow
+
+# pure zsh
+#zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+#zinit light sindresorhus/pure
+
 # Path to your oh-my-zsh installation.
 # export PATH=$PATH:/usr/local/go/bin
 # export ZSH=~/.oh-my-zsh
@@ -379,16 +421,6 @@ export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:$PATH"
 # NVM nodejs
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="agnoster"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# # # # To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
-# [[ ! -f ~/dotfiles/zsh/.p10k.zsh ]] || source ~/dotfiles/zsh/.p10k.zsh
 
 # brew shell completions
 if type brew &>/dev/null
@@ -402,10 +434,8 @@ fi
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
-# source $ZSH/oh-my-zsh.sh
+# source zalias.zsh
 source $ZDOTDIR/zshrc.d/zalias.zsh
-
-# User configuration
 
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
@@ -417,8 +447,8 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 # Checking Login v.s. Non-Login
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 
-# grc
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+# # grc
+# [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 #for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
 #    cmd="${cmd##*conf.}"
 #    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
@@ -433,10 +463,6 @@ fi
 # them once. This not only clears the error for powerline-go, but also for
 # everything else you run in that shell. Don't enable this if you're not
 # sure this is what you want.
-
-# Enable a better reverse search experience.
-#   Requires: https://github.com/junegunn/fzf (to use fzf in general)
-#   Requires: https://github.com/BurntSushi/ripgrep (for using rg below)
 
 # fzf env var
 export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
@@ -493,7 +519,6 @@ unset -f bind-git-helper
 # powerline-status
 #/home/scudzy/.local/bin/powerline-daemon -q
 #source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
-
 /usr/bin/powerline-daemon -q
 source /usr/share/powerline/bindings/zsh/powerline.zsh
 
@@ -551,19 +576,15 @@ unset PIDFOUND
 
 # Load oh-my-posh shell themes
 #eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
-eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/negligible.omp.json')"
+#eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/negligible.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
 #eval $(thefuck --alias --enable-experimental-instant-mode)
 
-### Path ref XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-### Path ref XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-### Path ref XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-
 # # Load powerlevel10k theme
-# zinit ice depth"1" # git clone depth
-# zinit light romkatv/powerlevel10k
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
 
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
@@ -577,30 +598,38 @@ eval $(thefuck --alias)
 echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf > /dev/null
 
 # # pure prompt
-# autoload -Uz promptinit
+#autoload -Uz promptinit
 # promptinit
-# prompt pure
+#prompt pure
 # optionally define some options
-# PURE_CMD_MAX_EXEC_TIME=10
+#PURE_CMD_MAX_EXEC_TIME=10
 # # change the path color
-# zstyle :prompt:pure:path color blue
+#zstyle :prompt:pure:path color blue
 # # change the color for both `prompt:success` and `prompt:error`
-# zstyle ':prompt:pure:prompt:*' color cyan
+#zstyle ':prompt:pure:prompt:*' color cyan
 # # turn on git stash status
-# zstyle :prompt:pure:git:stash show yes
+#zstyle :prompt:pure:git:stash show yes
 
-# # Git
-# autoload -Uz vcs_info
-# precmd_vcs_info() vcs_info
-# precmd_functions+=( precmd_vcs_info )
-# RPROMPT=\$vcs_info_msg_0_
-# zstyle ':vcs_info:git:*' formats '%b'
+
+# Git
+autoload -Uz vcs_info
+precmd_vcs_info() vcs_info
+precmd_functions+=( precmd_vcs_info )
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%b'
+GITSTATUS_LOG_LEVEL=DEBUG
 
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # ### zsh builtin AUTOLOAD
-# autoload -Uz compinit
-# compinit -i
+autoload -Uz compinit
+compinit -i
+
+# LS_COLORS
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
 
 # # Options
 # setopt auto_cd # cd by typing directory name if it's not a command
@@ -639,3 +668,6 @@ echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
 #fortune | cowsay -f tux
+
+# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
+[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
