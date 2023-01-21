@@ -576,15 +576,15 @@ unset PIDFOUND
 
 # Load oh-my-posh shell themes
 #eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
-#eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/negligible.omp.json')"
+eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/pure.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
 #eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # # Load powerlevel10k theme
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
+#zinit ice depth"1" # git clone depth
+#zinit light romkatv/powerlevel10k
 
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
@@ -670,4 +670,4 @@ printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;
 #fortune | cowsay -f tux
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
+#[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
