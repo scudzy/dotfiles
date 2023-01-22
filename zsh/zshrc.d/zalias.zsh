@@ -101,10 +101,13 @@ alias dus="du -had 1 | sort -rh"
 alias autorotate="jhead -autorot"
 
 # ls
-alias ld="exa -hlaDG --icons"
-alias ll="exa -hlaG --icons --group-directories-first"
-#alias lf="exa "
-alias lgit="exa -hlaG --icons --git --group-directories-first"
+alias ld="exa -haDG --icons $@"
+alias lld="exa -hlaDG --icons $@"
+alias ll="exa -hlaT -L=1 --icons --group-directories-first $@"
+alias l2="exa -hlaT -L=2 --icons --group-directories-first $@"
+alias lg="exa -haG --icons --group-directories-first $@"
+alias llg="exa -hlaG --icons --group-directories-first $@"
+alias lgit="exa -hlaG --icons --git --group-directories-first $@"
 
 # sh
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
@@ -198,7 +201,6 @@ alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
 alias gst="git status"
 alias gp="git push"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias lg="lazygit"
 alias gcm="git commit -m $@"
 alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
 
