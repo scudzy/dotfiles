@@ -679,6 +679,6 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusl
 
 let g:fern_disable_startup_warnings = 1
 " powerline-status
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
