@@ -518,9 +518,10 @@ unset -f bind-git-helper
 
 # powerline-status
 #/home/scudzy/.local/bin/powerline-daemon -q
-#source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
-/usr/bin/powerline-daemon -q
-source /usr/share/powerline/bindings/zsh/powerline.zsh
+source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
+#/usr/bin/powerline-daemon -q
+#source /usr/share/powerline/bindings/zsh/powerline.zsh
+
 
 # # ruby rbenv
 # export PATH="$HOME/.rbenv/bin:$PATH"
@@ -543,6 +544,9 @@ function settitle () {
   export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$'
   echo -ne '\033]0;'"$1"'\a'
 }
+
+# tmux
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # browserpass gnupg
 PIDFOUND=$(pgrep gpg-agent)
@@ -595,7 +599,7 @@ eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # fix wsl2 resolv.conf
-echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf > /dev/null
+#echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf > /dev/null
 
 # # pure prompt
 #autoload -Uz promptinit
@@ -663,7 +667,7 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-#neofetch
+neofetch
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
