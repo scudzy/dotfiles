@@ -447,12 +447,12 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 # Checking Login v.s. Non-Login
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 
-# # grc
-# [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
-#for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-#    cmd="${cmd##*conf.}"
-#    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-#done
+# grc
+#[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/local/share/grc/ ); do
+    cmd="${cmd##*conf.}"
+    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+done
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -684,6 +684,7 @@ autoload -Uz $fpath[1]/*(.:t)
 end="$(date +%s)"
 total="$(( end - start ))"
 neofetch
+sudo update-binfmts --disable cli
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
