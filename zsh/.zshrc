@@ -641,8 +641,8 @@ zi as'null' lucid sbin wait'1' for \
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # ### zsh builtin AUTOLOAD
-autoload -Uz compinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+#autoload -Uz compinit
+#(( ${+_comps} )) && _comps[zinit]=_zinit
 #compinit -i
 
 # LS_COLORS
