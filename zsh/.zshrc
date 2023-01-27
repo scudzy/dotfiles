@@ -580,15 +580,15 @@ unset PIDFOUND
 
 # Load oh-my-posh shell themes
 #eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
-eval "$(oh-my-posh init zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/pure.omp.json')"
+# eval "$(oh-my-posh --init --shell zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/pure.omp.json')"
 
 # the fuck alias
 eval $(thefuck --alias)
 #eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # # Load powerlevel10k theme
-#zinit ice depth"1" # git clone depth
-#zinit light romkatv/powerlevel10k
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
 
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
@@ -623,11 +623,27 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 GITSTATUS_LOG_LEVEL=DEBUG
 
+# Extending Git
+zi as'null' lucid sbin wait'1' for \
+  Fakerr/git-recall \
+  davidosomething/git-my \
+  iwata/git-now \
+  paulirish/git-open \
+  paulirish/git-recent \
+    atload'export _MENU_THEME=legacy' \
+  arzzen/git-quick-stats \
+    make'install' \
+  tj/git-extras \
+    make'GITURL_NO_CGITURL=1' \
+    sbin'git-url;git-guclone' \
+  zdharma-continuum/git-url
+
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # ### zsh builtin AUTOLOAD
 autoload -Uz compinit
-compinit -i
+(( ${+_comps} )) && _comps[zinit]=_zinit
+#compinit -i
 
 # LS_COLORS
 zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
@@ -674,4 +690,4 @@ printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;
 #fortune | cowsay -f tux
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-#[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
+[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
