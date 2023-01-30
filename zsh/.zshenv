@@ -83,7 +83,7 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER="/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+export BROWSER=wslview
 
 # Ripgrep
 export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
