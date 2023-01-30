@@ -411,12 +411,15 @@ zinit light charmbracelet/glow
 #zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 #zinit light sindresorhus/pure
 
+# after `forgit` was loaded
+export forgit_revert_commit="grcm"
+
 # Path to your oh-my-zsh installation.
 # export PATH=$PATH:/usr/local/go/bin
 # export ZSH=~/.oh-my-zsh
 export DOTFILES=~/.dotfiles
 export ZDOTDIR=~/.dotfiles/zsh
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:${HOME}/.local/share/zinit/plugins/wfxr---forgit/bin:$PATH"
 
 # NVM nodejs
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -448,7 +451,7 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 
 # grc
-#[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+[[ -f "/etc/grc.zsh" ]] && source /etc/grc.zsh
 for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/local/share/grc/ ); do
     cmd="${cmd##*conf.}"
     type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
@@ -623,20 +626,20 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 GITSTATUS_LOG_LEVEL=DEBUG
 
-# Extending Git
-zi as'null' lucid sbin wait'1' for \
-  Fakerr/git-recall \
-  davidosomething/git-my \
-  iwata/git-now \
-  paulirish/git-open \
-  paulirish/git-recent \
-    atload'export _MENU_THEME=legacy' \
-  arzzen/git-quick-stats \
-    make'install' \
-  tj/git-extras \
-    make'GITURL_NO_CGITURL=1' \
-    sbin'git-url;git-guclone' \
-  zdharma-continuum/git-url
+# # Extending Git
+# zi as'null' lucid sbin wait'1' for \
+#   Fakerr/git-recall \
+#   davidosomething/git-my \
+#   iwata/git-now \
+#   paulirish/git-open \
+#   paulirish/git-recent \
+#     atload'export _MENU_THEME=legacy' \
+#   arzzen/git-quick-stats \
+#     make'install' \
+#   tj/git-extras \
+#     make'GITURL_NO_CGITURL=1' \
+#     sbin'git-url;git-guclone' \
+#   zdharma-continuum/git-url
 
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
