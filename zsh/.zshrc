@@ -376,8 +376,8 @@ zinit ice wait lucid
 zinit load 'wfxr/forgit'
 
 # lsd
-zinit ice as"program" from"gh-r" mv"lsd* -> lsd" pick"lsd/lsd"
-zinit light Peltoche/lsd
+zinit ice wait"0" lucid as"command" from"gh-r" mv"*x86_64-unknown-linux-gnu -> lsd" bpick"*x86_64-unknown-linux-gnu.tar.gz" pick"lsd/lsd"
+zinit light lsd-rs/lsd
 
 # ripgrep
 zinit ice as"program" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg"
