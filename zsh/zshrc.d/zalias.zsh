@@ -138,6 +138,7 @@ alias path="printenv | rg $PATH"
 alias stats="stat -c '%A %a %n' $@" ### "stat -c '%a' $@"
 #alias time="/usr/bin/time -f'Loading in %e secomds' $@"
 alias speed="speedtest --selection-details -v"
+alias zuu="zinit self-update && zinit update"
 
 # windows
 alias pwsh="/c/Program\ Files/Powershell/7/pwsh.exe -c $@"
