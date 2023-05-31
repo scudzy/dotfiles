@@ -245,3 +245,10 @@ alias brewup="brew upgrade $@"
 alias brewl="brew list"
 alias brewi="brew install $@"
 alias brewun="brew uninstall $@"
+
+# rclone function
+rcl1 () { rclone about G-scudzy: && echo "$(tput setaf 1)scudzy@gmail.com$(tput sgr0)" }
+rcl2 () { rclone about G-mhmk770922:  && echo "$(tput setaf 1)mhmk770922@gmail.com$(tput sgr0)" }
+rcl3 () { rclone about G-halimi: && echo "$(tput setaf 1)halimi@barikatech.com$(tput sgr0)" }
+rcl4 () { rclone about O-scudzy: && echo "$(tput setaf 1)scudzy@outlook.com$(tput sgr0)" }
+rcl5 () { rclone about D-scudzy: && echo "$(tput setaf 1)Dropbox-scudzy$(tput sgr0)" }
