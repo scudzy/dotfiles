@@ -20,6 +20,7 @@ if [[ "$OSTYPE" == amd64 ]]; then
 fi
 
 # Add all local binary paths to the system path.
+export PAGER="most"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 #export GOROOT="/usr/local/go/"
 #export GOPATH="${HOME}/go"
