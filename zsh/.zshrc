@@ -452,6 +452,9 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 # source zalias.zsh
 source $ZDOTDIR/zshrc.d/zalias.zsh
 
+# source gcloud completion
+source /snap/google-cloud-cli/current/completion.zsh.inc
+
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
 #curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
