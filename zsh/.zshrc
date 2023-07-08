@@ -55,6 +55,10 @@ bindkey '^[[Z' undo                               # shift + tab undo last action
 fpath=(~/.local/share/zinit/completions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
+
 # enable completion features
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
@@ -299,10 +303,6 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
         print -P "%F{160} The clone has failed.%f%b"
 fi
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -361,7 +361,7 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::python
 zinit snippet OMZP::systemd
 zinit snippet OMZP::zsh-interactive-cd
-zinit snippet OMZP::docker
+#zinit snippet OMZP::docker
 zinit snippet OMZP::brew
 
 # Download the package with the default ice list + set up the key bindings
@@ -632,6 +632,10 @@ zinit light romkatv/powerlevel10k
 # # turn on git stash status
 #zstyle :prompt:pure:git:stash show yes
 
+# compinit
+# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Git
 autoload -Uz vcs_info
@@ -659,9 +663,9 @@ GITSTATUS_LOG_LEVEL=DEBUG
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # ### zsh builtin AUTOLOAD
-#autoload -Uz compinit
-#(( ${+_comps} )) && _comps[zinit]=_zinit
-#compinit -i
+autoload -Uz compinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+compinit -i
 
 # LS_COLORS
 zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
