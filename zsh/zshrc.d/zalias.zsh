@@ -78,6 +78,7 @@ alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 alias speedtestw="wget -O /dev/null http://speed.transip.nl/10mb.bin"
+alias speedtestp*"curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias pinging="command ping"
 
 # other aliases
