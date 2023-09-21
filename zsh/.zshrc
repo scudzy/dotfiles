@@ -1,6 +1,6 @@
 start="$(date +%s)"
-module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
-zmodload zdharma_continuum/zinit
+# module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
+# zmodload zdharma_continuum/zinit
 zmodload zsh/zprof
 zmodload -i zsh/complist
 #zstyle ':omz:update' mode auto
@@ -55,7 +55,12 @@ bindkey '^[[Z' undo                               # shift + tab undo last action
 fpath=(~/.local/share/zinit/completions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 # autoload -Uz _zinit
 # (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -433,9 +438,9 @@ export DOTFILES=~/.dotfiles
 export ZDOTDIR=~/.dotfiles/zsh
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:${HOME}/.local/share/zinit/plugins/wfxr---forgit/bin:$PATH"
 
-# NVM nodejs
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# # NVM nodejs
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # brew shell completions
 if type brew &>/dev/null
@@ -467,9 +472,9 @@ source /snap/google-cloud-cli/current/completion.zsh.inc
 
 # grc
 [[ -f "/etc/grc.zsh" ]] && source /etc/grc.zsh
-for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/local/share/grc/ ); do
-    cmd="${cmd##*conf.}"
-    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+  cmd="${cmd##*conf.}"
+  type "${cmd}" >/dev/null 2>&1 && echo alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
 done
 
 # xterm modes
@@ -535,11 +540,12 @@ bind-git-helper f b t r h
 unset -f bind-git-helper
 
 # powerline-status
+/home/scudzy/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
+source ~/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh
 #/home/scudzy/.local/bin/powerline-daemon -q
-source /home/scudzy/.local/lib/python3.9/site-packages/powerline/bindings/zsh/powerline.zsh
+# source /home/scudzy/.local/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh
 #/usr/bin/powerline-daemon -q
 #source /usr/share/powerline/bindings/zsh/powerline.zsh
-
 
 # # ruby rbenv
 # export PATH="$HOME/.rbenv/bin:$PATH"
@@ -580,14 +586,14 @@ if [ -n "$PIDFOUND" ]; then
 fi
 unset PIDFOUND
 
-# # # browserpass gnupg
-# # Enable gpg-agent if it is not running
-# GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
-# if [ ! -S $GPG_AGENT_SOCKET ]; then
-#     gpgconf --kill gpg-agent
-#     gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
-#     export GPG_TTY=$(tty)
-# fi
+# # browserpass gnupg
+# Enable gpg-agent if it is not running
+GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
+if [ ! -S $GPG_AGENT_SOCKET ]; then
+    gpgconf --kill gpg-agent
+    gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
+    export GPG_TTY=$(tty)
+fi
 
 # # Set SSH to use gpg-agent if it is configured to do so
 # GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
@@ -633,7 +639,6 @@ zinit light romkatv/powerlevel10k
 #zstyle :prompt:pure:git:stash show yes
 
 # compinit
-# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -673,30 +678,6 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
-# # Options
-# setopt auto_cd # cd by typing directory name if it's not a command
-# setopt auto_list # automatically list choices on ambiguous completion
-# setopt auto_menu # automatically use menu completion
-# setopt always_to_end # move cursor to end if word had one match
-# setopt hist_ignore_all_dups # remove older duplicate entries from history
-# setopt hist_reduce_blanks # remove superfluous blanks from history items
-# setopt inc_append_history # save history entries as soon as they are entered
-# setopt share_history # share history between different instances
-# setopt correct_all # autocorrect commands
-# setopt interactive_comments # allow comments in interactive shells
-# setopt nohup
-
-# # Improve autocompletion style
-# zstyle ':completion:*' menu select # select completions with arrow keys
-# zstyle ':completion:*' group-name '' # group results by category
-# zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-# zstyle ':xdg-basedirs:*' apps $XDG_APPS
-# # zsh-notify
-# zstyle ':notify:*' error-title "Command failed (in #{time_elapsed} seconds)"
-# zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
-# zstyle ':notify:*' app-name sh
-# zstyle ':notify:*' error-log /dev/null
-
 # load function folders ----------- NEVER DELETE BELOW RHIS LINE
 fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
@@ -706,7 +687,6 @@ autoload -Uz $fpath[1]/*(.:t)
 end="$(date +%s)"
 total="$(( end - start ))"
 neofetch
-sudo update-binfmts --disable cli
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
