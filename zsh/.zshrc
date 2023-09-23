@@ -318,6 +318,13 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# tmux window name
+tmux-window-name() {
+  ($TMUX_PLUGIN_MANAGER_PATH/tmux-window-name/scripts/rename_session_windows.py &)
+}
+
+add-zsh-hook chpwd tmux-window-name
+
 # fix mkdir permission
 if grep -q microsoft /proc/version; then
     if [ "$(umask)" == '0000' ]; then
@@ -471,10 +478,11 @@ source /snap/google-cloud-cli/current/completion.zsh.inc
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 
 # grc
-[[ -f "/etc/grc.zsh" ]] && source /etc/grc.zsh
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+# dynamic aliases
 for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
   cmd="${cmd##*conf.}"
-  type "${cmd}" >/dev/null 2>&1 && echo alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+  type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
 done
 
 # xterm modes
@@ -686,11 +694,11 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-neofetch
+#neofetch
+fortune debian-hints | cowsay -f tux
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 #echo ""
-#fortune | cowsay -f tux
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
