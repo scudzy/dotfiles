@@ -320,9 +320,8 @@ zinit light-mode for \
 
 # tmux window name
 tmux-window-name() {
-  ($TMUX_PLUGIN_MANAGER_PATH/tmux-window-name/scripts/rename_session_windows.py &)
+  (~/.tmux/plugins/tmux-window-name/scripts/rename_session_windows.py &)
 }
-
 add-zsh-hook chpwd tmux-window-name
 
 # fix mkdir permission
@@ -366,6 +365,7 @@ zinit wait lucid for \
 
 # load omz plugins
 zinit snippet OMZP::tmux
+zinit snippet OMZP::genpass
 zinit snippet OMZP::fzf
 zinit snippet OMZP::sudo
 zinit snippet OMZP::colored-man-pages
@@ -373,7 +373,8 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::python
 zinit snippet OMZP::systemd
 zinit snippet OMZP::zsh-interactive-cd
-#zinit snippet OMZP::docker
+zinit snippet OMZP::encode64
+zinit snippet OMZP::systemadmin
 zinit snippet OMZP::brew
 
 # Download the package with the default ice list + set up the key bindings
@@ -431,6 +432,22 @@ zinit light dbrgn/tealdeer
 zinit ice as"command" from"gh-r" bpick"*_linux_x86_64.tar.gz" pick"glow"
 zinit light charmbracelet/glow
 
+# fzf tab
+zinit light Aloxaf/fzf-tab
+
+# fzf tab config
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+
 # pure zsh
 #zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 #zinit light sindresorhus/pure
@@ -467,6 +484,9 @@ source $ZDOTDIR/zshrc.d/zalias.zsh
 # source gcloud completion
 source /snap/google-cloud-cli/current/completion.zsh.inc
 
+# zsh-interactive-cd
+source ~/.local/share/zinit/snippets/OMZP::zsh-interactive-cd/OMZP::zsh-interactive-cd
+
 # Startup
 #if [ -f /usr/bin/neofetch ]; then neofetch; fi
 #curl -s 'wttr.in/Kuantan, Malaysia?m0Fq&format=4'
@@ -498,6 +518,7 @@ fi
 # fzf env var
 export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
 export FZF_DEFAULT_OPTS="--ansi"
+export FZF_BASE="~/.fzf"
 
 # fzf pass ZSH
 _fzf_complete_pass() {
