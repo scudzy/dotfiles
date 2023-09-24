@@ -357,9 +357,6 @@ zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/
 zinit ice svn pick"completion.zsh" #src"git.zsh"
 zinit snippet OMZ::lib
 
-# omz
-setopt promptsubst
-
 zinit wait lucid for \
         OMZL::functions.zsh
 
@@ -378,6 +375,12 @@ zinit snippet OMZP::systemadmin
 zinit snippet OMZP::brew
 
 # Download the package with the default ice list + set up the key bindings
+
+zinit wait lucid for \
+        OMZL::git.zsh \
+  atload"unalias grv" \
+        OMZP::git
+
 # sharkdp/fd
 zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
 zinit light sharkdp/fd
@@ -447,6 +450,25 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
+# tldr
+zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
+# preview
+zstyle ':fzf-tab:user-expand:*' fzf-preview 'less ${(Q)word}'
+
+# LS_COLORS
+# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+# zinit light trapd00r/LS_COLORS
+
+zinit ice wait"0c" lucid reset \
+    atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
+            \${P}sed -i \
+            '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
+            \${P}dircolors -b LS_COLORS > c.zsh" \
+    atpull'%atclone' pick"c.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
 
 # pure zsh
 #zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
@@ -517,8 +539,13 @@ fi
 
 # fzf env var
 export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
-export FZF_DEFAULT_OPTS="--ansi"
-export FZF_BASE="~/.fzf"
+# export FZF_DEFAULT_OPTS="--ansi"
+export FZF_BASE="~/.fzf/"
+export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1"
+export FZF_CTRL_R_OPTS="--height=50% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
+export FZF_CTRL_T_OPTS="--height=40% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
+# export FZF_DEFAULT_OPTS='--reverse --border --exact --height=50%'
+export FZF_ALT_C_COMMAND='fd --type directory'
 
 # fzf pass ZSH
 _fzf_complete_pass() {
@@ -667,9 +694,9 @@ zinit light romkatv/powerlevel10k
 # # turn on git stash status
 #zstyle :prompt:pure:git:stash show yes
 
-# compinit
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+# # compinit
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Git
 autoload -Uz vcs_info
@@ -701,12 +728,6 @@ autoload -Uz compinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 compinit -i
 
-# LS_COLORS
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
-
 # load function folders ----------- NEVER DELETE BELOW RHIS LINE
 fpath=( $ZDOTDIR/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
@@ -716,10 +737,11 @@ autoload -Uz $fpath[1]/*(.:t)
 end="$(date +%s)"
 total="$(( end - start ))"
 #neofetch
-fortune debian-hints | cowsay -f tux
-echo ""
+fortune linux | cowsay -f tux
+echo
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-#echo ""
+echo
+# python3 -c 'print("\n")'
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
