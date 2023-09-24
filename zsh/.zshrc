@@ -374,13 +374,6 @@ zinit snippet OMZP::encode64
 zinit snippet OMZP::systemadmin
 zinit snippet OMZP::brew
 
-# Download the package with the default ice list + set up the key bindings
-
-zinit wait lucid for \
-        OMZL::git.zsh \
-  atload"unalias grv" \
-        OMZP::git
-
 # sharkdp/fd
 zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
 zinit light sharkdp/fd
@@ -720,6 +713,12 @@ GITSTATUS_LOG_LEVEL=DEBUG
 #     make'GITURL_NO_CGITURL=1' \
 #     sbin'git-url;git-guclone' \
 #   zdharma-continuum/git-url
+
+## pipx Completion
+autoload -U bashcompinit
+    bashcompinit
+
+eval "$(register-python-argcomplete pipx)"
 
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
