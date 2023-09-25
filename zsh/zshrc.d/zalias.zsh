@@ -181,10 +181,12 @@ alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f
 
 # apt & dpkg
 alias apti="sudo apt install $@"
-alias aptinir="sudo apt install --no-install-recommends $@"
+alias aptino="sudo apt install --no-install-recommends $@"
 alias aptar="sudo apt autoremove $@"
 alias aptcs="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias apts="apt search $@"
+alias aptrd="apt-rdepends $@"
+alias aptli="apt list --installed"
 alias dpigs20="dpigs --lines=20 -SH"
 
 # fzf
