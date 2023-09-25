@@ -323,7 +323,7 @@ zinit light-mode for \
 # https://github.com/romkatv/gitstatus
 zinit ice wait'1' #atload'zinc_optional_depenency_loaded'
 zinit load romkatv/gitstatus
-source ~/.local/share/zinit/plugins/romkatv---gitstatus/gitstatus.plugin.zsh
+source ~/.local/share/zinit/plugins/romkatv---gitstatus/gitstatus.prompt.zsh
 
 ### Zinit
 ### Turbo mode
@@ -748,9 +748,9 @@ end="$(date +%s)"
 total="$(( end - start ))"
 #neofetch
 fortune linux | cowsay -f tux
-echo
+echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-echo
+echo ""
 # python3 -c 'print("\n")'
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
