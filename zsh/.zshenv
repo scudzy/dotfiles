@@ -7,7 +7,8 @@ export DOTFILES="${HOME}/.dotfiles"
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_RUNTIME_DIR="${HOME}/.xdg"
+export XDG_RUNTIME_DIR=~/.local/service-scudzy.aqX
+export RUNLEVEL=3
 export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 
 if [[ "$OSTYPE" == amd64 ]]; then
@@ -42,6 +43,7 @@ export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/snap/g
 # WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 # export DISPLAY=$WSL2IP:0
 # export DISPLAY=192.168.1.120:0
+export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 export NO_AT_BRIDGE=1
 #export PULSE_SERVER=tcp:"$DISPLAY"
@@ -74,14 +76,15 @@ export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --
 export LESS='-F -i -J -M -R -W -x4 -X -z-4'
 
 # Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less .
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
+# Default apps
 export EDITOR=vim
 export VISUAL=vim
 export BROWSER=wslview
