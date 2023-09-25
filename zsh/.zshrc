@@ -1,9 +1,10 @@
 start="$(date +%s)"
 # module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
 # zmodload zdharma_continuum/zinit
-zmodload zsh/zprof
-zmodload -i zsh/complist
-#zstyle ':omz:update' mode auto
+# zmodload zsh/zprof
+# zmodload -i zsh/complist
+# zstyle ':omz:update' mode auto
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -60,9 +61,8 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-# autoload -Uz _zinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
+zinit ice atinit'zmodload zsh/zprof' \
+    atload'zprof | head -n 20; zmodload -u zsh/zprof'
 
 # enable completion features
 autoload -Uz compinit
@@ -318,29 +318,25 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-# tmux window name
-tmux-window-name() {
-  (~/.tmux/plugins/tmux-window-name/scripts/rename_session_windows.py &)
-}
-add-zsh-hook chpwd tmux-window-name
-
-# fix mkdir permission
-if grep -q microsoft /proc/version; then
-    if [ "$(umask)" == '0000' ]; then
-        umask 0022
-    fi
-fi
+# ZINC git info is already async, but if you want it
+# even faster with gitstatus in Turbo mode:
+# https://github.com/romkatv/gitstatus
+zinit ice wait'1' #atload'zinc_optional_depenency_loaded'
+zinit load romkatv/gitstatus
+source ~/.local/share/zinit/plugins/romkatv---gitstatus/gitstatus.plugin.zsh
 
 ### Zinit
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-history-substring-search
+### Turbo mode
+zinit wait lucid light-mode for \
+  atinit"zicompinit; zicdreplay" \
+      zdharma-continuum/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" \
+      zsh-users/zsh-autosuggestions \
+  blockf atpull'zinit creinstall -q .' \
+      zsh-users/zsh-completions
 
-# Autosuggestions & fast-syntax-highlighting
-# zinit ice wait lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zinit light zdharma-continuum/fast-syntax-highlighting
-# zsh-autosuggestions
-zinit ice wait lucid atload"!_zsh_autosuggest_start"
-zinit load zsh-users/zsh-autosuggestions
+# zsh-users/zsh-history-substring-search
+zinit light zsh-users/zsh-history-substring-search
 
 # zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
@@ -351,12 +347,14 @@ zinit load zdharma-continuum/history-search-multi-word
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
+# OMZL git
 zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
 
 # omz lib
 zinit ice svn pick"completion.zsh" #src"git.zsh"
 zinit snippet OMZ::lib
 
+# OMZL functions
 zinit wait lucid for \
         OMZL::functions.zsh
 
@@ -448,12 +446,7 @@ zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $wor
 # preview
 zstyle ':fzf-tab:user-expand:*' fzf-preview 'less ${(Q)word}'
 
-# LS_COLORS
-# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-#     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-# zinit light trapd00r/LS_COLORS
-
+### LS_COLOR
 zinit ice wait"0c" lucid reset \
     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
             \${P}sed -i \
@@ -463,9 +456,31 @@ zinit ice wait"0c" lucid reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
+# # Load powerlevel10k theme
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
+
 # pure zsh
 #zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 #zinit light sindresorhus/pure
+
+autoload compinit
+compinit
+
+####################### End of zinit line ##########################
+
+# tmux window name
+#tmux-window-name() {
+#  (~/.tmux/plugins/tmux-window-name/scripts/rename_session_windows.py &)
+#}
+#add-zsh-hook chpwd tmux-window-name
+
+# fix mkdir permission
+if grep -q microsoft /proc/version; then
+    if [ "$(umask)" == '0000' ]; then
+        umask 0022
+    fi
+fi
 
 # after `forgit` was loaded
 export forgit_revert_commit="grcm"
@@ -618,8 +633,8 @@ function settitle () {
   echo -ne '\033]0;'"$1"'\a'
 }
 
-# tmux
-PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+# # tmux
+# PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # browserpass gnupg
 PIDFOUND=$(pgrep gpg-agent)
@@ -658,10 +673,6 @@ fi
 # the fuck alias
 eval $(thefuck --alias)
 #eval $(thefuck --alias --enable-experimental-instant-mode)
-
-# # Load powerlevel10k theme
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
 
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
