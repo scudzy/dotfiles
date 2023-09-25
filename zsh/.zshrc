@@ -1,8 +1,8 @@
 start="$(date +%s)"
 # module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
 # zmodload zdharma_continuum/zinit
-# zmodload zsh/zprof
-# zmodload -i zsh/complist
+zmodload zsh/zprof
+zmodload -i zsh/complist
 # zstyle ':omz:update' mode auto
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -61,8 +61,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-zinit ice atinit'zmodload zsh/zprof' \
-    atload'zprof | head -n 20; zmodload -u zsh/zprof'
+#zinit ice atinit'zmodload zsh/zprof' atload'zprof | head -n 20; zmodload -u zsh/zprof'
 
 # enable completion features
 autoload -Uz compinit
@@ -318,12 +317,12 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-# ZINC git info is already async, but if you want it
-# even faster with gitstatus in Turbo mode:
-# https://github.com/romkatv/gitstatus
-zinit ice wait'1' #atload'zinc_optional_depenency_loaded'
-zinit load romkatv/gitstatus
-source ~/.local/share/zinit/plugins/romkatv---gitstatus/gitstatus.prompt.zsh
+# # ZINC git info is already async, but if you want it
+# # even faster with gitstatus in Turbo mode:
+# # https://github.com/romkatv/gitstatus
+# zinit ice wait'1' #atload'zinc_optional_depenency_loaded'
+# zinit load romkatv/gitstatus
+# source ~/.local/share/zinit/plugins/romkatv---gitstatus/gitstatus.prompt.zsh
 
 ### Zinit
 ### Turbo mode
@@ -746,8 +745,8 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-#neofetch
-fortune linux | cowsay -f tux
+neofetch
+#fortune linux | cowsay -f tux
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
