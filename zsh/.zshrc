@@ -394,8 +394,8 @@ zinit ice wait lucid
 zinit load 'wfxr/forgit'
 
 # lsd
-zinit ice wait"0" lucid as"command" from"gh-r" mv"*x86_64-unknown-linux-gnu -> lsd" bpick"*x86_64-unknown-linux-gnu.tar.gz" pick"lsd/lsd"
-zinit light lsd-rs/lsd
+#zinit ice wait"0" lucid as"command" from"gh-r" mv"*x86_64-unknown-linux-gnu -> lsd" bpick"*x86_64-unknown-linux-gnu.tar.gz" pick"lsd/lsd"
+#zinit light lsd-rs/lsd
 
 # ripgrep
 zinit ice as"program" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg"
@@ -406,8 +406,8 @@ zinit ice as"command" from"gh-r" mv"*x86_64-unknown-linux-musl/delta -> delta" b
 zinit light dandavison/delta
 
 # ogham/dog
-zinit ice as"command" from"gh-r" bpick"*x86_64-unknown-linux-gnu*" pick"bin/dog"
-zinit light ogham/dog
+#zinit ice as"command" from"gh-r" bpick"*x86_64-unknown-linux-gnu*" pick"bin/dog"
+#zinit light ogham/dog
 
 # b4b4r07/httpstat
 zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
@@ -511,7 +511,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 source $ZDOTDIR/zshrc.d/zalias.zsh
 
 # source gcloud completion
-source /snap/google-cloud-cli/current/completion.zsh.inc
+#source /snap/google-cloud-cli/current/completion.zsh.inc
 
 # zsh-interactive-cd
 source ~/.local/share/zinit/snippets/OMZP::zsh-interactive-cd/OMZP::zsh-interactive-cd
@@ -649,14 +649,14 @@ if [ -n "$PIDFOUND" ]; then
 fi
 unset PIDFOUND
 
-# # browserpass gnupg
-# Enable gpg-agent if it is not running
-GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
-if [ ! -S $GPG_AGENT_SOCKET ]; then
-    gpgconf --kill gpg-agent
-    gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
-    export GPG_TTY=$(tty)
-fi
+# # # browserpass gnupg
+# # Enable gpg-agent if it is not running
+# GPG_AGENT_SOCKET="${HOME}/.gnupg/S.gpg-agent.ssh"
+# if [ ! -S $GPG_AGENT_SOCKET ]; then
+#     gpgconf --kill gpg-agent
+#     gpg-agent pinentry-program /d/Apps/password-store/pinentry-wsl-ps1.sh >/dev/null 2>&1
+#     export GPG_TTY=$(tty)
+# fi
 
 # # Set SSH to use gpg-agent if it is configured to do so
 # GNUPGCONFIG=${GNUPGHOME:-"${HOME}/.gnupg/gpg-agent.conf"}
