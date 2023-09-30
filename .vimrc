@@ -132,6 +132,7 @@ Plug 'tpope/vim-rails'
 Plug 'vim-python/python-syntax'
 Plug 'vim-ruby/vim-ruby'
 Plug 'wgwoods/vim-systemd-syntax'
+Plug 'ervandew/supertab'
 
 call plug#end()
 
@@ -683,3 +684,5 @@ let g:vim_tmux_clipboard#loadb_option = '-w'
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
