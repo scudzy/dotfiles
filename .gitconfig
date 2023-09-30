@@ -264,3 +264,7 @@
 	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
 	subrepo = !sh -c 'git filter-branch --prune-empty --subdirectory-filter $1 master' -
 	human = name-rev --name-only --refs=refs/heads/*
+[http]
+	postbuffer = 524288000
+[credential]
+	helper = cache --timeout=86400
