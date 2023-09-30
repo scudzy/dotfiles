@@ -38,6 +38,16 @@ WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
+# fpath
+fpath=(~/.local/share/zinit/completions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+
+# fpath
+fpath=(
+  $ZDOTDIR/functions
+  "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+
 # configure key keybindings
 bindkey -e                                        # emacs key bindings
 bindkey ' ' magic-space                           # do history expansion on space
@@ -52,10 +62,6 @@ bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
-# fpath
-fpath=(~/.local/share/zinit/completions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
-
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -64,8 +70,10 @@ source "${ZINIT_HOME}/zinit.zsh"
 #zinit ice atinit'zmodload zsh/zprof' atload'zprof | head -n 20; zmodload -u zsh/zprof'
 
 # enable completion features
+
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
+
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-descitiption 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
@@ -79,6 +87,11 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+## only for git
+zstyle ':completion:*:*:git:*' fzf-search-display true
+## or for everything
+zstyle ':completion:*' fzf-search-display true
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -332,7 +345,23 @@ zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start" \
       zsh-users/zsh-autosuggestions \
   blockf atpull'zinit creinstall -q .' \
-      zsh-users/zsh-completions
+      zsh-users/zsh-completions \
+    OMZP::colored-man-pages \
+    OMZP::tmux \
+    OMZP::genpass \
+    OMZP::fzf \
+    OMZP::sudo \
+    OMZP::command-not-found \
+    OMZP::python \
+    OMZP::systemd \
+    OMZP::zsh-interactive-cd \
+    OMZP::encode64 \
+    OMZP::systemadmin \
+    OMZP::brew \
+    OMZP::gpg-agent \
+    OMZP::docker-compose \
+    OMZP::debian \
+    OMZP::gcloud
 
 # zsh-users/zsh-history-substring-search
 zinit light zsh-users/zsh-history-substring-search
@@ -347,29 +376,28 @@ zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
 # OMZL git
-zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
+# zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
+# # omz git
+zinit ice atload"unalias grv"
+zinit snippet OMZP::git
+
+# # docker
+# zinit ice as"completion"
+# zinit snippet OMZP::docker/_docker
+
+zinit for OMZL::prompt_info_functions.zsh OMZT::gnzh
 
 # omz lib
 zinit ice svn pick"completion.zsh" #src"git.zsh"
 zinit snippet OMZ::lib
 
-# OMZL functions
-zinit wait lucid for \
-        OMZL::functions.zsh
-
-# load omz plugins
-zinit snippet OMZP::tmux
-zinit snippet OMZP::genpass
-zinit snippet OMZP::fzf
-zinit snippet OMZP::sudo
-zinit snippet OMZP::colored-man-pages
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::python
-zinit snippet OMZP::systemd
-zinit snippet OMZP::zsh-interactive-cd
-zinit snippet OMZP::encode64
-zinit snippet OMZP::systemadmin
-zinit snippet OMZP::brew
+# # OMZL functions
+# zinit wait lucid for \
+#         OMZL::functions.zsh \
+#         OMZL::cli.zsh \
+#         OMZL::history.zsh \
+#         OMZL::completion.zsh \
+#         OMZL::git.zsh
 
 # sharkdp/fd
 zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
@@ -425,8 +453,35 @@ zinit light dbrgn/tealdeer
 zinit ice as"command" from"gh-r" bpick"*_linux_x86_64.tar.gz" pick"glow"
 zinit light charmbracelet/glow
 
-# fzf tab
+### LS_COLOR
+zinit ice wait"0c" lucid reset \
+    atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
+            \${P}sed -i \
+            '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
+            \${P}dircolors -b LS_COLORS > c.zsh" \
+    atpull'%atclone' pick"c.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
+
+# # Load powerlevel10k theme
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
+
+## docker completion
+# zstyle ':completion:*:*:docker:*' option-stacking yes
+# zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
+### fzf tab
 zinit light Aloxaf/fzf-tab
+
+# pure zsh
+#zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+#zinit light sindresorhus/pure
+
+# autoload -Uz compinit
+# compinit -d ~/.cache/zcompdump
+
+####################### End of zinit line ##########################
 
 # fzf tab config
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
@@ -445,32 +500,9 @@ zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $wor
 # preview
 zstyle ':fzf-tab:user-expand:*' fzf-preview 'less ${(Q)word}'
 
-### LS_COLOR
-zinit ice wait"0c" lucid reset \
-    atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
-            \${P}sed -i \
-            '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
-            \${P}dircolors -b LS_COLORS > c.zsh" \
-    atpull'%atclone' pick"c.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
-
-# # Load powerlevel10k theme
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
-
-# pure zsh
-#zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-#zinit light sindresorhus/pure
-
-autoload compinit
-compinit
-
-####################### End of zinit line ##########################
-
 # tmux window name
 #tmux-window-name() {
-#  (~/.tmux/plugins/tmux-window-name/scripts/rename_session_windows.py &)
+# (~/.tmux/plugins/tmux-window-name/scripts/rename_session_windows.py &)
 #}
 #add-zsh-hook chpwd tmux-window-name
 
@@ -494,15 +526,6 @@ export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:${HOME}/.local/share/zinit/
 # # NVM nodejs
 # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# brew shell completions
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
 
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
@@ -545,14 +568,88 @@ fi
 # sure this is what you want.
 
 # fzf env var
-export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
+
 # export FZF_DEFAULT_OPTS="--ansi"
 export FZF_BASE="~/.fzf/"
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border --margin=1 --padding=1"
-export FZF_CTRL_R_OPTS="--height=50% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
-export FZF_CTRL_T_OPTS="--height=40% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
+# export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --inline-info --border --margin=1 --padding=1"
+# export FZF_CTRL_R_OPTS="--height=50% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
+# export FZF_CTRL_T_OPTS="--height=50% --border=sharp --layout=reverse --prompt '∷ ' --pointer=▶ --marker=⇒"
 # export FZF_DEFAULT_OPTS='--reverse --border --exact --height=50%'
+
+export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
+
+# Color Ayu Mirage
+export FZF_DEFAULT_OPTS="
+    --height=50% --layout=reverse
+    --inline-info --border --margin=1 --padding=1
+    --color=fg:#cbccc6,bg:#1f2430,hl:#707a8c
+    --color=fg+:#707a8c,bg+:#191e2a,hl+:#ffcc66
+    --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
+    --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff"
+
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}' --preview-window up:3:hidden:wrap
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
 export FZF_ALT_C_COMMAND='fd --type directory'
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
+
+# Options to fzf command
+export FZF_COMPLETION_OPTS='--border --info=inline'
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+  esac
+}
+
+# basic file preview for ls (you can replace with something more sophisticated than head)
+zstyle ':completion::*:ls::*' fzf-completion-opts --preview='eval head {1}'
+
+# preview when completing env vars (note: only works for exported variables)
+# eval twice, first to unescape the string, second to expand the $variable
+zstyle ':completion::*:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-completion-opts --preview='eval eval echo {1}'
+
+# preview a `git status` when completing git add
+zstyle ':completion::*:git::git,add,*' fzf-completion-opts --preview='git -c color.status=always status --short'
+
+# if other subcommand to git is given, show a git diff or git log
+zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
+eval set -- {+1}
+for arg in "$@"; do
+    { git diff --color=always -- "$arg" | git log --color=always "$arg" } 2>/dev/null
+done'
 
 # fzf pass ZSH
 _fzf_complete_pass() {
@@ -571,13 +668,6 @@ _fzf_complete_pass() {
 #  [ $# -gt 0 ] && _z "$*" && return
 #  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 #}
-
-# Color Ayu Mirage
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-    --color=fg:#cbccc6,bg:#1f2430,hl:#707a8c
-    --color=fg+:#707a8c,bg+:#191e2a,hl+:#ffcc66
-    --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
-    --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff'
 
 join-lines() {
   local item
@@ -669,10 +759,6 @@ unset PIDFOUND
 #eval "$(oh-my-posh --init --shell zsh --config '~/.dotfiles/.poshthemes/negligible.omp.json')"
 # eval "$(oh-my-posh --init --shell zsh --config '/home/linuxbrew/.linuxbrew/opt/oh-my-posh/themes/pure.omp.json')"
 
-# the fuck alias
-eval $(thefuck --alias)
-#eval $(thefuck --alias --enable-experimental-instant-mode)
-
 # # prompt pure
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 # zinit light sindresorhus/pure
@@ -681,8 +767,9 @@ eval $(thefuck --alias)
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# fix wsl2 resolv.conf
-#echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf > /dev/null
+# source omz lib
+[ -f ~/.local/share/zinit/snippets/OMZ::lib/cli.zsh ] && source ~/.local/share/zinit/snippets/OMZ::lib/cli.zsh
+[ -f ~/.local/share/zinit/snippets/OMZ::lib/git.zsh ] && source ~/.local/share/zinit/snippets/OMZ::lib/git.zsh
 
 # # pure prompt
 #autoload -Uz promptinit
@@ -697,9 +784,14 @@ eval $(thefuck --alias)
 # # turn on git stash status
 #zstyle :prompt:pure:git:stash show yes
 
-# # compinit
-# autoload -Uz _zinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
+# Ctrl+A for aliases full commands
+zle -C alias-expension complete-word _generic
+bindkey '^a' alias-expension
+zstyle ':completion:alias-expension:*' completer _expand_alias
+
+# the fuck alias
+eval $(thefuck --alias)
+#eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # Git
 autoload -Uz vcs_info
@@ -724,12 +816,6 @@ GITSTATUS_LOG_LEVEL=DEBUG
 #     sbin'git-url;git-guclone' \
 #   zdharma-continuum/git-url
 
-## pipx Completion
-autoload -U bashcompinit
-    bashcompinit
-
-eval "$(register-python-argcomplete pipx)"
-
 # ## Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # ### zsh builtin AUTOLOAD
@@ -737,11 +823,20 @@ autoload -Uz compinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 compinit -i
 
-# load function folders ----------- NEVER DELETE BELOW RHIS LINE
-fpath=( $ZDOTDIR/functions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
+## pipx Completion
+autoload -U bashcompinit
+bashcompinit
+eval "$(register-python-argcomplete pipx)"
 
+# brew shell completions
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# load function folders ----------- NEVER DELETE BELOW RHIS LINE
 ### End of Zinit's installer chunk
+
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
