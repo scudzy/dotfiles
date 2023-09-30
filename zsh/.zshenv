@@ -96,3 +96,20 @@ export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-
 # Glibc
 export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/glibc/lib"
 export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/glibc/include"
+
+# brew
+#eval "$(/home/scudzy/.linuxbrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" eval export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+export HOMEBREW_NO_INSTALL_FROM_API="1"
+export HOMEBREW_VERBOSE="1"
+
+### Powerline-status
+export POWERLINE_LOCATION="/home/scudzy/.local/pipx/venx/powerline-status/lib/python3.11/site-packages/powerline"
+export POWERLINE_CONFIG_COMMAND="/home/scudzy/.local/bin/powerline-config"
+export POWERLINE_ZSH_CONTINUATION="1"
+export POWERLINE_ZSH_SELECT="1"
