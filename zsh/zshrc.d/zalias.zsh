@@ -132,7 +132,7 @@ alias halimi="pass garbage/eMail/Google-halimi@barikatech.com"
 
 # others
 alias c="calc $@"
-alias suu="sudo apt update && sudo apt upgrade -y"
+alias suu="sudo apt -oDebug::pkgAcquire::Worker=1 update && sudo apt -oDebug::pkgAcquire::Worker=1 upgrade -y"
 alias dfah="df -h $@"
 alias dush="du -csh $@"
 alias path="printenv | rg $PATH"
@@ -172,6 +172,9 @@ alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/d
 # python
 alias cc="currency_converter $@"
 alias vw="pyvoc -w $@"
+alias pxu="pipx upgrade-all"
+alias pxi="pipx install $@"
+alias pxun="pipx uninstall $@"
 alias pip="pip3"
 alias pip3i="python3 -m pip install $@"
 alias pip3u="pip3 uninstall $#"
@@ -180,9 +183,9 @@ alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 
 # apt & dpkg
-alias apti="sudo apt install $@"
-alias aptino="sudo apt install --no-install-recommends $@"
-alias aptar="sudo apt autoremove $@"
+alias apti="sudo apt -oDebug::pkgAcquire::Worker=1 install $@"
+alias aptino="sudo apt -oDebug::pkgAcquire::Worker= install --no-install-recommends $@"
+alias aptar="sudo apt -oDebug::pkgAcquire::Worker=1 autoremove $@"
 alias aptcs="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias apts="apt search $@"
 alias aptrd="apt-rdepends $@"
@@ -243,11 +246,11 @@ alias encode="openssl enc -base64 <<< $@"
 alias decode="openssl enc -base64 -d <<< $@"
 
 # brew
-alias brewuu="brew update && brew upgrade && exec zsh"
-alias brewup="brew upgrade $@"
+alias brewuu="brew update -v && brew upgrade -v && exec zsh"
+alias brewup="brew upgrade $@ -v"
 alias brewl="brew list"
-alias brewi="brew install $@"
-alias brewun="brew uninstall $@"
+alias brewi="brew install $@ -v"
+alias brewun="brew uninstall $@ -v"
 
 # rclone function
 rcl1 () { rclone about G-scudzy: && echo "$(tput setaf 1)scudzy@gmail.com$(tput sgr0)" }
