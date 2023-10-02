@@ -9,7 +9,7 @@ export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_RUNTIME_DIR=~/.local/service-scudzy.aqX
 export RUNLEVEL=3
-export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
+# export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 
 if [[ "$OSTYPE" == amd64 ]]; then
   export XDG_DESKTOP_DIR="${HOME}/Users/Desktop"
@@ -36,8 +36,12 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 export COWPATH="/usr/share/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/snap/google-cloud-cli/current/bin:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:$PATH"
+#:/snap/google-cloud-cli/current/bin:
 #export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
+
+### Python3 path
+export PATH="$PATH:/usr/bin/python3:$PATH"
 
 # VCXSRV
 # WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
@@ -97,9 +101,8 @@ export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-
 export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/glibc/lib"
 export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/glibc/include"
 
-# brew
-#eval "$(/home/scudzy/.linuxbrew/bin/brew shellenv)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" eval export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+### Homebrew
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
 export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
 export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
@@ -113,3 +116,10 @@ export POWERLINE_LOCATION="/home/scudzy/.local/pipx/venx/powerline-status/lib/py
 export POWERLINE_CONFIG_COMMAND="/home/scudzy/.local/bin/powerline-config"
 export POWERLINE_ZSH_CONTINUATION="1"
 export POWERLINE_ZSH_SELECT="1"
+
+### tmux
+export ZSH_TMUX_CONFIG="/home/scudzy/.tmux.conf"
+
+### z.lua
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
