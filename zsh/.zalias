@@ -23,15 +23,15 @@ alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
 # text editor
-alias zshrc="gedit $ZDOTDIR/.zshrc"
-alias zshenv="gedit $ZDOTDIR/.zshenv"
-alias zlogin="gedit $ZDOTDIR/.zlogin"
-alias zsprofile="gedit $ZDOTDIR/.zprofile"
-alias zalias="gedit /home/scudzy/.dotfiles/zsh/.zalias"
-alias resolv="gedit /etc/resolv.conf"
-alias wslrc="gedit /etc/wsl.conf"
-alias tmuxrc="gedit $DOTFILES/.tmux.conf"
-alias vimrc="gedit $DOTFILES/.vimrc"
+alias zshrc="gvim $ZDOTDIR/.zshrc"
+alias zshenv="gvim $ZDOTDIR/.zshenv"
+alias zlogin="gvim $ZDOTDIR/.zlogin"
+alias zsprofile="gvim $ZDOTDIR/.zprofile"
+alias zalias="gvim /home/scudzy/.dotfiles/zsh/.zalias"
+alias resolv="gvim /etc/resolv.conf"
+alias wslrc="gvim /etc/wsl.conf"
+alias tmuxrc="gvim $DOTFILES/.tmux.conf"
+alias vimrc="gvim $DOTFILES/.vimrc"
 alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 alias stresscpu="for i in $(seq $(getconf _NPROCESSORS_ONLN)); do yes > /dev/null & done"
 alias ompu='sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh && sudo chmod +x /usr/local/bin/oh-my-posh'
@@ -40,7 +40,7 @@ alias ompv='oh-my-posh --version'
 # z,lua
 alias zh='z -I -t .' # access MRU directories interactively by utilizing parameter -I (fzf) and -t (sort by time):
 alias zz='z -c'      # restrict matches to subdirs of $PWD
-alias zi='z -i'      # cd with interactive selection
+#alias zi='z -i'      # cd with interactive selection
 alias zf='z -I'      # use fzf to select in multiple matches
 alias zb='z -b'      # quickly cd to the parent directory
 
@@ -55,6 +55,8 @@ alias -g M='| more'
 # Colorize
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
 alias -g -- --help='--help |& bat --language=help --style=plain'
+
+alias -g -- ?='--help'
 
 # mask built-ins with better defaults
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
@@ -195,9 +197,10 @@ alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 
 # apt & dpkg
-alias apti="sudo apt -oDebug::pkgAcquire::Worker=1 install $@"
-alias aptino="sudo apt -oDebug::pkgAcquire::Worker= install --no-install-recommends $@"
-alias aptar="sudo apt -oDebug::pkgAcquire::Worker=1 autoremove $@"
+# -oDebug::pkgAcquire::Worker=1 --- Add for verbose debug
+alias apti="sudo apt install $@"
+alias aptino="sudo apt install --no-install-recommends $@"
+alias aptar="sudo apt autoremove $@"
 alias aptcs="apt-cache search '' | sort | cut --delimiter ' ' --fields 1 | fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | xargs -r"
 alias apts="apt search $@"
 alias aptrd="apt-rdepends $@"
@@ -232,7 +235,7 @@ alias tempty="trash-empty $@"
 alias trestore="restore-trash $@"
 alias tlist="trash-list"
 alias cat="bat --pager"
-alias tl="tldr $@"
+alias td="tldr $@"
 
 # dns
 alias dns1='echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8\n" | sudo tee /etc/resolv.conf'
