@@ -160,16 +160,16 @@ endif
 set background=dark
 
 " AirLineTheme
-let g:airline_theme='ayu_dark'
+let g:airline_theme='powerlineish'
 " set airline theme
 " let g:airline_theme = 'tender'
 "set termguicolors
 "let ayucolor="light"  " for light version of theme
 "let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+"colorscheme powerlineish
+colorscheme gruvbox
 "colorscheme gruvbox
-"colorscheme dracula
 
 " Specific colorscheme settings (must come after setting your colorscheme).
 if (g:colors_name == 'gruvbox')
