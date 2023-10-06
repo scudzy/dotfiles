@@ -4,6 +4,8 @@
 [credential "https://github.com"]
 	helper =
 	helper = !/usr/bin/gh auth git-credential
+[include]
+	path = /home/scudzy/.config/delta/themes.gitconfig
 [diff]
 	tool = vimdiff
 [pager]
@@ -12,6 +14,7 @@
 	reflog = delta
 	show = delta
 [delta]
+	features = collared-trogon
 	features = side-by-side line-numbers decorations
 	whitespace-error-style = 22 reverse
 	side-by-side = true
