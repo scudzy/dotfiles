@@ -2,16 +2,22 @@
 --max-columns=150
 --max-columns-preview
 
+# Line number
+--line-number
+
 # Add my 'web' type.
 --type-add
 web:*.{html,css,js}*
 
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
 # Using glob patterns to include/exclude files or folders
---glob=!git/*
+--glob=!.git/*
 
 # or
 --glob
-!git/*
+!.git/*
 
 # Set the colors.
 --colors=line:none
@@ -19,6 +25,3 @@ web:*.{html,css,js}*
 
 # Because who cares about case!?
 --smart-case
-
-# Line number
---line-number
