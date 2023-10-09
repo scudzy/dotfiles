@@ -44,6 +44,10 @@ alias zz='z -c'      # restrict matches to subdirs of $PWD
 alias zf='z -I'      # use fzf to select in multiple matches
 alias zb='z -b'      # quickly cd to the parent directory
 
+### Manpages
+alias mank="man -k $@"
+alias manf="man -f $@"
+
 # zsh pipes
 alias -g H='| head'
 alias -g T='| tail'
@@ -85,6 +89,7 @@ alias po=popd
 alias pu=pushd
 alias globurl='noglob urlglobber '
 alias qq=exit
+alias rg="rg -S -n --no-heading --color=always $@"
 
 # network
 alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -115,13 +120,13 @@ alias dus="du -had 1 | sort -rh"
 alias autorotate="jhead -autorot"
 
 # ls
-alias ld="exa -haDG --icons --octal-permissions $@"
-alias lld="exa -hlaDG --icons --octal-permissions $@"
-alias ll="exa -hlaT -L=1 --icons --octal-permissions --group-directories-first $@"
-alias l2="exa -hlaT -L=2 --icons --octal-permissions --group-directories-first $@"
-alias lg="exa -haG --icons --octal-permissions --group-directories-first $@"
-alias llg="exa -hlaG --icons --octal-permissions --group-directories-first $@"
-alias lgit="exa -hlaG --icons --git --octal-permissions --group-directories-first $@"
+alias ld="exa -ahDG --icons --octal-permissions $@"
+alias lld="exa -lahDG --icons --octal-permissions $@"
+alias ll="exa -laT -L=1 --icons --octal-permissions --group-directories-first $@"
+alias l2="exa -laT -L=2 --icons --octal-permissions --group-directories-first $@"
+alias lg="exa -ahG --icons --octal-permissions --group-directories-first $@"
+alias llg="exa -lahG --icons --octal-permissions --group-directories-first $@"
+alias lgit="exa -lahG --icons --git --octal-permissions --group-directories-first $@"
 
 # sh
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
