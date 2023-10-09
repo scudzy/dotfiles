@@ -51,25 +51,25 @@ function verify_appfile {
   fi
 }
 
-# #
-# # atom
-# #
-# if command -v apm &> /dev/null; then
-#   export ATOM_HOME="$XDG_CONFIG_HOME"/atom
-#   [[ $VERIFY_XDG == true ]] && verify_appdir "$ATOM_HOME" "$HOME"/.atom
-# fi
+#
+# atom
+#
+if command -v apm &> /dev/null; then
+  export ATOM_HOME="$XDG_CONFIG_HOME"/atom
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$ATOM_HOME" "$HOME"/.atom
+fi
 
-# #
-# # docker and docker-machine
-# #
-# if command -v docker &> /dev/null; then
-#   if command -v docker-machine &> /dev/null; then
-#     export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
-#     [[ $VERIFY_XDG == true ]] && verify_appdir "$MACHINE_STORAGE_PATH" "$HOME"/.docker/machine
-#   fi
-#   export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
-#   [[ $VERIFY_XDG == true ]] && verify_appdir "$DOCKER_CONFIG" "$HOME"/.docker
-# fi
+#
+# docker and docker-machine
+#
+if command -v docker &> /dev/null; then
+  if command -v docker-machine &> /dev/null; then
+    export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
+    [[ $VERIFY_XDG == true ]] && verify_appdir "$MACHINE_STORAGE_PATH" "$HOME"/.docker/machine
+  fi
+  export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$DOCKER_CONFIG" "$HOME"/.docker
+fi
 
 #
 # gnupg
@@ -79,40 +79,40 @@ if command -v gpg &> /dev/null || command -v gpg &> /dev/null; then
   [[ $VERIFY_XDG == true ]] && verify_appdir "$GNUPGHOME" "$HOME"/.gnupg
 fi
 
-# #
-# # ipython/jupyter
-# #
-# if command -v ipython &> /dev/null || type jupyter &> /dev/null; then
-#   export IPYTHONDIR="$XDG_CONFIG_HOME"/jupyter
-#   [[ $VERIFY_XDG == true ]] && verify_appdir "$IPYTHONDIR" "$HOME"/.ipython
-#   export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
-#   [[ $VERIFY_XDG == true ]] && verify_appdir "$JUPYTER_CONFIG_DIR" "$HOME"/.jupyter
-# fi
+#
+# ipython/jupyter
+#
+if command -v ipython &> /dev/null || type jupyter &> /dev/null; then
+  export IPYTHONDIR="$XDG_CONFIG_HOME"/jupyter
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$IPYTHONDIR" "$HOME"/.ipython
+  export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$JUPYTER_CONFIG_DIR" "$HOME"/.jupyter
+fi
 
-# #
-# # less
-# #
-# if command -v less &> /dev/null; then
-#   export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
-#   [[ $VERIFY_XDG == true ]] && verify_appfile "$LESSKEY" "$HOME"/.less
-#   export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
-#   [[ $VERIFY_XDG == true ]] && verify_appfile "$LESSHISTFILE" "$HOME"/.lesshst
-# fi
+#
+# less
+#
+if command -v less &> /dev/null; then
+  export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$LESSKEY" "$HOME"/.less
+  export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$LESSHISTFILE" "$HOME"/.lesshst
+fi
 
-# #
-# # npm
-# #
-# if command -v npm &> /dev/null; then
-#   npmrc=$(cat <<EOF
-# prefix=\${XDG_DATA_HOME}/npm
-# cache=\${XDG_CACHE_HOME}/npm
-# tmp=\${XDG_RUNTIME_DIR}/npm
-# init-module=\${XDG_CONFIG_HOME}/npm/config/npm-init.js
-# EOF
-# )
-#   export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
-#   [[ $VERIFY_XDG == true ]] && verify_appfile "$NPM_CONFIG_USERCONFIG" "$HOME"/.npmrc "$npmrc"
-# fi
+#
+# npm
+#
+if command -v npm &> /dev/null; then
+  npmrc=$(cat <<EOF
+prefix=\${XDG_DATA_HOME}/npm
+cache=\${XDG_CACHE_HOME}/npm
+tmp=\${XDG_RUNTIME_DIR}/npm
+init-module=\${XDG_CONFIG_HOME}/npm/config/npm-init.js
+EOF
+)
+  export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$NPM_CONFIG_USERCONFIG" "$HOME"/.npmrc "$npmrc"
+fi
 
 #
 # python
@@ -130,35 +130,35 @@ if command -v pylint &> /dev/null; then
   [[ $VERIFY_XDG == true ]] && verify_appdir "$PYLINTHOME" "$HOME"/.pylint.d
 fi
 
-# #
-# # readline
-# #
-# export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
-# [[ $VERIFY_XDG == true ]] && verify_appfile "$INPUTRC" "$HOME"/.inputrc
+#
+# readline
+#
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+[[ $VERIFY_XDG == true ]] && verify_appfile "$INPUTRC" "$HOME"/.inputrc
 
-# #
-# # screen
-# #
-# if command -v screen &> /dev/null; then
-#   export SCREENRC="$XDG_CONFIG_HOME"/screen/.screenrc
-#   [[ $VERIFY_XDG == true ]] && verify_appfile "$SCREENRC" "$HOME"/.screenrc
-# fi
+#
+# screen
+#
+if command -v screen &> /dev/null; then
+  export SCREENRC="$XDG_CONFIG_HOME"/screen/.screenrc
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$SCREENRC" "$HOME"/.screenrc
+fi
 
-# #
-# # subversion
-# #
-# if command -v svn &> /dev/null; then
-#   [[ $VERIFY_XDG == true ]] && verify_appdir "$XDG_CONFIG_HOME"/subversion "$HOME"/.svn
-#   alias svn="command svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
-# fi
+#
+# subversion
+#
+if command -v svn &> /dev/null; then
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$XDG_CONFIG_HOME"/subversion "$HOME"/.svn
+  alias svn="command svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
+fi
 
-# #
-# # sqlite
-# #
-# if command -v sqlite3 &> /dev/null; then
-#   export SQLITE_HISTORY="$XDG_DATA_HOME"/sqlite/sqlite_history
-#   [[ $VERIFY_XDG == true ]] && verify_appfile "$SQLITE_HISTORY" "$HOME"/.sqlite_history
-# fi
+#
+# sqlite
+#
+if command -v sqlite3 &> /dev/null; then
+  export SQLITE_HISTORY="$XDG_DATA_HOME"/sqlite/sqlite_history
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$SQLITE_HISTORY" "$HOME"/.sqlite_history
+fi
 
 #
 # tmux
@@ -184,10 +184,10 @@ EOF
   verify_appfile "$WGETRC" "$HOME"/.wgetrc "$wgetrc_contents"
 fi
 
-# #
-# # z
-# #
-# if command -v z &> /dev/null; then
-#   export _Z_DATA="$XDG_DATA_HOME/z/data"
-#   verify_appfile "$_Z_DATA" "$HOME"/.z
-# fi
+#
+# z
+#
+if command -v z &> /dev/null; then
+  export _Z_DATA="$XDG_DATA_HOME/z/data"
+  verify_appfile "$_Z_DATA" "$HOME"/.z
+fi
