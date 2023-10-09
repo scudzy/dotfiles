@@ -49,6 +49,7 @@ bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
+bindkey '^Xh' _complete_help                      # ctrl x h context for a command
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
     [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -322,7 +323,6 @@ zinit wait lucid light-mode for \
         zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions \
-        OMZP::colored-man-pages \
         OMZP::tmux \
         OMZP::genpass \
         OMZP::fzf \
@@ -333,23 +333,15 @@ zinit wait lucid light-mode for \
         OMZP::zsh-interactive-cd \
         OMZP::encode64 \
         OMZP::systemadmin \
-        OMZP::brew \
         OMZP::gpg-agent \
         OMZP::docker-compose \
         OMZP::debian
 
+        # OMZP::brew \
+        # OMZP::colored-man-pages \
+
 ### zsh-users/zsh-history-substring-search
 zinit light zsh-users/zsh-history-substring-search
-
-### Load fzf, completion & key biindings
-zinit for \
-    as'command' \
-    dl="$(print -c https://raw.githubusercontent.com/junegunn/fzf/master/{shell/{'key-bindings.zsh;','completion.zsh -> _fzf;'},man/{'man1/fzf.1 -> $ZPFX/share/man/man1/fzf.1;','man1/fzf-tmux.1 -> $ZPFX/share/man/man1/fzf-tmux.1;'}})" \
-    from'gh-r' \
-    null \
-    pick'fzf' \
-    src'key-bindings.zsh' \
-  @junegunn/fzf
 
 ### zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
@@ -369,13 +361,11 @@ zinit ice svn pick"completion.zsh" multisrc'git.zsh \
     functions.zsh clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh'
 zinit snippet OMZ::lib
 
-zinit for OMZL::prompt_info_functions.zsh OMZT::gnzh
-
 ### git extras
 # or with the for syntax + async load
-zinit lucid wait'0a' for \
-as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX" \
-    cp"man/git*.1 ${ZINIT[MAN_DIR]}/man1" tj/git-extras
+zinit ice lucid wait'0' as"program" pick"$ZPFX/bin/git-*" \
+  src"etc/git-extras-completion.zsh" make"--prefix=$ZPFX"
+zinit light tj/git-extras
 
 ### sharkdp/fd
 zinit ice from"gh-r" as"command" \
@@ -386,18 +376,6 @@ zinit ice from"gh-r" as"command" \
   " \
   atpull"%atclone"
 zinit light sharkdp/fd
-
-  # atload'
-  #   FZF_FD_OPTS="--color always --hidden --follow --exclude .git --exclude node_modules"
-  #   FZF_PREVIEW_FILE_COMMAND="bat --color=always --paging=never --style=plain"
-  #   FZF_PREVIEW_DIR_COMMAND="exa -1a --color=always --icons --group-directories-first"
-  #   FZF_DEFAULT_OPTS="--no-mouse --bind \"tab:accept,ctrl-y:preview-page-up,ctrl-v:preview-page-down,ctrl-e:execute-silent(\${VISUAL:-code} {+} >/dev/null 2>&1)\""
-  #   FZF_DEFAULT_COMMAND="fd --type f $FZF_FD_OPTS"
-  #   FZF_ALT_C_OPTS="--ansi --preview \"$FZF_PREVIEW_DIR_COMMAND {} 2>/dev/null\""
-  #   FZF_ALT_C_COMMAND="fd --type d . $FZF_FD_OPTS"
-  #   FZF_CTRL_T_OPTS="--ansi --bind \"ctrl-w:execute(\${EDITOR:-nano} {1} >/dev/tty </dev/tty)+refresh-preview\" --preview \"$FZF_PREVIEW_FILE_COMMAND {} 2>/dev/null\""
-  #   FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  # '
 
 ### sharkdp/bat
 zinit ice from"gh-r" as"command" \
@@ -429,8 +407,17 @@ zinit ice from"gh-r" as"command" \
   atpull"%atclone"
 zinit light ogham/exa
 
+### ripgrep
+zinit ice as"program" from"gh-r" \
+    mv"ripgrep* -> rg" \
+    atclone"
+        mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1
+    " \
+    atpull"%atclone"
+zinit light BurntSushi/ripgrep
+
 ### vivid
-zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid"  pick"vivid/vivid" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" pick"vivid/vivid" \
     atload'export LS_COLORS="$(vivid generate snazzy)"'
 zinit load sharkdp/vivid
 
@@ -445,12 +432,8 @@ zinit wait"1" lucid from"gh-r" as"null" for \
 zinit ice wait lucid
 zinit load 'wfxr/forgit'
 
-### ripgrep
-zinit ice lucid wait"0" as"program" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg"
-zinit light BurntSushi/ripgrep
-
 ### git-delta
-zinit ice from"gh-r" as"command" \
+zinit ice wait"0" from"gh-r" as"command" \
   mv"delta-*/delta -> delta" \
   dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta" 
 zinit light dandavison/delta
@@ -478,6 +461,16 @@ zinit ice from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz"  pick"glow" \
   cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
 
+### Load fzf, completion & key biindings
+zinit for \
+    as'command' \
+    dl="$(print -c https://raw.githubusercontent.com/junegunn/fzf/master/{shell/{'key-bindings.zsh;','completion.zsh -> _fzf;'},man/{'man1/fzf.1 -> $ZPFX/share/man/man1/fzf.1;','man1/fzf-tmux.1 -> $ZPFX/share/man/man1/fzf-tmux.1;'}})" \
+    from'gh-r' \
+    null \
+    pick'fzf' \
+    src'key-bindings.zsh' \
+  @junegunn/fzf
+
 ### tab completions via fzf-tab
 zinit ice wait"1" lucid \
   has"fzf" \
@@ -490,6 +483,9 @@ zinit ice wait"1" lucid \
     zstyle ':completion::complete:rm:*:globbed-files' ignored-patterns
     zstyle ':fzf-tab:*' fzf-command fzf
     zstyle ':fzf-tab:*' fzf-flags '--ansi'
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath' 
+    zstyle ':fzf-tab:complete:_zlua:*' query-string input
+    zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
     zstyle ':fzf-tab:*' fzf-bindings \
       'tab:accept' \
       'ctrl-y:preview-page-up' \
@@ -526,6 +522,30 @@ zinit light trapd00r/LS_COLORS
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 
+### clone vim & compiling
+zinit ice wait lucid as"program" \
+    atclone"
+        rm -f src/auto/config.cache &&
+        ./configure --prefix=$ZPFX \
+        --with-features=huge \
+        --enable-cscope \
+        --with-x \
+        --enable-multibyte \
+        --enable-rubyinterp=yes \
+        --enable-python3interp=yes \
+        --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ \
+        --enable-luainterp=yes \
+        --with-compiledby="scudzy@duck.com"
+        sudo make -j8 
+        sudo make install
+        " \
+    atpull"%atclone" \
+    atload"
+        sudo update-alternatives --install /usr/bin/editor editor $ZPFX/bin/vim 1
+        sudo update-alternatives --set editor $ZPFX/bin/vim"
+zinit light vim/vim
+
+    # make pick"$ZPFX/bin/vim"
 # ### Load git extras
 # zinit as"null" wait"1" lucid for \
 #         sbin    Fakerr/git-recall \
@@ -537,6 +557,96 @@ zinit light romkatv/powerlevel10k
 #         sbin    iwata/git-now \
 #         sbin"git-url;git-guclone" make"GITURL_NO_CGITURL=1" \
 #         zdharma-continuum/git-url
+
+### Load fzf, completion & key biindings
+zinit for \
+    as'command' \
+    dl="$(print -c https://raw.githubusercontent.com/junegunn/fzf/master/{shell/{'key-bindings.zsh;','completion.zsh -> _fzf;'},man/{'man1/fzf.1 -> $ZPFX/share/man/man1/fzf.1;','man1/fzf-tmux.1 -> $ZPFX/share/man/man1/fzf-tmux.1;'}})" \
+    from'gh-r' \
+    null \
+    pick'fzf' \
+    src'key-bindings.zsh' \
+  @junegunn/fzf
+
+### FZF configs ------------- ###
+export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
+export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
+
+# Color Ayu Mirage
+export FZF_DEFAULT_OPTS="
+    --height=60% --layout=reverse
+    --inline-info --border --margin=1 --padding=1
+    --color=fg:#cbccc6,bg:#1f2430,hl:#707a8c
+    --color=fg+:#707a8c,bg+:#191e2a,hl+:#ffcc66
+    --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
+    --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff"
+
+export FZF_CTRL_R_OPTS="
+    --preview 'echo {}' --preview-window up:3:hidden:wrap
+    --bind 'ctrl-/:toggle-preview'
+    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+    --color header:italic
+    --header 'Press CTRL-Y to copy command into clipboard'"
+
+## Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+    --preview 'bat -n --color=always {}'
+    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# # ### ALT C
+# # export FZF_ALT_C_COMMAND="fd --type directory"
+# # ### Print tree structure in the preview window
+# # export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
+
+# ### Options to fzf command
+# export FZF_COMPLETION_OPTS="--border --info=inline"
+
+# # Use fd (https://github.com/sharkdp/fd) instead of the default find
+# # command for listing path candidates.
+# # - The first argument to the function ($1) is the base path to start traversal
+# # - See the source code (completion.{bash,zsh}) for the details.
+# _fzf_compgen_path() {
+#   fd --hidden --follow --exclude ".git" . "$1"
+# }
+
+# # Use fd to generate the list for directory completion
+# _fzf_compgen_dir() {
+#   fd --type d --hidden --follow --exclude ".git" . "$1"
+# }
+
+# # Advanced customization of fzf options via _fzf_comprun function
+# # - The first argument to the function is the name of the command.
+# # - You should make sure to pass the rest of the arguments to fzf.
+# _fzf_comprun() {
+#   local command=$1
+#   shift
+
+#   case "$command" in
+#     cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+#     export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+#     ssh)          fzf --preview 'dig {}'                   "$@" ;;
+#     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+#   esac
+# }
+
+# # basic file preview for ls (you can replace with something more sophisticated than head)
+# zstyle ':completion::*:ls::*' fzf-completion-opts --preview='eval head {1}'
+
+# # preview when completing env vars (note: only works for exported variables)
+# # eval twice, first to unescape the string, second to expand the $variable
+# zstyle ':completion::*:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-completion-opts --preview='eval eval echo {1}'
+
+# # preview a `git status` when completing git add
+# zstyle ':completion::*:git::git,add,*' fzf-completion-opts --preview='git -c color.status=always status --short'
+
+# # if other subcommand to git is given, show a git diff or git log
+# zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
+#     eval set -- {+1}
+#     for arg in "$@"; do
+#        { git diff --color=always -- "$arg" | git log --color=always "$arg" } 2>/dev/null
+#     done'
+
+### End of fzf configs ----------------------- ###
 
 ####################### End of zinit line ##########################
 
@@ -562,7 +672,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 source $ZDOTDIR/.zalias
 
 # source gcloud completion
-#source /snap/google-cloud-cli/current/completion.zsh.inc
+source /snap/google-cloud-cli/current/completion.zsh.inc
 
 # git-extra
 source $HOME/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh
@@ -588,90 +698,6 @@ done
 if [ "$TERM" != "xterm-256color" ]; then
     export TERM=xterm-256color
 fi
-
-### FZF configs ------------- ###
-### fzf env var
-# source zsh fzf
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-### Fzf base
-export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
-export FZF_DEFAULT_COMMAND="fd --type file --hidden --follow --exclude .git --color=always"
-
-# Color Ayu Mirage
-export FZF_DEFAULT_OPTS="
-    --height=80% --layout=reverse
-    --inline-info --border --margin=1 --padding=1
-    --color=fg:#cbccc6,bg:#1f2430,hl:#707a8c
-    --color=fg+:#707a8c,bg+:#191e2a,hl+:#ffcc66
-    --color=info:#73d0ff,prompt:#707a8c,pointer:#cbccc6
-    --color=marker:#73d0ff,spinner:#73d0ff,header:#d4bfff"
-
-export FZF_CTRL_R_OPTS="
-    --preview 'echo {}' --preview-window up:3:hidden:wrap
-    --bind 'ctrl-/:toggle-preview'
-    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-    --color header:italic
-    --header 'Press CTRL-Y to copy command into clipboard'"
-
-## Preview file content using bat (https://github.com/sharkdp/bat)
-export FZF_CTRL_T_OPTS="
-    --preview 'bat -n --color=always {}'
-    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
-### ALT C
-export FZF_ALT_C_COMMAND="fd --type directory"
-### Print tree structure in the preview window
-export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
-
-### Options to fzf command
-export FZF_COMPLETION_OPTS="--border --info=inline"
-
-# Use fd (https://github.com/sharkdp/fd) instead of the default find
-# command for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
-}
-
-# Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
-    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
-  esac
-}
-
-# basic file preview for ls (you can replace with something more sophisticated than head)
-zstyle ':completion::*:ls::*' fzf-completion-opts --preview='eval head {1}'
-
-# preview when completing env vars (note: only works for exported variables)
-# eval twice, first to unescape the string, second to expand the $variable
-zstyle ':completion::*:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-completion-opts --preview='eval eval echo {1}'
-
-# preview a `git status` when completing git add
-zstyle ':completion::*:git::git,add,*' fzf-completion-opts --preview='git -c color.status=always status --short'
-
-# if other subcommand to git is given, show a git diff or git log
-zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
-    eval set -- {+1}
-    for arg in "$@"; do
-       { git diff --color=always -- "$arg" | git log --color=always "$arg" } 2>/dev/null
-    done'
-
-### End of fzf configs ----------------------- ###
 
 ### fzf pass ZSH
 _fzf_complete_pass() {
@@ -718,9 +744,24 @@ unset -f bind-git-helper
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 source $HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# Load z.lua
-#eval "$(lua ~/z.lua-1.8.12/z.lua --init zsh)"
-# eval "$(lua ${DOTFILES}/z.lua/z.lua --init zsh enhanced once fzf)"
+# ### ------------------------------ powerline-go ------------------------------ ###-
+# function powerline_precmd() {
+#     eval "$($GOPATH/bin/powerline-go -error $? -shell zsh -eval -modules-right git)"
+# }
+
+# function install_powerline_precmd() {
+#   for s in "${precmd_functions[@]}"; do
+#     if [ "$s" = "powerline_precmd" ]; then
+#       return
+#     fi
+#   done
+#   precmd_functions+=(powerline_precmd)
+# }
+
+# if [ "$TERM" != "linux" ]; then
+#     install_powerline_precmd
+# fi
+# ### ------------------------------ powerline-go ------------------------------ ###-
 
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
@@ -771,9 +812,9 @@ GITSTATUS_LOG_LEVEL=DEBUG
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 ### zsh builtin AUTOLOAD
-autoload -Uz compinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-compinit -i
+# autoload -Uz compinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
+# compinit -i
 
 ### pipx Completion
 autoload -U bashcompinit
@@ -804,8 +845,11 @@ echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
 
-# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
+### To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
+
+### source xdg settings
+[[ ! -f $ZDOTDIR/xdg.zsh ]] || source $ZDOTDIR/xdg.zsh
 
 # debug
 # zprof
