@@ -1,7 +1,0 @@
-tap "homebrew/bundle"
-tap "homebrew/core"
-brew "gcc"
-brew "cheat"
-brew "gdu"
-brew "oh-my-posh"
-brew "vim"
