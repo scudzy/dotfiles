@@ -22,13 +22,13 @@ fi
 
 # Add all local binary paths to the system path.
 export PAGER="less"
-export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.local/share/zinit/plugins/tj---git-extras/man:$MANPATH"
+export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.local/share/zinit/plugins/tj---git-extras/man"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GOROOT="/usr/local/go/"
 export GOPATH="${HOME}/go"
 # export PYTHONHOME="/usr/lib/python3.11"
-# export PYTHONPATH="${HOME}/.local/lib/python3.11/site-packages:/usr/lib/python3/dist-packages/"
-export PKG_CONFIG_PATH="/usr/share/pkgconfig/"
+export PYTHONPATH="${HOME}/.local/lib/python3.11/site-packages"
+export PKG_CONFIG_PATH="/usr/share/pkgconfig"
 export PASSWORD_STORE_DIR="${HOME}/.password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
@@ -36,11 +36,8 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 export COWPATH="/usr/share/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin/:$FORGIT_INSTALL_DIR/bin:$PATH"
-#:/snap/google-cloud-cli/current/bin:
-#export PATH="${HOME}/.local/bin:${HOME}/dotfiles/sh:${HOME}/.local/lib/python3.9/site-packages:/c/Windows/System32/:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$FORGIT_INSTALL_DIR/bin:/snap/google-cloud-cli/current/bin:$PATH"
 
-# VCXSRV
 # WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 # export DISPLAY=$WSL2IP:0
 # export DISPLAY=192.168.1.120:0
@@ -80,16 +77,17 @@ export VISUAL="gvim"
 export BROWSER="wslview"
 
 # Ripgrep
-export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case"
+export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc" 
 #export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
 
 ### Homebrew
-export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
-export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
-export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+# export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+# export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+# export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+# export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
+# export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+# export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 export HOMEBREW_NO_INSTALL_FROM_API="1"
 export HOMEBREW_VERBOSE="1"
 
@@ -103,9 +101,8 @@ export POWERLINE_ZSH_SELECT="1"
 export ZSH_TMUX_CONFIG="${HOME}/.tmux.conf"
 
 ### z.lua
-export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu"
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
-
-# # Glibc
-# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/glibc/lib"
-# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/glibc/include"
+export LDFLAGS="-L/usr/lib"
+export CPPFLAGS="-I/usr/include"
+export RUBYLIB="/usr/lib/ruby/vendor_ruby"
