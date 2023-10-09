@@ -134,6 +134,9 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'wgwoods/vim-systemd-syntax'
 Plug 'ervandew/supertab'
 
+" zinit-vim-syntax
+Plug 'zdharma-continuum/zinit-vim-syntax'
+
 call plug#end()
 
 " -----------------------------------------------------------------------------
