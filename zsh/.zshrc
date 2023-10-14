@@ -388,6 +388,7 @@ zinit ice from"gh-r" as"command" \
   atload"
     export BAT_THEME='zenburn'
     export BAT_PAGER='less -R -F -+X --mouse'
+    export PAGER='less'
     export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'
     alias cat='bat --paging=never --color=auto --style=numbers,changes'
     alias cats='bat --paging=always --color=always --style=numbers,changes'
@@ -668,6 +669,9 @@ export PATH="$HOME/.local/bin:$HOME/.dotfiles/sh:$PATH"
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
+### source xdg settings
+[[ ! -f $ZDOTDIR/xdg.zsh ]] || source $ZDOTDIR/xdg.zsh
+
 # source zalias
 source $ZDOTDIR/.zalias
 
@@ -847,9 +851,6 @@ echo ""
 
 ### To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
-
-### source xdg settings
-[[ ! -f $ZDOTDIR/xdg.zsh ]] || source $ZDOTDIR/xdg.zsh
 
 # debug
 # zprof
