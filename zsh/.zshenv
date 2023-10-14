@@ -88,8 +88,8 @@ export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc"
 # export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
 # export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
 # export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
-export HOMEBREW_NO_INSTALL_FROM_API="1"
-export HOMEBREW_VERBOSE="1"
+# export HOMEBREW_NO_INSTALL_FROM_API="1"
+# export HOMEBREW_VERBOSE="1"
 
 ### Powerline-status
 export POWERLINE_LOCATION="${HOME}/.local/pipx/venx/powerline-status/lib/python3.11/site-packages/powerline"
