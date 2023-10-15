@@ -10,6 +10,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Set path
+export DOTFILES="$HOME/.dotfiles"
+export ZDOTDIR="$HOME/.dotfiles/zsh"
+export PATH="$HOME/.local/bin:$HOME/.dotfiles/sh:$PATH"
+
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
@@ -81,9 +86,8 @@ zstyle ':completion:*:*:git:*' fzf-search-display true
 zstyle ':completion:*' fzf-search-display true
 
 # History configurations
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+# HISTSIZE=1000
+# SAVEHIST=2000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
@@ -398,7 +402,7 @@ zinit light sharkdp/bat
 
 ### ogham/exa, replacement for ls
 # grab exa (better ls) binary
-zinit ice from"gh-r" as"command" \
+zinit ice wait"2" lucid from"gh-r" as"program" \
   mv"bin/exa* -> exa" \
   atclone"
     mv -vf completions/exa.zsh _exa
@@ -408,13 +412,10 @@ zinit ice from"gh-r" as"command" \
   atpull"%atclone"
 zinit light ogham/exa
 
-### ripgrep
-zinit ice as"program" from"gh-r" \
-    mv"ripgrep* -> rg" \
+# BurntSushi/ripgrep
+zinit ice as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
     atclone"
-        mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1
-    " \
-    atpull"%atclone"
+        mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light BurntSushi/ripgrep
 
 ### vivid
@@ -538,13 +539,32 @@ zinit ice wait lucid as"program" \
         --enable-luainterp=yes \
         --with-compiledby="scudzy@duck.com"
         sudo make -j8 
-        sudo make install
+        sudo make install vim
         " \
     atpull"%atclone" \
     atload"
         sudo update-alternatives --install /usr/bin/editor editor $ZPFX/bin/vim 1
         sudo update-alternatives --set editor $ZPFX/bin/vim"
 zinit light vim/vim
+
+# # vim xdg spec
+# "$XDG_CONFIG_HOME"/vim/vimrc
+# set runtimepath^=$XDG_CONFIG_HOME/vim
+# set runtimepath+=$XDG_DATA_HOME/vim
+# set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+# set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+# set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+# let g:netrw_home = $XDG_DATA_HOME."/vim"
+# call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+
+# set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+# set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
+# set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+# set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
+
+# if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
 
     # make pick"$ZPFX/bin/vim"
 # ### Load git extras
@@ -661,11 +681,6 @@ fi
 # after `forgit` was loaded
 export forgit_revert_commit="grcm"
 
-# Set path
-export DOTFILES="$HOME/.dotfiles"
-export ZDOTDIR="$HOME/.dotfiles/zsh"
-export PATH="$HOME/.local/bin:$HOME/.dotfiles/sh:$PATH"
-
 # powerline9k prompt
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
@@ -775,6 +790,20 @@ function j() {
     fi
 }
 
+# Shell-GPT integration ZSH v0.1
+_sgpt_zsh() {
+if [[ -n "$BUFFER" ]]; then
+    _sgpt_prev_cmd=$BUFFER
+    BUFFER+="⌛"
+    zle -I && zle redisplay
+    BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
+    zle end-of-line
+fi
+}
+zle -N _sgpt_zsh
+bindkey ^l _sgpt_zsh
+# Shell-GPT integration ZSH v0.1
+
 # # Windows Terminal
 # function settitle () {
 #   export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
@@ -801,6 +830,9 @@ eval "$(thefuck --alias)"
 
 ### ruby env
 eval "$(/usr/bin/rbenv init - zsh)"
+
+# ### dircolors
+#eval "$(dircolors -b $DOTFILES/.dircolors)"
 
 ### Load Homebrew env
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
