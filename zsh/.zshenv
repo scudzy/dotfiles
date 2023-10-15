@@ -3,15 +3,26 @@
 
 export ZDOTDIR="${HOME}/.dotfiles/zsh"
 export DOTFILES="${HOME}/.dotfiles"
+
 # Set XDG dirs
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_RUNTIME_DIR="${HOME}/.local/service-scudzy.aqX"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.xdg}"
+export XDG_DATA_DIRS="/usr/local/share:/usr/share"
+export XDG_CONFIG_DIRS="/etc/xdg"
 export RUNLEVEL=3
+export OPENAI_API_KEY="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"
+export OPENAI_KEY="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"
 # export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 
-if [[ "$OSTYPE" == amd64 ]]; then
+export ICEAUTHORITY="$XDG_RUNTIME_DIR/ICEauthority"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export SCREENDIR="$XDG_RUNTIME_DIR/screen"
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR/tmux"
+
+if [[ "$OSTYPE" == linux-gnu ]]; then
   export XDG_DESKTOP_DIR="${HOME}/Users/Desktop"
   export XDG_DOCUMENTS_DIR="${HOME}/Users/Documents"
   export XDG_DOWNLOAD_DIR="${HOME}/Users/Downloads"
@@ -24,23 +35,32 @@ fi
 export PAGER="less"
 export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.local/share/zinit/plugins/tj---git-extras/man"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+### golang
 export GOROOT="/usr/local/go/"
 export GOPATH="${HOME}/go"
+
+### python
 # export PYTHONHOME="/usr/lib/python3.11"
 export PYTHONPATH="${HOME}/.local/lib/python3.11/site-packages"
-export PKG_CONFIG_PATH="/usr/share/pkgconfig"
+export PYTHONSTARTUP="$DOTFILES/.pythonrc"
+
+### pass
 export PASSWORD_STORE_DIR="${HOME}/.password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
 export PASSWORD_STORE_GENERATED_LENGTH="20"
+
+### rclone
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
+
+### cowsay
 export COWPATH="/usr/share/cowsay/cows/"
+
 # If you come from bash you might have to change your $PATH.
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$FORGIT_INSTALL_DIR/bin:/snap/google-cloud-cli/current/bin:$PATH"
 
-# WSL2IP=$(/sbin/ip route | awk '/default/ { print $3 }')
-# export DISPLAY=$WSL2IP:0
-# export DISPLAY=192.168.1.120:0
+# wsl2 display
 export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 export NO_AT_BRIDGE=1
@@ -55,14 +75,17 @@ export THEFUCK_PRIORITY='no_command=9999:apt_get=100'
 export THEFUCK_HISTORY_LIMIT='2000'
 export THEFUCK_NUM_CLOSE_MATCHES='5'
 
-## Nicer shell experience
+### hisory bash or zsh
+# export HISTFILE="$XDG_STATE_HOME"/bash/history
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"; # Make some commands not show up in history
 export HISTTIMEFORMAT='%F-%T ';
 export SAVEHIST=$HISTSIZE;
-export HISTFILE=$HOME/.zsh_history;
+
+### language
 export LANG="en_US.UTF-8"; # Language formatting is still important
 export LC_ALL="en_US.UTF-8"; # byte-wise sorting and force language for those pesky apps
 
@@ -81,6 +104,23 @@ export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-
 export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc" 
 #export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
 
+### Powerline-status
+export POWERLINE_LOCATION="${HOME}/.local/pipx/venx/powerline-status/lib/python3.11/site-packages/powerline"
+export POWERLINE_CONFIG_COMMAND="${HOME}/.local/bin/powerline-config"
+export POWERLINE_ZSH_CONTINUATION="1"
+export POWERLINE_ZSH_SELECT="1"
+
+### tmux
+export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
+
+### local library paths
+export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu"
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig:$PKG_CONFIG_PATH"
+export LDFLAGS="-L/usr/lib"
+export CPPFLAGS="-I/usr/include"
+export RUBYLIB="/usr/lib/ruby/vendor_ruby"
+
+
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 # export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
@@ -90,19 +130,3 @@ export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc"
 # export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 # export HOMEBREW_NO_INSTALL_FROM_API="1"
 # export HOMEBREW_VERBOSE="1"
-
-### Powerline-status
-export POWERLINE_LOCATION="${HOME}/.local/pipx/venx/powerline-status/lib/python3.11/site-packages/powerline"
-export POWERLINE_CONFIG_COMMAND="${HOME}/.local/bin/powerline-config"
-export POWERLINE_ZSH_CONTINUATION="1"
-export POWERLINE_ZSH_SELECT="1"
-
-### tmux
-export ZSH_TMUX_CONFIG="${HOME}/.tmux.conf"
-
-### z.lua
-export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu"
-export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
-export LDFLAGS="-L/usr/lib"
-export CPPFLAGS="-I/usr/include"
-export RUBYLIB="/usr/lib/ruby/vendor_ruby"
