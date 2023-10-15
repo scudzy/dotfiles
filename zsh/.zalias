@@ -27,10 +27,10 @@ alias zshrc="gvim $ZDOTDIR/.zshrc"
 alias zshenv="gvim $ZDOTDIR/.zshenv"
 alias zlogin="gvim $ZDOTDIR/.zlogin"
 alias zsprofile="gvim $ZDOTDIR/.zprofile"
-alias zalias="gvim /home/scudzy/.dotfiles/zsh/.zalias"
+alias zalias="gvim /$ZDOTDIR/.zalias"
 alias resolv="gvim /etc/resolv.conf"
 alias wslrc="gvim /etc/wsl.conf"
-alias tmuxrc="gvim $DOTFILES/.tmux.conf"
+alias tmuxrc="gvim $HOME/.config/tmux/tmux.conf"
 alias vimrc="gvim $DOTFILES/.vimrc"
 alias zbench="export LAZY_PROMPT=false; for i in $(seq 1 10); do time 'zsh -i -c exit'; done; unset LAZY_PROMPT"
 alias stresscpu="for i in $(seq $(getconf _NPROCESSORS_ONLN)); do yes > /dev/null & done"
@@ -62,6 +62,9 @@ alias -g -- --help='--help |& bat --language=help --style=plain'
 
 alias -g -- ?='--help'
 
+# subversion
+alias svn="svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
+
 # mask built-ins with better defaults
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias ping="ping -c5 $@"
@@ -89,7 +92,7 @@ alias po=popd
 alias pu=pushd
 alias globurl='noglob urlglobber '
 alias qq=exit
-alias rg="rg -S -n --no-heading --color=always $@"
+alias rgc="rg -S -n --no-heading --color=always $@"
 
 # network
 alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
