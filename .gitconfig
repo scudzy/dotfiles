@@ -271,3 +271,5 @@
 	postbuffer = 524288000
 [credential]
 	helper = cache --timeout=86400
+[core]
+	pager = delta --dark
