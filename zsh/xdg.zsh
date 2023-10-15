@@ -8,7 +8,10 @@
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.xdg}"
+export XDG_DATA_DIRS="/usr/local/share:/usr/share"
+export XDG_CONFIG_DIRS="/etc/xdg"
 
 VERIFY_XDG="${VERIFY_XDG:-true}"
 
@@ -60,6 +63,30 @@ if command -v apm &> /dev/null; then
 fi
 
 #
+# bash
+#
+if command -v bash &> /dev/null; then
+  export BASH_HOME="$XDG_CONFIG_HOME"/bash
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$BASH_HOME" "$HOME"/.bash
+fi
+
+#
+# curl
+#
+if command -v curl &> /dev/null; then
+  export CURL_HOME="$XDG_CONFIG_HOME"/.curlrc
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$CURL_HOME" "$HOME"/.curlrc
+fi
+
+#
+# ruby gem
+#
+if command -v gem &> /dev/null; then
+  export GEMRC="$XDG_CONFIG_HOME"/.gemrc
+  [[ $VERIFY_XDG == true ]] && verify_appfile "$GEMRC" "$HOME"/.gemrc
+fi
+
+#
 # docker and docker-machine
 #
 if command -v docker &> /dev/null; then
@@ -77,6 +104,14 @@ fi
 if command -v gpg &> /dev/null || command -v gpg &> /dev/null; then
   export GNUPGHOME="$XDG_DATA_HOME"/gnupg
   [[ $VERIFY_XDG == true ]] && verify_appdir "$GNUPGHOME" "$HOME"/.gnupg
+fi
+
+#
+# pyvoc
+#
+if command -v pyvoc &> /dev/null || command -v pyvoc &> /dev/null; then
+  export PYVOCHOME="$XDG_CONFIG_HOME"/pyvoc
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$PYVOCHOME" "$HOME"/.pyvoc
 fi
 
 #
@@ -137,6 +172,12 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 [[ $VERIFY_XDG == true ]] && verify_appfile "$INPUTRC" "$HOME"/.inputrc
 
 #
+# rbenv
+#
+export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
+[[ $VERIFY_XDG == true ]] && verify_appdir "$RBENV_ROOT" "$HOME"/.rbenv
+
+#
 # screen
 #
 if command -v screen &> /dev/null; then
@@ -148,8 +189,8 @@ fi
 # subversion
 #
 if command -v svn &> /dev/null; then
-  [[ $VERIFY_XDG == true ]] && verify_appdir "$XDG_CONFIG_HOME"/subversion "$HOME"/.svn
-  alias svn="command svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
+  [[ $VERIFY_XDG == true ]] && verify_appdir "$XDG_CONFIG_HOME"/.subversion "$HOME"/.svn
+  alias svn="command svn --config-dir \"$XDG_CONFIG_HOME\"/.subversion"
 fi
 
 #
