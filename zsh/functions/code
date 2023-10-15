@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-
+#!/usr/bin/env
 function code() {
        /c/Users/scudzy/AppData/Local/Programs/Microsoft\ VS\ Code/Code.exe
 }
