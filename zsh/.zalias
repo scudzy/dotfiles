@@ -92,7 +92,7 @@ alias po=popd
 alias pu=pushd
 alias globurl='noglob urlglobber '
 alias qq=exit
-alias rgc="rg -S -n --no-heading --color=always $@"
+alias rgc="rg -n --no-heading --color=always $@"
 
 # network
 alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
