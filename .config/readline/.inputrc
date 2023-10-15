@@ -1,0 +1,56 @@
+# To source this file:
+#   bind -f {thefilename}
+# To know the list of functions, bound or not
+#   bind -p | less
+
+# Deserve to be know
+# - "\C-x\C-u": undo
+# - "\e#": insert-comment
+# - "\C-s": forward-search-history
+# - "\C-r": reverse-search-history
+# - "\et": transpose-words
+# - restore a binding: self-insert
+
+# Don't beep
+set bell-style none
+
+# enable 8-bits characters ...
+set meta-flag on
+set convert-meta off
+set output-meta on
+
+# clear a line.
+#Control-u: kill-whole-line
+#Home: beginning-of-line
+
+# Moving around
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# Ctrl+Backspace/Delete to delete whole words
+"\e[3;5~": kill-word
+"\C-_": backward-kill-word
+
+# Ctrl+Shift+Backspace/Delete to delete to start/end of the line
+"\e[3;6~": kill-line
+"\xC2\x9F": backward-kill-line  # for UTF-8
+#"\x9F": backward-kill-line     # for ISO-8859-x
+#"\e\C-_": backward-kill-line   # for any other charset
+
+# Insert "$()" around current line
+"\e\C-m": '\C-a"$(\C-e)"'
+
+# CTRL+up/down: navigate search history
+"\e[1;5A": history-search-backward
+"\e[1;5B": history-search-forward
+
+# Insert " 2>&1"
+"\e2": '2>&1'
+# Append " | less"
+"\el": '\C-e | less'
+# Prepend "less"
+"\eL": '\C-aless '
+# Find
+"\eF": '\C-afind . -name '
+# append "| awk /pattern/ {print $42}"
+"\ea": '\C-e | awk \'/pattern/ {print $42}\''
