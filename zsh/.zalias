@@ -92,7 +92,7 @@ alias po=popd
 alias pu=pushd
 alias globurl='noglob urlglobber '
 alias qq=exit
-alias rgc="rg -n --no-heading --color=always $@"
+alias rgc="rg -n --no-heading --color=always"
 
 # network
 alias ipext="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -123,13 +123,13 @@ alias dus="du -had 1 | sort -rh"
 alias autorotate="jhead -autorot"
 
 # ls
-alias ld="exa -ahDG --icons --octal-permissions $@"
-alias lld="exa -lahDG --icons --octal-permissions $@"
-alias ll="exa -laT -L=1 --icons --octal-permissions --group-directories-first $@"
-alias l2="exa -laT -L=2 --icons --octal-permissions --group-directories-first $@"
-alias lg="exa -ahG --icons --octal-permissions --group-directories-first $@"
-alias llg="exa -lahG --icons --octal-permissions --group-directories-first $@"
-alias lgit="exa -lahG --icons --git --octal-permissions --group-directories-first $@"
+alias ld="exa -ahDG --icons --octal-permissions"
+alias lld="exa -lahDG --icons --octal-permissions"
+alias ll="exa -laT -L=1 --icons --octal-permissions --group-directories-first"
+alias l2="exa -laT -L=2 --icons --octal-permissions --group-directories-first"
+alias lg="exa -ahG --icons --octal-permissions --group-directories-first"
+alias llg="exa -lahG --icons --octal-permissions --group-directories-first"
+alias lgit="exa -lahG --icons --git --octal-permissions --group-directories-first"
 
 # sh
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
@@ -157,7 +157,7 @@ alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfh="df -h $@"
 alias dush="du -csh $@"
-alias path="printenv | rg $PATH"
+alias path="printenv | rgc $PATH"
 alias stats="stat -c '%A %a %n' $@" ### "stat -c '%a' $@"
 #alias time="/usr/bin/time -f'Loading in %e secomds' $@"
 alias speed="speedtest --selection-details -v"
