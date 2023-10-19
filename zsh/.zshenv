@@ -60,7 +60,7 @@ export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 export COWPATH="/usr/share/cowsay/cows/"
 
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$FORGIT_INSTALL_DIR/bin:/snap/google-cloud-cli/current/bin:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$FORGIT_INSTALL_DIR/bin:$PATH"
 
 # wsl2 display
 export DISPLAY=:0
@@ -124,6 +124,11 @@ export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 export LDFLAGS="-L/usr/lib"
 export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/ruby/vendor_ruby"
+
+### pipx
+# export PIPX_HOME="${HOME}/.local/pipx"
+# export PIPX_BIN_DIR="${HOME}/.local/bin"
+# export USE_EMOJI="true"
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
