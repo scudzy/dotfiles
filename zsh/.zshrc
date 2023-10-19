@@ -80,14 +80,12 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-## only for git
-zstyle ':completion:*:*:git:*' fzf-search-display true
-## or for everything
-zstyle ':completion:*' fzf-search-display true
+### nvm lazy loads
+zstyle ':omz:plugins:nvm' lazy yes
 
 # History configurations
-# HISTSIZE=1000
-# SAVEHIST=2000
+HISTSIZE=1000
+SAVEHIST=2000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
@@ -99,14 +97,6 @@ alias history="history 0"
 
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
-
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Ctrl+A for aliases full commands
-zle -C alias-expension complete-word _generic
-bindkey '^a' alias-expension
-zstyle ':completion:alias-expension:*' completer _expand_alias
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -170,9 +160,9 @@ if [ "$color_prompt" = yes ]; then
     configure_prompt
 
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-        . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-        ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+    if [ -f $HOME/.local/share/zinit/plugins/zsh-users---zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+        . $HOME/.local/share/zinit/plugins/zsh-users---zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
         ZSH_HIGHLIGHT_STYLES[default]=none
         ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=white,underline
         ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
@@ -260,16 +250,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
 
-    # alias ls='ls --color=auto'
-    # #alias dir='dir --color=auto'
-    # #alias vdir='vdir --color=auto'
-
-    # alias grep='grep --color=auto'
-    # alias fgrep='fgrep --color=auto'
-    # alias egrep='egrep --color=auto'
-    # alias diff='diff --color=auto'
-    # alias ip='ip --color=auto'
-
     # add color to man pages
     export MANROFFOPT='-c'
     export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
@@ -288,8 +268,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f $HOME/.local/share/zinit/plugins/zsh-users---zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . $HOME/.local/share/zinit/plugins/zsh-users---zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
@@ -319,6 +299,12 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 ### Zinit
+
+# syntax highlighting
+zinit ice wait lucid \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
+zinit light zsh-users/zsh-syntax-highlighting
+
 ### Turbo mode
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
@@ -339,12 +325,24 @@ zinit wait lucid light-mode for \
         OMZP::systemadmin \
         OMZP::gpg-agent \
         OMZP::docker-compose \
-        OMZP::debian
-
-        # OMZP::brew \
-        # OMZP::colored-man-pages \
+        OMZP::debian \
+        OMZP::nvm \
+        OMZP::svn \
+        OMZP::snap \
+        OMZP::rbenv \
+        OMZP::npm 
 
 ### zsh-users/zsh-history-substring-search
+# history substring searching
+# only bind these keys once they're ready
+bindkey -r "^[[A"
+bindkey -r "^[[B"
+zinit ice wait lucid \
+  atload"
+    zmodload zsh/terminfo
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-down
+  "
 zinit light zsh-users/zsh-history-substring-search
 
 ### zdharma-continuum/history-search-multi-word
@@ -367,12 +365,16 @@ zinit snippet OMZ::lib
 
 ### git extras
 # or with the for syntax + async load
-zinit ice lucid wait'0' as"program" pick"$ZPFX/bin/git-*" \
-  src"etc/git-extras-completion.zsh" make"--prefix=$ZPFX"
-zinit light tj/git-extras
+# zinit ice lucid wait'0' as"program" pick"$ZPFX/bin/git-*" \
+#   src"etc/git-extras-completion.zsh" make"--prefix=$ZPFX"
+# zinit light tj/git-extras
+zinit lucid wait'0a' for \
+    as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" \
+    make"PREFIX=$ZPFX" tj/git-extras
+
 
 ### sharkdp/fd
-zinit ice from"gh-r" as"command" \
+zinit ice wait lucid from"gh-r" as"command" \
   mv"fd-*/fd -> fd" \
   atclone"
     mv -vf fd-*/autocomplete/_fd _fd
@@ -382,7 +384,7 @@ zinit ice from"gh-r" as"command" \
 zinit light sharkdp/fd
 
 ### sharkdp/bat
-zinit ice from"gh-r" as"command" \
+zinit ice wait lucid from"gh-r" as"command" \
   mv"bat-*/bat -> bat" \
   atclone"
     mv -vf bat-*/autocomplete/bat.zsh _bat
@@ -413,7 +415,7 @@ zinit ice wait"2" lucid from"gh-r" as"program" \
 zinit light ogham/exa
 
 # BurntSushi/ripgrep
-zinit ice as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
     atclone"
         mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light BurntSushi/ripgrep
@@ -426,9 +428,6 @@ zinit load sharkdp/vivid
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
 zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/vivid"     @sharkdp/vivid 
-    # sbin"**/fd"        @sharkdp/fd \
-    # sbin"**/bat"       @sharkdp/bat \
-    # sbin"exa* -> exa"  ogham/exa
 
 ### forgit
 zinit ice wait lucid
@@ -453,13 +452,13 @@ zinit ice lucid wait"0" as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
 zinit light dalance/procs
 
 ### dbrgn/tealdeer
-zinit ice from"gh-r" as"command" \
+zinit ice lucid wait"0" from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
     dl"https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr"
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
-zinit ice from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz"  pick"glow" \
+zinit ice lucid wait"0" from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz"  pick"glow" \
   cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
 
@@ -530,6 +529,7 @@ zinit ice wait lucid as"program" \
         rm -f src/auto/config.cache &&
         ./configure --prefix=$ZPFX \
         --with-features=huge \
+        --enable-gui=auto \
         --enable-cscope \
         --with-x \
         --enable-multibyte \
@@ -539,45 +539,13 @@ zinit ice wait lucid as"program" \
         --enable-luainterp=yes \
         --with-compiledby="scudzy@duck.com"
         sudo make -j8 
-        sudo make install vim
+        sudo make install
         " \
     atpull"%atclone" \
     atload"
         sudo update-alternatives --install /usr/bin/editor editor $ZPFX/bin/vim 1
         sudo update-alternatives --set editor $ZPFX/bin/vim"
 zinit light vim/vim
-
-# # vim xdg spec
-# "$XDG_CONFIG_HOME"/vim/vimrc
-# set runtimepath^=$XDG_CONFIG_HOME/vim
-# set runtimepath+=$XDG_DATA_HOME/vim
-# set runtimepath+=$XDG_CONFIG_HOME/vim/after
-
-# set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
-# set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
-
-# let g:netrw_home = $XDG_DATA_HOME."/vim"
-# call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
-
-# set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
-# set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
-# set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
-# set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
-
-# if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
-
-    # make pick"$ZPFX/bin/vim"
-# ### Load git extras
-# zinit as"null" wait"1" lucid for \
-#         sbin    Fakerr/git-recall \
-#         sbin    cloneopts paulirish/git-open \
-#         sbin    paulirish/git-recent \
-#         sbin    davidosomething/git-my \
-#         sbin atload"export _MENU_THEME=legacy" \
-#         arzzen/git-quick-stats \
-#         sbin    iwata/git-now \
-#         sbin"git-url;git-guclone" make"GITURL_NO_CGITURL=1" \
-#         zdharma-continuum/git-url
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -614,6 +582,11 @@ export FZF_CTRL_T_OPTS="
     --preview 'bat -n --color=always {}'
     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
+## only for git
+zstyle ':completion:*:*:git:*' fzf-search-display true
+## or for everything
+zstyle ':completion:*' fzf-search-display true
+
 # # ### ALT C
 # # export FZF_ALT_C_COMMAND="fd --type directory"
 # # ### Print tree structure in the preview window
@@ -622,50 +595,50 @@ export FZF_CTRL_T_OPTS="
 # ### Options to fzf command
 # export FZF_COMPLETION_OPTS="--border --info=inline"
 
-# # Use fd (https://github.com/sharkdp/fd) instead of the default find
-# # command for listing path candidates.
-# # - The first argument to the function ($1) is the base path to start traversal
-# # - See the source code (completion.{bash,zsh}) for the details.
-# _fzf_compgen_path() {
-#   fd --hidden --follow --exclude ".git" . "$1"
-# }
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
 
-# # Use fd to generate the list for directory completion
-# _fzf_compgen_dir() {
-#   fd --type d --hidden --follow --exclude ".git" . "$1"
-# }
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
 
-# # Advanced customization of fzf options via _fzf_comprun function
-# # - The first argument to the function is the name of the command.
-# # - You should make sure to pass the rest of the arguments to fzf.
-# _fzf_comprun() {
-#   local command=$1
-#   shift
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
 
-#   case "$command" in
-#     cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
-#     export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
-#     ssh)          fzf --preview 'dig {}'                   "$@" ;;
-#     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
-#   esac
-# }
+  case "$command" in
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+  esac
+}
 
-# # basic file preview for ls (you can replace with something more sophisticated than head)
-# zstyle ':completion::*:ls::*' fzf-completion-opts --preview='eval head {1}'
+# basic file preview for ls (you can replace with something more sophisticated than head)
+zstyle ':completion::*:ls::*' fzf-completion-opts --preview='eval head {1}'
 
-# # preview when completing env vars (note: only works for exported variables)
-# # eval twice, first to unescape the string, second to expand the $variable
-# zstyle ':completion::*:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-completion-opts --preview='eval eval echo {1}'
+# preview when completing env vars (note: only works for exported variables)
+# eval twice, first to unescape the string, second to expand the $variable
+zstyle ':completion::*:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-completion-opts --preview='eval eval echo {1}'
 
-# # preview a `git status` when completing git add
-# zstyle ':completion::*:git::git,add,*' fzf-completion-opts --preview='git -c color.status=always status --short'
+# preview a `git status` when completing git add
+zstyle ':completion::*:git::git,add,*' fzf-completion-opts --preview='git -c color.status=always status --short'
 
-# # if other subcommand to git is given, show a git diff or git log
-# zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
-#     eval set -- {+1}
-#     for arg in "$@"; do
-#        { git diff --color=always -- "$arg" | git log --color=always "$arg" } 2>/dev/null
-#     done'
+# if other subcommand to git is given, show a git diff or git log
+zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
+    eval set -- {+1}
+    for arg in "$@"; do
+       { git diff --color=always -- "$arg" | git log --color=always "$arg" } 2>/dev/null
+    done'
 
 ### End of fzf configs ----------------------- ###
 
@@ -692,6 +665,9 @@ source $ZDOTDIR/.zalias
 
 # source gcloud completion
 source /snap/google-cloud-cli/current/completion.zsh.inc
+
+# zsh-history-substring-search.zsh
+source $HOME/.local/share/zinit/plugins/zsh-users---zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # git-extra
 source $HOME/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh
@@ -763,25 +739,6 @@ unset -f bind-git-helper
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 source $HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# ### ------------------------------ powerline-go ------------------------------ ###-
-# function powerline_precmd() {
-#     eval "$($GOPATH/bin/powerline-go -error $? -shell zsh -eval -modules-right git)"
-# }
-
-# function install_powerline_precmd() {
-#   for s in "${precmd_functions[@]}"; do
-#     if [ "$s" = "powerline_precmd" ]; then
-#       return
-#     fi
-#   done
-#   precmd_functions+=(powerline_precmd)
-# }
-
-# if [ "$TERM" != "linux" ]; then
-#     install_powerline_precmd
-# fi
-# ### ------------------------------ powerline-go ------------------------------ ###-
-
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
         z "$@"
@@ -790,7 +747,7 @@ function j() {
     fi
 }
 
-# Shell-GPT integration ZSH v0.1
+### ---------- Shell-GPT integration ZSH v0.1 ---------- ###
 _sgpt_zsh() {
 if [[ -n "$BUFFER" ]]; then
     _sgpt_prev_cmd=$BUFFER
@@ -802,7 +759,7 @@ fi
 }
 zle -N _sgpt_zsh
 bindkey ^l _sgpt_zsh
-# Shell-GPT integration ZSH v0.1
+### ---------- Shell-GPT integration ZSH v0.1 ---------- ###
 
 # # Windows Terminal
 # function settitle () {
@@ -831,12 +788,6 @@ eval "$(thefuck --alias)"
 ### ruby env
 eval "$(/usr/bin/rbenv init - zsh)"
 
-# ### dircolors
-#eval "$(dircolors -b $DOTFILES/.dircolors)"
-
-### Load Homebrew env
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # Git
 autoload -Uz vcs_info
 precmd_vcs_info() vcs_info
@@ -847,25 +798,15 @@ GITSTATUS_LOG_LEVEL=DEBUG
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
-### zsh builtin AUTOLOAD
-# autoload -Uz compinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
-# compinit -i
-
 ### pipx Completion
 autoload -U bashcompinit
 bashcompinit
 eval "$(register-python-argcomplete pipx)"
 
-### brew shell completions
-if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
 # fpath
 fpath=(
     $HOME/.local/share/zinit/completions
-    $HOME/.dotfiles/zsh/functions
+    $ZDOTDIR/functions
     "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
