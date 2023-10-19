@@ -41,6 +41,7 @@ zplugins/
 */plugins/
 *.gpg
 plugins/
+*/.gitmoji/
 
 # Temporary
 .netrwhist
