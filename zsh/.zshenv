@@ -10,12 +10,14 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.xdg}"
-export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
-export RUNLEVEL=3
-export OPENAI_API_KEY="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"
-export OPENAI_KEY="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"
+export XDG_DATA_DIRS="/usr/local/share:/usr/share:/usr/share/gnome"
 # export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
+export RUNLEVEL=3
+
+# chatgpt
+export OPENAI_API_KEY="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"
+export OPENAI_KEY="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"
 
 export ICEAUTHORITY="$XDG_RUNTIME_DIR/ICEauthority"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
@@ -65,6 +67,9 @@ export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 export NO_AT_BRIDGE=1
 
+# x11
+export XDG_CURRENT_DESKTOP="XFCE"
+
 # thefuck
 export THEFUCK_RULES='sudo:no_command'
 export THEFUCK_EXCLUDE_RULES='git_pull:git_push'
@@ -77,7 +82,7 @@ export THEFUCK_NUM_CLOSE_MATCHES='5'
 
 ### hisory bash or zsh
 # export HISTFILE="$XDG_STATE_HOME"/bash/history
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
+export HISTFILE="$XDG_STATE_HOME"/zsh/.zsh_history
 export HISTSIZE=100000; # Larger bash history (allow 32³ entries; default is 500)
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups; # Remove duplicates from history. I use `git status` a lot.
@@ -115,11 +120,10 @@ export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
 ### local library paths
 export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu"
-export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig"
 export LDFLAGS="-L/usr/lib"
 export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/ruby/vendor_ruby"
-
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
