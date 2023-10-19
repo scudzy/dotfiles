@@ -364,14 +364,9 @@ zinit ice svn pick"completion.zsh" multisrc'git.zsh \
 zinit snippet OMZ::lib
 
 ### git extras
-# or with the for syntax + async load
-# zinit ice lucid wait'0' as"program" pick"$ZPFX/bin/git-*" \
-#   src"etc/git-extras-completion.zsh" make"--prefix=$ZPFX"
-# zinit light tj/git-extras
 zinit lucid wait'0a' for \
     as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" \
     make"PREFIX=$ZPFX" tj/git-extras
-
 
 ### sharkdp/fd
 zinit ice wait lucid from"gh-r" as"command" \
