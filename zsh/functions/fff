@@ -1,6 +1,0 @@
-#!/usr/bin/env
-
-# fzf
-function fff() {
-    find / -iname "$1" 2>/dev/null | fzf
-}

@@ -1,6 +1,0 @@
-#!/usr/bin/env
-
-# List installed package in number
-function dpkgq() {
-    dpkg-query -f '${binary:Package}\n' -W | awk 'BEGIN {"wc -l" | getline wcl; print "No of Installed Package:", wcl}'
-}
