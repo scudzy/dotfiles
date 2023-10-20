@@ -1,6 +1,5 @@
 
 # zsh only aliases
-if [[ -n $ZSH_VERSION ]]; then
 alias 1='cd -'
 alias 2='cd -2'
 alias 3='cd -3'
@@ -10,7 +9,6 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
-fi
 
 alias cd..='cd ..'
 alias -g ..2='../..'
@@ -229,6 +227,7 @@ alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
 
 # git
 alias gst="git status"
+alias gsts="git status --short"
 alias gp="git push"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gcm="git commit -m $@"
@@ -242,7 +241,7 @@ alias del="trash-put $@"
 alias tempty="trash-empty $@"
 alias trestore="restore-trash $@"
 alias tlist="trash-list"
-alias cat="bat --pager"
+# alias cat="bat --pager"
 alias td="tldr $@"
 
 # dns
@@ -286,3 +285,9 @@ alias rcl5="rclone about D-scudzy: && printf '\n\e[1;34m%-6s\e[m' "Dropbox-scudz
 # search installed packages
 alias dpin="dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n"
 
+# google cloud cli
+alias gc-s="gcloud cheat-sheet"
+
+# shutdown & reboot
+alias shutdown="wsl.exe --shutdown $WSL_DISTRO_NAME"
+alias reboot="wsl.exe --terminate $WSL_DISTRO_NAME"
