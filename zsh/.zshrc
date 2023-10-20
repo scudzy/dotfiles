@@ -34,7 +34,7 @@ setopt nonomatch            # hide error message if there is no match for the pa
 setopt notify               # report the status of background jobs immediately
 setopt numericglobsort      # sort filenames numerically when it makes sense
 setopt nohup                # for nohup to works against watch
-setopt promptsubst          # enable command substitution in prompt
+# setopt promptsubst          # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -62,11 +62,13 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ensure compinit recognizes zinit's changes
-autoload -Uz _zinit
+autoload -Uz _zinit 
 # shellcheck disable=SC2154
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zstyle ':completion:*:*:*:*:*' menu select
+# :*:*:*:*
+
+zstyle ':completion:*' menu select
 zstyle ':completion:*' auto-descitiption 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' format 'Completing %d'
@@ -76,12 +78,9 @@ zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character t
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
+# zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-### nvm lazy loads
-zstyle ':omz:plugins:nvm' lazy yes
 
 # History configurations
 HISTSIZE=1000
@@ -299,11 +298,10 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 ### Zinit
-
-# syntax highlighting
-zinit ice wait lucid \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
-zinit light zsh-users/zsh-syntax-highlighting
+# # syntax highlighting
+# zinit ice wait lucid \
+#   atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
+# zinit light zsh-users/zsh-syntax-highlighting
 
 ### Turbo mode
 zinit wait lucid light-mode for \
@@ -331,6 +329,9 @@ zinit wait lucid light-mode for \
         OMZP::snap \
         OMZP::rbenv \
         OMZP::npm 
+
+### nvm lazy loads
+zstyle ':omz:plugins:nvm' lazy yes
 
 ### zsh-users/zsh-history-substring-search
 # history substring searching
@@ -391,11 +392,12 @@ zinit ice wait lucid from"gh-r" as"command" \
     export BAT_PAGER='less -R -F -+X --mouse'
     export PAGER='less'
     export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'
-    alias cat='bat --paging=never --color=auto --style=numbers,changes'
-    alias cats='bat --paging=always --color=always --style=numbers,changes'
-    alias catcat='\cat --paging=never --color=auto --style=plain'
   "
 zinit light sharkdp/bat
+
+    # alias cat='bat --paging=never --color=auto --style=numbers,changes'
+    # alias cats='bat --paging=always --color=always --style=numbers,changes'
+    # alias catcat='\cat --paging=never --color=auto --style=plain'
 
 ### ogham/exa, replacement for ls
 # grab exa (better ls) binary
@@ -425,7 +427,9 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/vivid"     @sharkdp/vivid 
 
 ### forgit
-zinit ice wait lucid
+zinit ice wait lucid \
+    atload"export forgit_revert_commit='grcm'
+    "
 zinit load 'wfxr/forgit'
 
 ### git-delta
@@ -514,9 +518,32 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
+# zinit ice wait"0c" lucid reset \
+#     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
+#             \${P}sed -i \
+#             '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
+#             \${P}dircolors -b LS_COLORS > c.zsh" \
+#     atpull'%atclone' pick"c.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+# zinit light trapd00r/LS_COLORS
+
+# zinit ice wait'!' lucid nocompletions \
+#          compile"{zinc_functions/*,segments/*,zinc.zsh}" \
+#          atload'!prompt_zinc_setup; prompt_zinc_precmd'
+# zinit load robobenklein/zinc
+
+# # # ZINC git info is already async, but if you want it
+# # # even faster with gitstatus in Turbo mode:
+# # # https://github.com/romkatv/gitstatus
+# zinit ice wait"1" lucid atload'zinc_optional_depenency_loaded'
+# zinit load romkatv/gitstatus
+
+# # powerline9k prompt
+# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
 ### Load powerlevel10k theme
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
+# zinit ice depth"1" # git clone depth
+# zinit light romkatv/powerlevel10k
 
 ### clone vim & compiling
 zinit ice wait lucid as"program" \
@@ -541,6 +568,13 @@ zinit ice wait lucid as"program" \
         sudo update-alternatives --install /usr/bin/editor editor $ZPFX/bin/vim 1
         sudo update-alternatives --set editor $ZPFX/bin/vim"
 zinit light vim/vim
+
+# # After finishing the configuration wizard change the atload'' ice to:
+# # -> atload'source ~/.p10k.zsh; _p9k_precmd'
+# # zinit ice depth"1" atload'true; _p9k_precmd' nocd
+zinit ice depth"1" atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
+zinit light romkatv/powerlevel10k
+setopt promptsubst
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -646,33 +680,6 @@ if grep -q microsoft /proc/version; then
     fi
 fi
 
-# after `forgit` was loaded
-export forgit_revert_commit="grcm"
-
-# powerline9k prompt
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-
-### source xdg settings
-[[ ! -f $ZDOTDIR/xdg.zsh ]] || source $ZDOTDIR/xdg.zsh
-
-# source zalias
-source $ZDOTDIR/.zalias
-
-# source gcloud completion
-source /snap/google-cloud-cli/current/completion.zsh.inc
-
-# zsh-history-substring-search.zsh
-source $HOME/.local/share/zinit/plugins/zsh-users---zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# git-extra
-source $HOME/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh
-
-# zsh-interactive-cd
-source $HOME/.local/share/zinit/snippets/OMZP::zsh-interactive-cd/OMZP::zsh-interactive-cd
-
-# git extras
-source $HOME/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh
-
 # Checking Login v.s. Non-Login
 [[ -o login ]] && echo "Login" || echo "Non-Login"
 
@@ -730,10 +737,6 @@ bind-git-helper() {
 bind-git-helper f b t r h
 unset -f bind-git-helper
 
-# powerline-status
-$HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
-source $HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh
-
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
         z "$@"
@@ -743,17 +746,17 @@ function j() {
 }
 
 ### ---------- Shell-GPT integration ZSH v0.1 ---------- ###
-_sgpt_zsh() {
-if [[ -n "$BUFFER" ]]; then
-    _sgpt_prev_cmd=$BUFFER
-    BUFFER+="⌛"
-    zle -I && zle redisplay
-    BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
-    zle end-of-line
-fi
-}
-zle -N _sgpt_zsh
-bindkey ^l _sgpt_zsh
+# _sgpt_zsh() {
+# if [[ -n "$BUFFER" ]]; then
+#     _sgpt_prev_cmd=$BUFFER
+#     BUFFER+="⌛"
+#     zle -I && zle redisplay
+#     BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
+#     zle end-of-line
+# fi
+# }
+# zle -N _sgpt_zsh
+# bindkey ^l _sgpt_zsh
 ### ---------- Shell-GPT integration ZSH v0.1 ---------- ###
 
 # # Windows Terminal
@@ -776,12 +779,28 @@ if [ -n "$PIDFOUND" ]; then
 fi
 unset PIDFOUND
 
-### the fuck alias
-eval "$(thefuck --alias)"
-#eval $(thefuck --alias --enable-experimental-instant-mode)
+# # pure prompt theme
+# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
 
-### ruby env
-eval "$(/usr/bin/rbenv init - zsh)"
+### ----------------------------- pure prompt ----------------------------- ###
+# # prompt
+# autoload -U promptinit; promptinit
+# # optionally define some options
+# PURE_CMD_MAX_EXEC_TIME=5
+# PURE_GIT_DOWN_ARROW=⇣
+# PURE_GIT_UP_ARROW=⇡
+# PURE_GIT_STASH_SYMBOL=≡
+# # change the path color
+# zstyle :prompt:pure:path color red
+# # change the color for both `prompt:success` and `prompt:error`
+# zstyle ':prompt:pure:prompt:*' color cyan
+# # turn on git stash status
+# zstyle :prompt:pure:git:stash show yes
+# prompt pure
+### ----------------------------- pure prompt ----------------------------- ###
+
+### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 # Git
 autoload -Uz vcs_info
@@ -790,18 +809,19 @@ precmd_functions+=( precmd_vcs_info )
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 GITSTATUS_LOG_LEVEL=DEBUG
+POWERLEVEL9K_DISABLE_GITSTATUS="true"
+GITSTATUS_DAEMON="${HOME}/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
 
-### Auto Completion -------------- SOURCE BEFORE THIS LINE
-
-### pipx Completion
-autoload -U bashcompinit
-bashcompinit
-eval "$(register-python-argcomplete pipx)"
+#####################
+# COLORING          #
+#####################
+autoload colors && colors
 
 # fpath
+typeset -U fpath
 fpath=(
-    $HOME/.local/share/zinit/completions
-    $ZDOTDIR/functions
+    /home/scudzy/.local/share/zinit/completions
+    /home/scudzy/.dotfiles/zsh/functions
     "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
@@ -817,8 +837,40 @@ echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
 
-### To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-[[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
+### pipx Completion
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+# eval "$(register-python-argcomplete pipx)"
+
+# powerline-status
+$HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
+. "$HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh"
+
+### source xdg settings
+[[ -f '$ZDOTDIR/xdg.zsh' ]] || source $ZDOTDIR/xdg.zsh
+
+# source zalias
+[[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
+
+### the fuck alias
+eval "$(thefuck --alias)"
+#eval $(thefuck --alias --enable-experimental-instant-mode)
+
+### ruby env
+eval "$(/usr/bin/rbenv init - zsh)"
+
+# # zsh-interactive-cd
+# . "$HOME/.local/share/zinit/snippets/OMZP::zsh-interactive-cd/OMZP::zsh-interactive-cd"
+
+# zsh-history-substring-search.zsh
+# . "$HOME/.local/share/zinit/plugins/zsh-users---zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# # git-extra
+. "$HOME/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh"
+
+# # source gcloud completion
+# . "/usr/share/google-cloud-sdk/completion.zsh.inc"
 
 # debug
 # zprof
