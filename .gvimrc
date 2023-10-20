@@ -1,5 +1,5 @@
-set lines=55
-set columns=100
+"" set lines=55 100
+"" set columns=100
 "" set guioptions-=T
 
 set t_Co=256
@@ -30,7 +30,7 @@ set numberwidth=4
 hi LineNr guibg=grey10 guifg=grey30
 hi Folded guibg=#1d1d1d guifg=#808080 gui=none
 
-set enc=utf-8 
+set enc=utf-8
 set mousehide
 
 "" let g:easytags_cmd = '/usr/local/bin/ctags'
