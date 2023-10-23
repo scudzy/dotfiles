@@ -5,12 +5,13 @@
 # https://wiki.archlinux.org/index.php/XDG_Base_Directory
 
 # Make sure XDG dirs are set
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
-export XDG_DATA_DIRS="/usr/local/share:/usr/share"
-export XDG_CONFIG_DIRS="/etc/xdg"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+XDG_RUNTIME_DIR="${HOME}/.local/service-scudzy.aqX}"
+XDG_DATA_DIRS="/usr/local/share:/usr/share"
+XDG_CONFIG_DIRS="/etc/xdg"
 
 VERIFY_XDG="${VERIFY_XDG:-true}"
 
