@@ -15,10 +15,6 @@ export XDG_DATA_DIRS="/usr/local/share:/usr/share:/usr/share/gnome"
 # export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
 export RUNLEVEL=3
 
-# chatgpt
-export OPENAI_API_KEY="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"
-export OPENAI_KEY="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"
-
 export ICEAUTHORITY="$XDG_RUNTIME_DIR/ICEauthority"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export SCREENDIR="$XDG_RUNTIME_DIR/screen"
@@ -60,7 +56,7 @@ export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
 export COWPATH="/usr/share/cowsay/cows/"
 
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$FORGIT_INSTALL_DIR/bin:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:$PATH"
 
 # wsl2 display
 export DISPLAY=:0
@@ -124,11 +120,6 @@ export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 export LDFLAGS="-L/usr/lib"
 export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/ruby/vendor_ruby"
-
-### pipx
-# export PIPX_HOME="${HOME}/.local/pipx"
-# export PIPX_BIN_DIR="${HOME}/.local/bin"
-# export USE_EMOJI="true"
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
