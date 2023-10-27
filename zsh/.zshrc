@@ -366,21 +366,25 @@ zinit lucid wait'0a' for \
     make"PREFIX=$ZPFX" tj/git-extras
 
 ### sharkdp/fd
-zinit ice wait lucid from"gh-r" as"command" \
-  mv"fd-*/fd -> fd" \
+zinit ice lucid wait'1' from"gh-r" as"command" \
+  mv"fd* -> fd" pick"fd/fd"  \
   atclone"
-    mv -vf fd-*/autocomplete/_fd _fd
-    mv -vf fd-*/fd.1 ${ZINIT[MAN_DIR]}/man1
-  " \
-  atpull"%atclone"
+    mv -vf fd/autocomplete/_fd _fd
+    mv -vf fd/fd.1 ${ZINIT[MAN_DIR]}/man1
+    "
 zinit light sharkdp/fd
 
+### vivid
+zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" pick"vivid/vivid" \
+    atload'export LS_COLORS="$(vivid generate snazzy)"'
+zinit load sharkdp/vivid
+
 ### sharkdp/bat
-zinit ice wait lucid from"gh-r" as"command" \
-  mv"bat-*/bat -> bat" \
+zinit ice lucid wait"1" from"gh-r" as"command" \
+  mv"bat -> bat" pick"bat/bat" \
   atclone"
-    mv -vf bat-*/autocomplete/bat.zsh _bat
-    mv -vf bat-*/bat.1 ${ZINIT[MAN_DIR]}/man1
+    mv -vf bat/autocomplete/bat.zsh _bat
+    mv -vf bat/bat.1 ${ZINIT[MAN_DIR]}/man1
   " \
   atpull"%atclone" \
   atload"
@@ -403,9 +407,15 @@ zinit ice wait"2" lucid from"gh-r" as"program" \
     mv -vf completions/exa.zsh _exa
     mv -vf man/exa.1 ${ZINIT[MAN_DIR]}/man1
     mv -vf man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5
-  " \
-  atpull"%atclone"
+  "
 zinit light ogham/exa
+
+### All of the above using the for-syntax and also z-a-bin-gem-node annex
+zinit wait"1" lucid from"gh-r" as"null" for \
+    sbin"**/fd"        @sharkdp/fd \
+    sbin"**/vivid"     @sharkdp/vivid \
+    sbin"**/bat"       @sharkdp/bat \
+    sbin"exa* -> exa"  ogham/exa 
 
 # BurntSushi/ripgrep
 zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
@@ -413,20 +423,10 @@ zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
         mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light BurntSushi/ripgrep
 
-### vivid
-zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" pick"vivid/vivid" \
-    atload'export LS_COLORS="$(vivid generate snazzy)"'
-zinit load sharkdp/vivid
-
-### All of the above using the for-syntax and also z-a-bin-gem-node annex
-zinit wait"1" lucid from"gh-r" as"null" for \
-    sbin"**/vivid"     @sharkdp/vivid 
-
 ### forgit
 zinit ice wait lucid \
     atload"
-    export forgit_revert_commit='grcm' \
-    export PATH="/home/scudzy/.local/share/zinit/plugins/wfxr---forgit/bin:$PATH"
+    export forgit_revert_commit='grcm'
     "
 zinit load 'wfxr/forgit'
 
