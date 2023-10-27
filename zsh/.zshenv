@@ -48,6 +48,10 @@ export PASSWORD_STORE_DIR="${HOME}/.password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
 export PASSWORD_STORE_GENERATED_LENGTH="20"
+export PASSWORD_STORE_TOMB="/usr/bin/tomb"
+export PASSWORD_STORE_TOMB_FILE="${HOME}/.password.tomb"
+export PASSWORD_STORE_TOMB_KEY="${HOME}/.password.key.tomb"
+export PASSWORD_STORE_TOMB_SIZE=10
 
 ### rclone
 export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
