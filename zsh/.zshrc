@@ -294,6 +294,12 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# async support
+zinit ice wait lucid \
+  atload"async_init" \
+  src"async.zsh"
+zinit light mafredri/zsh-async
+
 ### Zinit
 # # syntax highlighting
 # zinit ice wait lucid \
@@ -536,16 +542,9 @@ zinit ice wait lucid as"program" \
         " \
     atpull"%atclone" \
     atload"
-        sudo update-alternatives --install /usr/bin/editor editor $ZPFX/bin/vim 1
-        sudo update-alternatives --set editor $ZPFX/bin/vim"
+        sudo update-alternatives --install /usr/bin/editor editor /home/scudzy/.local/share/zinit/polaris/bin/vim 10
+        sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim"
 zinit light vim/vim
-
-# # After finishing the configuration wizard change the atload'' ice to:
-# # -> atload'source ~/.p10k.zsh; _p9k_precmd'
-# # zinit ice depth"1" atload'true; _p9k_precmd' nocd
-zinit ice depth"1" atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
-zinit light romkatv/powerlevel10k
-setopt promptsubst
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -634,6 +633,42 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### End of fzf configs ----------------------- ###
 
+# # After finishing the configuration wizard change the atload'' ice to:
+# # -> atload'source ~/.p10k.zsh; _p9k_precmd'
+# # zinit ice depth"1" atload'true; _p9k_precmd' nocd
+# zinit ice depth"1" #atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
+# zinit light romkatv/powerlevel10k
+
+# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
+# # Load pure theme
+# zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
+# zinit light sindresorhus/pure
+
+# starship prompt
+if ! command -v starship >/dev/null 2>&1; then
+  if which wget >/dev/null ; then
+    echo "Downloading via wget"
+    wget https://starship.rs/install.sh
+  elif which curl >/dev/null ; then
+    echo "Downloading via curl"
+    curl -sS -O https://starship.rs/install.sh
+  else
+    echo "Cannot download, neither wget nor curl. Exiting"
+    exit 1
+  fi
+fi
+
+# starship prompt
+zinit ice from"gh-r" as"command" \
+  atclone"
+    ./starship init zsh --print-full-init > init.zsh
+  " \
+  atpull"%atclone" \
+  multisrc"init.zsh /home/scudzy/.config/starship/spaceship.zsh"
+zinit light starship/starship
+
+setopt promptsubst
 ####################### End of zinit line ##########################
 
 # fix mkdir permission
