@@ -109,10 +109,10 @@ fi
 #
 # pyvoc
 #
-if command -v pyvoc &> /dev/null || command -v pyvoc &> /dev/null; then
-  export PYVOCHOME="$XDG_CONFIG_HOME"/pyvoc
-  [[ $VERIFY_XDG == true ]] && verify_appdir "$PYVOCHOME" "$HOME"/.pyvoc
-fi
+#if command -v pyvoc &> /dev/null || command -v pyvoc &> /dev/null; then
+#  export PYVOCHOME="$XDG_CONFIG_HOME"/pyvoc
+#  [[ $VERIFY_XDG == true ]] && verify_appdir "$PYVOCHOME" "$HOME"/.pyvoc
+#fi
 
 #
 # ipython/jupyter
