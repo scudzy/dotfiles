@@ -125,6 +125,8 @@ export LDFLAGS="-L/usr/lib"
 export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/ruby/vendor_ruby"
 
+export STARSHIP_CONFIG=~/home/scudzy/.config/starship.toml
+ 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 # export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
