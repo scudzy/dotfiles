@@ -300,6 +300,10 @@ zinit ice wait lucid \
   src"async.zsh"
 zinit light mafredri/zsh-async
 
+# zsh better npm completion
+zinit ice wait lucid src"zsh-better-npm-completion.plugin.zsh"
+zinit load lukechilds/zsh-better-npm-completion 
+
 ### Zinit
 # # syntax highlighting
 # zinit ice wait lucid \
@@ -319,6 +323,7 @@ zinit wait lucid light-mode for \
         OMZP::fzf \
         OMZP::sudo \
         OMZP::command-not-found \
+        OMZP::colored-man-pages \
         OMZP::python \
         OMZP::systemd \
         OMZP::zsh-interactive-cd \
@@ -329,8 +334,7 @@ zinit wait lucid light-mode for \
         OMZP::debian \
         OMZP::nvm \
         OMZP::svn \
-        OMZP::snap \
-        OMZP::npm 
+        OMZP::snap
 
 ### nvm lazy loads
 zstyle ':omz:plugins:nvm' lazy yes
