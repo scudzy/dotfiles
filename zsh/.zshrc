@@ -672,7 +672,6 @@ zinit ice from"gh-r" as"command" \
   multisrc"init.zsh /home/scudzy/.config/starship/spaceship.zsh"
 zinit light starship/starship
 
-setopt promptsubst
 ####################### End of zinit line ##########################
 
 # fix mkdir permission
@@ -780,12 +779,15 @@ unset PIDFOUND
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
-# Git
+### Git prompt
 autoload -Uz vcs_info
-precmd_vcs_info() vcs_info
-precmd_functions+=( precmd_vcs_info )
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:git:*' formats '%b'
+precmd() { vcs_info }
+setopt PROMPT_SUBST
+zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
+PROMPT='%(?.%F{green}●.%F{red}●%f) %F{211}%1~%f ${vcs_info_msg_0_} '
+RPROMPT='%F{245}%*%f'
+
+# p10k env var
 POWERLEVEL9K_DISABLE_GITSTATUS="true"
 GITSTATUS_DAEMON="${HOME}/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
 GITSTATUS_LOG_LEVEL=DEBUG
@@ -795,8 +797,10 @@ GITSTATUS_LOG_LEVEL=DEBUG
 #####################
 autoload colors && colors
 
+# automatically remove duplicates from these arrays
+typeset -U path cdpath fpath manpath
+
 # fpath
-typeset -U fpath
 fpath=(
     /home/scudzy/.local/share/zinit/completions
     /home/scudzy/.dotfiles/zsh/functions
