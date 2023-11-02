@@ -543,12 +543,11 @@ zinit ice wait lucid as"program" \
         --with-compiledby="scudzy@duck.com"
         sudo make -j8 
         sudo make install
-        " \
-    atpull"%atclone" \
-    atload"
         sudo update-alternatives --install /usr/bin/editor editor /home/scudzy/.local/share/zinit/polaris/bin/vim 10
-        sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim"
-zinit light vim/vim
+        sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim
+        " \
+    atpull"%atclone"
+    zinit light vim/vim
 
 ### Load fzf, completion & key biindings
 zinit for \
