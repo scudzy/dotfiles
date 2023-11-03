@@ -127,7 +127,7 @@ alias ll="exa -lagT -L=1 --icons --octal-permissions --group-directories-first"
 alias l2="exa -lagT -L=2 --icons --octal-permissions --group-directories-first"
 alias lg="exa -ahG --icons --octal-permissions --group-directories-first"
 alias llg="exa -laghG --icons --octal-permissions --group-directories-first"
-alias lgit="exa -laghG --icons --git --octal-permissions --group-directories-first"
+alias lgit="exa -lah --icons --git --octal-permissions --group-directories-first"
 
 # sh
 alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
