@@ -527,27 +527,14 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
 zinit light trapd00r/LS_COLORS
 
 ### clone vim & compiling
-zinit ice wait lucid as"program" \
-    atclone"
-        rm -f src/auto/config.cache &&
-        ./configure --prefix=$ZPFX \
-        --with-features=huge \
-        --enable-gui=auto \
-        --enable-cscope \
-        --with-x \
-        --enable-multibyte \
-        --enable-rubyinterp=yes \
-        --enable-python3interp=yes \
-        --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ \
-        --enable-luainterp=yes \
-        --with-compiledby="scudzy@duck.com"
-        sudo make -j8 
-        sudo make install
-        sudo update-alternatives --install /usr/bin/editor editor /home/scudzy/.local/share/zinit/polaris/bin/vim 10
-        sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim
-        " \
-    atpull"%atclone"
-    zinit light vim/vim
+# zinit ice as"program" \
+#     atclone"
+#         rm -f src/auto/config.cache;
+#         ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
+#         sudo make; sudo make install; sudo update-alternatives --install /usr/bin/editor editor /home/scudzy/.local/share/zinit/polaris/bin/vim 10; sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim
+#         " \
+#     atpull"%atclone" make pick"src/vim"
+#     zinit light vim/vim
 
 ### Load fzf, completion & key biindings
 zinit for \
