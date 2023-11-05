@@ -61,7 +61,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ensure compinit recognizes zinit's changes
-autoload -Uz _zinit 
+autoload -Uz _zinit
 # shellcheck disable=SC2154
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -302,7 +302,7 @@ zinit light mafredri/zsh-async
 
 # zsh better npm completion
 zinit ice wait lucid src"zsh-better-npm-completion.plugin.zsh"
-zinit load lukechilds/zsh-better-npm-completion 
+zinit load lukechilds/zsh-better-npm-completion
 
 ### Zinit
 # # syntax highlighting
@@ -334,7 +334,7 @@ zinit wait lucid light-mode for \
         OMZP::debian \
         OMZP::nvm \
         OMZP::svn \
-        OMZP::snap
+        OMZP::snap 
 
 ### nvm lazy loads
 zstyle ':omz:plugins:nvm' lazy yes
@@ -425,7 +425,7 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/fd"        @sharkdp/fd \
     sbin"**/vivid"     @sharkdp/vivid \
     sbin"**/bat"       @sharkdp/bat \
-    sbin"exa* -> exa"  ogham/exa 
+    sbin"exa* -> exa"  ogham/exa
 
 # BurntSushi/ripgrep
 zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
@@ -443,7 +443,7 @@ zinit load 'wfxr/forgit'
 ### git-delta
 zinit ice wait"0" from"gh-r" as"command" \
   mv"delta-*/delta -> delta" \
-  dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta" 
+  dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
 ### Install z.lua
@@ -491,7 +491,7 @@ zinit ice wait"1" lucid \
     zstyle ':completion::complete:rm:*:globbed-files' ignored-patterns
     zstyle ':fzf-tab:*' fzf-command fzf
     zstyle ':fzf-tab:*' fzf-flags '--ansi'
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath' 
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
     zstyle ':fzf-tab:complete:_zlua:*' query-string input
     zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
     zstyle ':fzf-tab:*' fzf-bindings \
@@ -527,14 +527,14 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
 zinit light trapd00r/LS_COLORS
 
 ### clone vim & compiling
-# zinit ice as"program" \
-#     atclone"
-#         rm -f src/auto/config.cache;
-#         ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
-#         sudo make; sudo make install; sudo update-alternatives --install /usr/bin/editor editor /home/scudzy/.local/share/zinit/polaris/bin/vim 10; sudo update-alternatives --set editor /home/scudzy/.local/share/zinit/polaris/bin/vim
-#         " \
-#     atpull"%atclone" make pick"src/vim"
-#     zinit light vim/vim
+zinit ice as"program" \
+    atclone"
+        rm -f src/auto/config.cache;
+        ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
+        make -j8; sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim9 && sudo make install; sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10; sudo update-alternatives --set editor /usr/local/bin/vim
+        " \
+    atpull"%atclone" make pick"src/vim"
+    zinit light vim/vim
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -668,7 +668,11 @@ if grep -q microsoft /proc/version; then
 fi
 
 # Checking Login v.s. Non-Login
-[[ -o login ]] && echo "Login" || echo "Non-Login"
+if [[ -o Login ]]; then
+    echo "Login" && neofetch
+else
+    echo "Non-Login" && fortune linux | cowsay -f tux
+fi
 
 # grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
@@ -742,12 +746,16 @@ $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 # source zalias
 [[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
 
+
+
 ### the fuck alias
 eval "$(thefuck --alias)"
 #eval $(thefuck --alias --enable-experimental-instant-mode)
 
 ### ruby env
-eval "$(/usr/bin/rbenv init - zsh)"
+eval "$(rbenv init - --no-rehash zsh)"
+# source rbenv
+# [[ -f '~/.rbenv/completions/rbenv.zsh' ]] || source ~/.rbenv/completions/rbenv.zsh
 
 # browserpass gnupg
 PIDFOUND=$(pgrep gpg-agent)
@@ -799,7 +807,7 @@ autoload -Uz $fpath[1]/*(.:t)
 # Execution time
 end="$(date +%s)"
 total="$(( end - start ))"
-neofetch
+# neofetch
 #fortune linux | cowsay -f tux
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
