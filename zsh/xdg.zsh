@@ -175,7 +175,7 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 # rbenv
 #
 export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
-[[ $VERIFY_XDG == true ]] && verify_appdir "$RBENV_ROOT" "$HOME"/.rbenv
+# [[ $VERIFY_XDG == true ]] && verify_appdir "$RBENV_ROOT" "$HOME"/.rbenv
 
 #
 # screen
