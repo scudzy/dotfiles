@@ -530,10 +530,10 @@ zinit light trapd00r/LS_COLORS
 zinit ice as"program" \
     atclone"
         rm -f src/auto/config.cache;
-        ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
+        ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
         make -j8; sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim9 && sudo make install; sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10; sudo update-alternatives --set editor /usr/local/bin/vim
         " \
-    atpull"%atclone" make pick"src/vim"
+    atpull"%atclone" #make pick"src/vim"
     zinit light vim/vim
 
 ### Load fzf, completion & key biindings
