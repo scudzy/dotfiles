@@ -192,14 +192,14 @@ alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/d
 alias rclone-docs="rclone sync '/d/OneDrive/Documents/Business Doc/' 'G-halimi:/Documents/' --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 --create-empty-src-dirs -u -P -v"
 
 # python
-alias cc="currency_converter $@"
-alias vw="pyvoc -w $@"
+alias cc="currency_converter"
+alias vw="pyvoc -w"
 alias pxu="pipx upgrade-all"
-alias pxi="pipx install $@"
-alias pxun="pipx uninstall $@"
+alias pxi="pipx install"
+alias pxun="pipx uninstall"
 alias pip="pip3"
-alias pip3i="python3 -m pip install $@"
-alias pip3u="pip3 uninstall $#"
+alias pip3i="python3 -m pip install"
+alias pip3u="pip3 uninstall"
 alias p3="python3"
 alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
