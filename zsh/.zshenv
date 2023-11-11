@@ -63,7 +63,7 @@ export COWPATH="/usr/share/cowsay/cows/"
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:/var/lib/gems/3.1.0/:$PATH"
 
 # wsl2 display
-export WSL2IP="$(ip addr show eth0 | grep inet | awk '{print $3; exit;}' | sed 's/\(.*\).\{3\}$/\1/' )"
+export WSL2IP="$(ip addr show eth0 | grep inet | awk '{print $2; exit;}' | sed 's/\(.*\).\{3\}$/\1/' )"
 export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 export NO_AT_BRIDGE=1
@@ -107,7 +107,7 @@ export BROWSER="wslview"
 
 # Ripgrep
 export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case"
-export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc" 
+export RIPGREP_CONFIG_PATH="${DOTFILES}/.ripgreprc"
 #export RG_PREFIX="rg --column -n --no-heading --color=always -S --max-columns=150 "
 
 ### Powerline-status
@@ -127,7 +127,7 @@ export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/"
 
 export STARSHIP_CONFIG=~/home/scudzy/.config/starship.toml
- 
+
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 # export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
