@@ -63,7 +63,7 @@ export COWPATH="/usr/share/cowsay/cows/"
 export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:/var/lib/gems/3.1.0/:$PATH"
 
 # wsl2 display
-export WSL2IP="$(ip route|awk '/^default/{print $3}')"
+export WSL2IP="$(ip addr show eth0 | grep inet | awk '{print $3; exit;}' | sed 's/\(.*\).\{3\}$/\1/' )"
 export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 export NO_AT_BRIDGE=1
