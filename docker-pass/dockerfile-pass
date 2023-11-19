@@ -1,0 +1,39 @@
+# Use the official Debian image as the base
+FROM debian:latest
+
+# Update the system and install the necessary packages
+RUN apt-get update && apt-get install -y \
+    gnupg2 \
+    git \
+    pass \
+    tree \
+    bash-completion \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory to /root
+WORKDIR /root
+
+# Clone the password-store repository
+RUN git clone https://git.zx2c4.com/password-store
+
+# Set the environment variable for password-store
+ENV PASSWORD_STORE_DIR=/root/.password-store
+
+# Initialize the password store with a dummy GPG key
+RUN gpg2 --batch --passphrase "" --quick-generate-key "test@example.com" && \
+    pass init $(gpg2 --list-keys --with-colons test@example.com | awk -F: '/^pub:/ { print $5 }')
+
+# Add some passwords to the store
+RUN pass insert -m test/test1 <<EOF
+This is a test password
+EOF
+RUN pass insert -m test/test2 <<EOF
+This is another test password
+EOF
+
+# Enable bash completion for pass
+RUN echo "source /etc/bash_completion" >> /root/.bashrc && \
+    echo "source /root/password-store/src/completion/pass.bash-completion" >> /root/.bashrc
+
+# Set the default command to run bash
+CMD ["bash"]
