@@ -440,9 +440,8 @@ zinit ice wait lucid \
     "
 zinit load 'wfxr/forgit'
 
-### git-delta
-zinit ice wait"0" from"gh-r" as"command" \
-  mv"delta-*/delta -> delta" \
+### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz 
+zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" \
   dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
@@ -457,6 +456,10 @@ zinit light b4b4r07/httpstat
 ### dalance/procs
 zinit ice lucid wait"0" as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
 zinit light dalance/procs
+
+### oxipng
+zinit ice lucid wait"0" as"command" from"gh-r" bpick"*x86_64-unknown-linux*" mv"oxipng* -> oxipng" pick"oxipng/oxipng"
+zinit light shssoichiro/oxipng
 
 ### dbrgn/tealdeer
 zinit ice lucid wait"0" from"gh-r" as"command" \
