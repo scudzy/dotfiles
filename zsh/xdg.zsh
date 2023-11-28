@@ -102,8 +102,8 @@ fi
 # gnupg
 #
 if command -v gpg &> /dev/null || command -v gpg &> /dev/null; then
-  export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-  [[ $VERIFY_XDG == true ]] && verify_appdir "$GNUPGHOME" "$HOME"/.gnupg
+  export GNUPGHOME="$HOME"/.gnupg
+  [[ $VERIFY_XDG == false ]] && verify_appdir "$GNUPGHOME" "$HOME"/.gnupg
 fi
 
 #
