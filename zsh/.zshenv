@@ -35,7 +35,7 @@ export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.l
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 ### golang
-export GOROOT="/usr/local/go/"
+export GOROOT="/usr/lib/go"
 export GOPATH="${HOME}/go"
 
 ### python
@@ -126,7 +126,11 @@ export LDFLAGS="-L/usr/lib"
 export CPPFLAGS="-I/usr/include"
 export RUBYLIB="/usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/"
 
+### starship
 export STARSHIP_CONFIG=~/home/scudzy/.config/starship.toml
+
+### GWSL
+export QT_SCALE_FACTOR=2
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
