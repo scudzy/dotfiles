@@ -391,7 +391,7 @@ zinit load sharkdp/vivid
 
 ### sharkdp/bat
 zinit ice lucid wait"1" from"gh-r" as"command" \
-  mv"bat -> bat" pick"bat/bat" \
+  mv"bat* -> bat" pick"bat/bat" \
   atclone"
     mv -vf bat/autocomplete/bat.zsh _bat
     mv -vf bat/bat.1 ${ZINIT[MAN_DIR]}/man1
@@ -441,7 +441,7 @@ zinit ice wait lucid \
 zinit load 'wfxr/forgit'
 
 ### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz 
-zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" \
+zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
   dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
@@ -533,7 +533,7 @@ zinit light trapd00r/LS_COLORS
 zinit ice as"program" \
     atclone"
         rm -f src/auto/config.cache;
-        ./configure --with-features=huge --enable-gui=auto --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
+        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
         make -j8; sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim9 && sudo make install; sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10; sudo update-alternatives --set editor /usr/local/bin/vim
         " \
     atpull"%atclone" #make pick"src/vim"
@@ -658,7 +658,7 @@ zinit ice from"gh-r" as"command" \
     ./starship init zsh --print-full-init > init.zsh
   " \
   atpull"%atclone" \
-  multisrc"init.zsh /home/scudzy/.config/starship/spaceship.zsh"
+  src"init.zsh" #/home/scudzy/.config/starship/starship.zsh
 zinit light starship/starship
 
 ####################### End of zinit line ##########################
@@ -739,6 +739,10 @@ function j() {
     fi
 }
 
+### nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 # powerline-status
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 . "$HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh"
@@ -748,8 +752,6 @@ $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 
 # source zalias
 [[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
-
-
 
 ### the fuck alias
 eval "$(thefuck --alias)"
