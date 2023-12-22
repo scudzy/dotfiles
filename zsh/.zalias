@@ -149,10 +149,10 @@ alias pfd="pass find $@"
 alias pgp="pass grep $@"
 alias genpass="head -c 16 /dev/random | base64"
 
-alias myBSN="pass show scudzyDB/garbage/My/myBSN"
-alias 2u="pass show scudzyDB/garbage/My/M2u"
+alias mybsn="pass show scudzyDB/garbage/My/MyBSN"
+alias 2u="pass show scudzyDB/garbage/My/Maybank2u"
 alias gscudzy="pass show scudzyDB/IDs/Google-scudzy"
-alias halimi="pass show scudzyDB/IDs/Google-halimi"
+alias ghalimi="pass show scudzyDB/IDs/Google-halimi"
 
 # others
 ### sudo apt -oDebug::pkgAcquire::Worker=1 update --- debug
