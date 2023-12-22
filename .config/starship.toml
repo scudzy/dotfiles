@@ -1,0 +1,52 @@
+#  ~/.config/starship.toml
+
+add_newline = false
+#format = """$os$username$hostname$kubernetes$directory$git_branch$git_status"""
+
+#[character]
+#success_symbol = "[➜](bold green) "
+#error_symbol = "[✗](bold red) "
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]      # The name of the module we are configuring is "character"
+symbol = "➜"     # The "symbol" segment is being set to "➜"
+error_symbol = "✗"
+use_symbol_for_status = true
+
+[directory]
+truncation_length = 4
+truncation_symbol = '…/'
+read_only = " 🔐"
+home_symbol = " 🏠"
+read_only_style = '197'
+#format = 'at [$path]($style)[$read_only]($read_only_style) '
+
+[gcloud]
+format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
+
+# git
+[git_branch]
+#format = '\[[$symbol$branch]($style)\]'
+symbol = " "
+
+[git_commit]
+commit_hash_length = 4
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged.value = "++"
+staged.style = "green"
+staged_count.enabled = true
+staged_count.style = "green"
+renamed = "👅"
+deleted = "🗑"
+
+[golang]
+format = '\[[$symbol($version)]($style)\]'
+symbol = " "
