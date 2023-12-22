@@ -1,4 +1,8 @@
 
+HOME="/home/scudzy"
+DOTFILES="$HOME/.dotfiles"
+ZDOTDIR="$DOTFILES/zsh/"
+
 # zsh only aliases
 alias 1='cd -'
 alias 2='cd -2'
@@ -125,12 +129,13 @@ alias ld="exa -ahDG --icons --octal-permissions"
 alias lld="exa -laghDG --icons --octal-permissions"
 alias ll="exa -lagT -L=1 --icons --octal-permissions --group-directories-first"
 alias l2="exa -lagT -L=2 --icons --octal-permissions --group-directories-first"
+alias l3="exa -lagT -L=3 --icons --octal-permissions --group-directories-first"
 alias lg="exa -ahG --icons --octal-permissions --group-directories-first"
 alias llg="exa -laghG --icons --octal-permissions --group-directories-first"
 alias lgit="exa -lah --icons --git --octal-permissions --group-directories-first"
 
 # sh
-alias ffmpegts="sh -c ~/dotfiles/sh/ffmpegts.sh"
+alias ffmpegts="sh -c '$DOTFILES/sh/ffmpegts.sh'"
 
 # pass
 alias passgp="pass git push -u --all"
@@ -144,10 +149,10 @@ alias pfd="pass find $@"
 alias pgp="pass grep $@"
 alias genpass="head -c 16 /dev/random | base64"
 
-alias myBSN="pass garbage/personal/My/myBSN"
-alias 2u="pass garbage/personal/My/Maybank2u"
-alias gscudzy="pass garbage/eMail/Google-scudzy"
-alias halimi="pass garbage/eMail/Google-halimi@barikatech.com"
+alias myBSN="pass show scudzyDB/garbage/My/myBSN"
+alias 2u="pass show scudzyDB/garbage/My/M2u"
+alias gscudzy="pass show scudzyDB/IDs/Google-scudzy"
+alias halimi="pass show scudzyDB/IDs/Google-halimi"
 
 # others
 ### sudo apt -oDebug::pkgAcquire::Worker=1 update --- debug
@@ -186,26 +191,30 @@ alias tio-com4="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --pari
 alias tio-com6="tio --baudrate 9600 --databits 8 --flow none --stopbits 1 --parity none /dev/tty6"
 
 # rclone
-alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
-alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
+alias rclGdrvd="rclone --exclude ".git/" sync '/home/scudzy/.dotfiles' 'Gdrive:/dotfiles/Debian' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Debian
+alias rclGdrvu="rclone --exclude ".git/" sync '/home/scudzy/.dotfiles' 'Gdrive:/dotfiles/Ubuntu' --track-renames --checkers=16 --transfers=16 --stats=1s --tpslimit=10 --tpslimit-burst=10 -u -P -v"     # Ubuntu
 
 alias rclone-docs="rclone sync '/d/OneDrive/Documents/Business Doc/' 'G-halimi:/Documents/' --transfers=8 --stats=1s --drive-chunk-size=128M --tpslimit=10 --tpslimit-burst=10 --create-empty-src-dirs -u -P -v"
 
 # python
 alias cc="currency_converter"
 alias vw="pyvoc -w"
-alias pxu="pipx upgrade-all"
-alias pxi="pipx install"
-alias pxun="pipx uninstall"
+alias pipu="pipx upgrade-all"
+alias pipxi="pipx install"
+alias pipxun="pipx uninstall"
+alias pipr="pip-review --local --interactive --verbose --no-cache-dir"
 alias pip="pip3"
 alias pip3i="python3 -m pip install"
 alias pip3u="pip3 uninstall"
 alias p3="python3"
-alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"  # Ubuntu
+alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
+
+# Ubuntu
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
 
 # apt & dpkg
 # -oDebug::pkgAcquire::Worker=1 --- Add for verbose debug
+alias aptsh="sudo apt show $@"
 alias apti="sudo apt install $@"
 alias aptino="sudo apt install --no-install-recommends $@"
 alias aptar="sudo apt autoremove $@"
@@ -225,6 +234,9 @@ alias geoloc="curl -s --request GET --url https://freegeoip.app/json/ --header '
 # path
 alias dot="cd $DOTFILES"
 alias zz="cd $ZDOTDIR"
+alias zplug="cd ~/.local/share/zinit/plugins"
+alias zsnip="cd ~/.local/share/zinit/snippets"
+alias zpol="cd ~/.local/share/zinit/polaris"
 alias timezsh="time-n-cmd 5 'zsh -i -c exit' 2>&1 > /dev/null"
 
 # git
