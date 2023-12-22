@@ -55,15 +55,22 @@ bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 bindkey '^Xh' _complete_help                      # ctrl x h context for a command
 
+# ### zsh builtin AUTOLOAD
+# autoload -Uz compinit
+# compinit -i
+# (( ${+_comps} )) && _comps[zinit]=_zinit
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
     [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
     [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-# ensure compinit recognizes zinit's changes
-autoload -Uz _zinit
+# # ensure compinit recognizes zinit's changes
+# autoload -Uz _zinit
+autoload -Uz compinit
 # shellcheck disable=SC2154
 (( ${+_comps} )) && _comps[zinit]=_zinit
+compinit -i
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-descitiption 'specify: %d'
@@ -294,6 +301,10 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# declare-zsh
+zinit ice wait"2" lucid
+zinit load zdharma-continuum/declare-zsh
+
 # async support
 zinit ice wait lucid \
   atload"async_init" \
@@ -305,10 +316,6 @@ zinit ice wait lucid src"zsh-better-npm-completion.plugin.zsh"
 zinit load lukechilds/zsh-better-npm-completion
 
 ### Zinit
-# # syntax highlighting
-# zinit ice wait lucid \
-#   atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
-# zinit light zsh-users/zsh-syntax-highlighting
 
 ### Turbo mode
 zinit wait lucid light-mode for \
@@ -316,7 +323,7 @@ zinit wait lucid light-mode for \
         zdharma-continuum/fast-syntax-highlighting \
     atload"_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
-    blockf atpull'zinit creinstall -q .' \
+        blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions \
         OMZP::tmux \
         OMZP::genpass \
@@ -334,7 +341,7 @@ zinit wait lucid light-mode for \
         OMZP::debian \
         OMZP::nvm \
         OMZP::svn \
-        OMZP::snap 
+        OMZP::snap
 
 ### nvm lazy loads
 zstyle ':omz:plugins:nvm' lazy yes
@@ -348,27 +355,17 @@ zinit ice wait lucid \
   atload"
     zmodload zsh/terminfo
     bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-  "
+    bindkey '^[[B' history-substring-search-down"
 zinit light zsh-users/zsh-history-substring-search
 
 ### zdharma-continuum/history-search-multi-word
-zstyle ":history-search-multi-word" page-size "11"
 zinit ice wait"1" lucid
 zinit load zdharma-continuum/history-search-multi-word
+zstyle ":history-search-multi-word" page-size "11"
 
 ### diff-so-fancy
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
-
-### omz git
-zinit ice atload"unalias grv"
-zinit snippet OMZP::git
-
-### omz lib multisource
-zinit ice svn pick"completion.zsh" multisrc'git.zsh \
-    functions.zsh clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh'
-zinit snippet OMZ::lib
 
 ### git extras
 zinit lucid wait'0a' for \
@@ -376,56 +373,48 @@ zinit lucid wait'0a' for \
     make"PREFIX=$ZPFX" tj/git-extras
 
 ### sharkdp/fd
-zinit ice lucid wait'1' from"gh-r" as"command" \
-  mv"fd* -> fd" pick"fd/fd"  \
-  atclone"
-    mv -vf fd/autocomplete/_fd _fd
-    mv -vf fd/fd.1 ${ZINIT[MAN_DIR]}/man1
-    "
+zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" \
+    atclone"
+    mv -vf fd*/autocomplete/_fd _fd 
+    mv -vf fd*/fd.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light sharkdp/fd
 
 ### vivid
-zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" pick"vivid/vivid" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" \
     atload'export LS_COLORS="$(vivid generate snazzy)"'
-zinit load sharkdp/vivid
+zinit light sharkdp/vivid
 
 ### sharkdp/bat
-zinit ice lucid wait"1" from"gh-r" as"command" \
-  mv"bat* -> bat" pick"bat/bat" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" \
   atclone"
-    mv -vf bat/autocomplete/bat.zsh _bat
-    mv -vf bat/bat.1 ${ZINIT[MAN_DIR]}/man1
-  " \
-  atpull"%atclone" \
+    mv -vf bat*/autocomplete/bat.zsh _bat
+    mv -vf bat*/bat.1 ${ZINIT[MAN_DIR]}/man1" \
   atload"
     export BAT_THEME='zenburn'
     export BAT_PAGER='less -R -F -+X --mouse'
     export PAGER='less'
-    export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'
-  "
+    export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'" 
 zinit light sharkdp/bat
 
-    # alias cat='bat --paging=never --color=auto --style=numbers,changes'
-    # alias cats='bat --paging=always --color=always --style=numbers,changes'
-    # alias catcat='\cat --paging=never --color=auto --style=plain'
-
 ### ogham/exa, replacement for ls
-# grab exa (better ls) binary
-zinit ice wait"2" lucid from"gh-r" as"program" \
-  mv"bin/exa* -> exa" \
-  atclone"
+zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
+    atclone"
     mv -vf completions/exa.zsh _exa
     mv -vf man/exa.1 ${ZINIT[MAN_DIR]}/man1
     mv -vf man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5
-  "
+    rm -rf man bin completions"
 zinit light ogham/exa
 
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
 zinit wait"1" lucid from"gh-r" as"null" for \
-    sbin"**/fd"        @sharkdp/fd \
-    sbin"**/vivid"     @sharkdp/vivid \
-    sbin"**/bat"       @sharkdp/bat \
-    sbin"exa* -> exa"  ogham/exa
+    sbin"**/fd"            @sharkdp/fd \
+    sbin"**/vivid"         @sharkdp/vivid \
+    sbin"**/bat"           @sharkdp/bat
+
+### omz lib multisource
+# zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
+#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+# zinit snippet OMZ::lib
 
 # BurntSushi/ripgrep
 zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
@@ -435,10 +424,8 @@ zinit light BurntSushi/ripgrep
 
 ### forgit
 zinit ice wait lucid \
-    atload"
-    export forgit_revert_commit='grcm'
-    "
-zinit load 'wfxr/forgit'
+    atload'export forgit_revert_commit="grcm"'
+zinit load wfxr/forgit
 
 ### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz 
 zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
@@ -468,18 +455,30 @@ zinit ice lucid wait"0" from"gh-r" as"command" \
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
-zinit ice lucid wait"0" from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz"  pick"glow" \
+zinit ice lucid wait"0" from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
   cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
+
+### omz git
+setopt PROMPT_SUBST
+zinit snippet OMZL::git.zsh
+zinit ice atload"unalias grv"
+zinit snippet OMZP::git
 
 ### Load fzf, completion & key biindings
 zinit for \
     as'command' \
-    dl="$(print -c https://raw.githubusercontent.com/junegunn/fzf/master/{shell/{'key-bindings.zsh;','completion.zsh -> _fzf;'},man/{'man1/fzf.1 -> $ZPFX/share/man/man1/fzf.1;','man1/fzf-tmux.1 -> $ZPFX/share/man/man1/fzf-tmux.1;'}})" \
+    dl="https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh" \
+    dl="https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> _fzf" \
+    dl="https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1" \
+    dl="https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1" \
     from'gh-r' \
     null \
     pick'fzf' \
     src'key-bindings.zsh' \
+    atclone"
+    mv -vf *.1 ${ZINIT[MAN_DIR]}/man1
+    " \
   @junegunn/fzf
 
 ### tab completions via fzf-tab
@@ -538,16 +537,6 @@ zinit ice as"program" \
         " \
     atpull"%atclone" #make pick"src/vim"
     zinit light vim/vim
-
-### Load fzf, completion & key biindings
-zinit for \
-    as'command' \
-    dl="$(print -c https://raw.githubusercontent.com/junegunn/fzf/master/{shell/{'key-bindings.zsh;','completion.zsh -> _fzf;'},man/{'man1/fzf.1 -> $ZPFX/share/man/man1/fzf.1;','man1/fzf-tmux.1 -> $ZPFX/share/man/man1/fzf-tmux.1;'}})" \
-    from'gh-r' \
-    null \
-    pick'fzf' \
-    src'key-bindings.zsh' \
-  @junegunn/fzf
 
 ### FZF configs ------------- ###
 export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
@@ -626,42 +615,115 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### End of fzf configs ----------------------- ###
 
+####################### Start of p10k prompt line ##########################
+
 # # After finishing the configuration wizard change the atload'' ice to:
 # # -> atload'source ~/.p10k.zsh; _p9k_precmd'
-# # zinit ice depth"1" atload'true; _p9k_precmd' nocd
-# zinit ice depth"1" #atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
-# zinit light romkatv/powerlevel10k
+# zinit ice depth"1" atload'true; _p9k_precmd' nocd
+zinit ice depth"1" atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
+zinit light romkatv/powerlevel10k
 
-# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+(( ! ${+functions[p10k]} )) || p10k finalize
+####################### End of p10k prompt line ############################
 
-# # Load pure theme
-# zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
+####################### Start of pure prompt line ##########################
+
+# # pure prompt
+# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 # zinit light sindresorhus/pure
 
-# starship prompt
-if ! command -v starship >/dev/null 2>&1; then
-  if which wget >/dev/null ; then
-    echo "Downloading via wget"
-    wget https://starship.rs/install.sh
-  elif which curl >/dev/null ; then
-    echo "Downloading via curl"
-    curl -sS -O https://starship.rs/install.sh
-  else
-    echo "Cannot download, neither wget nor curl. Exiting"
-    exit 1
-  fi
-fi
+# zstyle :prompt:pure:prompt:success color 014
+# zstyle :prompt:pure:host color 014
 
-# starship prompt
-zinit ice from"gh-r" as"command" \
-  atclone"
-    ./starship init zsh --print-full-init > init.zsh
-  " \
-  atpull"%atclone" \
-  src"init.zsh" #/home/scudzy/.config/starship/starship.zsh
-zinit light starship/starship
+# # Load pure theme
+# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
 
-####################### End of zinit line ##########################
+# # pure dark theme
+# typeset -A pure_halloween_scheme=(
+#     color1 "#E84000" # Tangelo
+#     color2 "#EB6123" # Halloween Orange
+#     color3 "#FFE5D5" # Flesh
+#     color4 "#F1B111" # Spanish Yellow
+#     color5 "#FF1A72" # Electric Pink
+#     color6 "#E40055" # Raspberry
+# )
+
+# zstyle :prompt:pure:execution_time      color $pure_halloween_scheme[color3]
+# zstyle :prompt:pure:git:arrow           color $pure_halloween_scheme[color5]
+# zstyle :prompt:pure:git:branch          color $pure_halloween_scheme[color2]
+# zstyle :prompt:pure:git:branch:cached   color $pure_halloween_scheme[color1]
+# zstyle :prompt:pure:git:dirty           color $pure_halloween_scheme[color4]
+# zstyle :prompt:pure:host                color $pure_halloween_scheme[color6]
+# zstyle :prompt:pure:path                color $pure_halloween_scheme[color1]
+# zstyle :prompt:pure:prompt:error        color $pure_halloween_scheme[color1]
+# zstyle :prompt:pure:prompt:success      color $pure_halloween_scheme[color4]
+# zstyle :prompt:pure:user                color $pure_halloween_scheme[color4]
+# zstyle :prompt:pure:user:root           color $pure_halloween_scheme[color3]
+# zstyle :prompt:pure:virtualenv          color $pure_halloween_scheme[color6]
+
+# ### Load pure prompt
+# autoload -U promptinit; promptinit
+# prompt pure
+
+####################### End of pure prompt line #############################
+
+####################### Start of starship prompt line ##########################
+
+# # starship prompt
+# if ! command -v starship >/dev/null 2>&1; then
+#   if which wget >/dev/null ; then
+#     echo "Downloading via wget"
+#     wget https://starship.rs/install.sh
+#   elif which curl >/dev/null ; then
+#     echo "Downloading via curl"
+#     curl -sS -O https://starship.rs/install.sh
+#   else
+#     echo "Cannot download, neither wget nor curl. Exiting"
+#     exit 1
+#   fi
+# fi
+
+# # starship prompt
+# zinit ice from"gh-r" as"command" \
+#   atclone"
+#     ./starship init zsh --print-full-init > init.zsh
+#     ./starship completions zsh > _starship
+#   " \
+#   atpull"%atclone" \
+#   src"init.zsh"
+# zinit light starship/starship
+
+# SPACESHIP_PROMPT_ORDER=(
+#   user          # Username section
+#   dir           # Current directory section
+#   host          # Hostname section
+#   git           # Git section (git_branch + git_status)
+#   hg            # Mercurial section (hg_branch  + hg_status)
+#   exec_time     # Execution time
+#   line_sep      # Line break
+#   vi_mode       # Vi-mode indicator
+#   jobs          # Background jobs indicator
+#   exit_code     # Exit code section
+#   char          # Prompt character
+# )
+# SPACESHIP_USER_SHOW=always
+# SPACESHIP_PROMPT_ADD_NEWLINE=false
+# SPACESHIP_CHAR_SYMBOL="❯"
+# SPACESHIP_CHAR_SUFFIX=" "
+
+### starship prompt
+# zinit ice from"gh-r" as"command" \
+#   atload"./starship init zsh --print-full-init > init.zsh"
+# zinit light starship/starship
+# eval "$(starship init zsh)"
+# zinit ice from"gh-r" as"command" atload'eval "$(starship init zsh)"'
+# zinit load starship/starship
+
+####################### End of starship prompt line ##########################
+
+########################## End of zinit line #############################
 
 # fix mkdir permission
 if grep -q microsoft /proc/version; then
@@ -779,12 +841,11 @@ unset PIDFOUND
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 ### Git prompt
-autoload -Uz vcs_info
-precmd() { vcs_info }
-setopt PROMPT_SUBST
-zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
-PROMPT='%(?.%F{green}●.%F{red}●%f) %F{211}%1~%f ${vcs_info_msg_0_} '
-RPROMPT='%F{245}%*%f'
+# autoload -Uz vcs_info
+# precmd() { vcs_info }
+# zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
+# PROMPT='%(?.%F{green}●.%F{red}●%f) %F{211}%1~%f ${vcs_info_msg_0_} '
+# RPROMPT='%F{245}%*%f'
 
 # p10k env var
 POWERLEVEL9K_DISABLE_GITSTATUS="true"
