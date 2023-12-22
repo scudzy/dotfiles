@@ -54,7 +54,7 @@ export PASSWORD_STORE_GENERATED_LENGTH="20"
 # export PASSWORD_STORE_TOMB_SIZE=10
 
 ### rclone
-export RCLONE_PASSWORD_COMMAND="pass garbage/wsl2/rclone-deb10"
+export RCLONE_PASSWORD_COMMAND="pass scudzyDB/garbage/wsl2/rclone-deb12"
 
 ### cowsay
 export COWPATH="/usr/share/cowsay/cows/"
