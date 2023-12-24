@@ -811,7 +811,7 @@ $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 
 ### source xdg settings
 [[ -f '$ZDOTDIR/xdg.zsh' ]] || source $ZDOTDIR/xdg.zsh
-
+[[ -f '$ZDOTDIR/function.zsh' ]] || source $ZDOTDIR/function.zsh
 # source zalias
 [[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
 
@@ -820,7 +820,7 @@ eval "$(thefuck --alias)"
 #eval $(thefuck --alias --enable-experimental-instant-mode)
 
 ### ruby env
-eval "$(rbenv init - --no-rehash zsh)"
+# eval "$(rbenv init - --no-rehash zsh)"
 # source rbenv
 # [[ -f '~/.rbenv/completions/rbenv.zsh' ]] || source ~/.rbenv/completions/rbenv.zsh
 
