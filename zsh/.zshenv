@@ -60,7 +60,7 @@ export RCLONE_PASSWORD_COMMAND="pass scudzyDB/garbage/wsl2/rclone-deb12"
 export COWPATH="/usr/share/cowsay/cows/"
 
 # If you come from bash you might have to change your $PATH.
-export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:/var/lib/gems/3.1.0/:$PATH"
+export PATH="${HOME}/.local/bin:${HOME}/.dotfiles/sh:/c/Windows/System32:/usr/local/go/bin:/var/lib/gems/3.1.0/:${HOME}/.local/share/npm/bin/:$PATH"
 
 # wsl2 display
 export WSL2IP="$(ip addr show eth0 | grep inet | awk '{print $2; exit;}' | sed 's/\(.*\).\{3\}$/\1/' )"
@@ -102,7 +102,7 @@ export LESS="-F -i -J -M -R -W -x4 -X -z-4"
 
 # Default apps
 export EDITOR="vim"
-export VISUAL="gvim"
+export VISUAL="vim"
 export BROWSER="wslview"
 
 # Ripgrep
@@ -131,6 +131,8 @@ export STARSHIP_CONFIG=~/home/scudzy/.config/starship.toml
 
 ### GWSL
 export QT_SCALE_FACTOR=2
+
+export fdatetime="$(date +%d%m%Y-%H%M)"
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
