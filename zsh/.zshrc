@@ -341,7 +341,8 @@ zinit wait lucid light-mode for \
         OMZP::debian \
         OMZP::nvm \
         OMZP::svn \
-        OMZP::snap
+        OMZP::snap \
+        OMZP::emoji
 
 ### nvm lazy loads
 zstyle ':omz:plugins:nvm' lazy yes
@@ -375,7 +376,7 @@ zinit lucid wait'0a' for \
 ### sharkdp/fd
 zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" \
     atclone"
-    mv -vf fd*/autocomplete/_fd _fd 
+    mv -vf fd*/autocomplete/_fd _fd
     mv -vf fd*/fd.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light sharkdp/fd
 
@@ -393,7 +394,7 @@ zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" \
     export BAT_THEME='zenburn'
     export BAT_PAGER='less -R -F -+X --mouse'
     export PAGER='less'
-    export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'" 
+    export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'"
 zinit light sharkdp/bat
 
 ### ogham/exa, replacement for ls
@@ -427,7 +428,7 @@ zinit ice wait lucid \
     atload'export forgit_revert_commit="grcm"'
 zinit load wfxr/forgit
 
-### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz 
+### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz
 zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
   dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
