@@ -296,6 +296,11 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+### omz lib multisource
+zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
+    clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+zinit snippet OMZ::lib
+
 ### Turbo mode
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
@@ -403,14 +408,9 @@ zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperf
     rm -rfv hyperfine-*" pick"hyperfine"
 zinit light sharkdp/hyperfine
 
-### omz lib multisource
-# zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
-#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
-# zinit snippet OMZ::lib
-
-### omz git
-zinit ice wait lucid
-zinit snippet OMZL::git.zsh
+# ### omz git
+# zinit ice wait lucid
+# zinit snippet OMZL::git.zsh
 zinit ice wait atload"unalias grv" lucid
 zinit snippet OMZP::git
 
@@ -751,6 +751,12 @@ set_window_title() {
     local title="wSL2"
     echo -ne "\033]0;$title\007"
 }
+
+# # Windows Terminal
+# function settitle () {
+#   export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
+#   echo -ne '\033]0;'"$1"'\a'
+# }
 
 # Execute set_window_title before each prompt
 precmd() {
