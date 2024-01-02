@@ -244,7 +244,7 @@ alias gst="git status"
 alias gsts="git status --short"
 alias gp="git push"
 alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias gcm="git commit -m $@"
+alias gcom="git commit -m $@"
 alias rmgitd="find . -type d -name ".git" -exec rm -rf {} +"
 
 # terminal
