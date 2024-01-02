@@ -33,7 +33,7 @@ setopt nonomatch            # hide error message if there is no match for the pa
 setopt notify               # report the status of background jobs immediately
 setopt numericglobsort      # sort filenames numerically when it makes sense
 setopt nohup                # for nohup to works against watch
-# setopt promptsubst          # enable command substitution in prompt
+setopt promptsubst          # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -66,11 +66,11 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # # ensure compinit recognizes zinit's changes
-# autoload -Uz _zinit
-autoload -Uz compinit
-# shellcheck disable=SC2154
+autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-compinit -i
+# shellcheck disable=SC2154
+# autoload -Uz compinit
+# compinit -i
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-descitiption 'specify: %d'
@@ -301,22 +301,6 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-# declare-zsh
-zinit ice wait"2" lucid
-zinit load zdharma-continuum/declare-zsh
-
-# async support
-zinit ice wait lucid \
-  atload"async_init" \
-  src"async.zsh"
-zinit light mafredri/zsh-async
-
-# zsh better npm completion
-zinit ice wait lucid src"zsh-better-npm-completion.plugin.zsh"
-zinit load lukechilds/zsh-better-npm-completion
-
-### Zinit
-
 ### Turbo mode
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
@@ -339,13 +323,22 @@ zinit wait lucid light-mode for \
         OMZP::gpg-agent \
         OMZP::docker-compose \
         OMZP::debian \
-        OMZP::nvm \
         OMZP::svn \
-        OMZP::snap \
-        OMZP::emoji
+        OMZP::snap
 
-### nvm lazy loads
-zstyle ':omz:plugins:nvm' lazy yes
+# declare-zsh
+zinit ice wait lucid
+zinit load zdharma-continuum/declare-zsh
+
+# async support
+zinit ice wait lucid \
+  atload"async_init" \
+  src"async.zsh"
+zinit light mafredri/zsh-async
+
+# zsh better npm completion
+zinit ice wait lucid src"zsh-better-npm-completion.plugin.zsh"
+zinit load lukechilds/zsh-better-npm-completion
 
 ### zsh-users/zsh-history-substring-search
 # history substring searching
@@ -365,13 +358,8 @@ zinit load zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
 
 ### diff-so-fancy
-zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
+zinit ice wait"1" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
-
-### git extras
-zinit lucid wait'0a' for \
-    as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" \
-    make"PREFIX=$ZPFX" tj/git-extras
 
 ### sharkdp/fd
 zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" \
@@ -398,12 +386,12 @@ zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" \
 zinit light sharkdp/bat
 
 ### ogham/exa, replacement for ls
-zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
-    atclone"
-    mv -vf completions/exa.zsh _exa
-    mv -vf man/exa.1 ${ZINIT[MAN_DIR]}/man1
-    mv -vf man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5
-    rm -rf man bin completions"
+# zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
+# rm -rf man bin completions
+zinit ice wait"2" lucid from"gh-r" as"program" pick"bin/exa" \
+    cp"completions/exa.zsh _exa" \
+    cp"man/exa.1 ${ZINIT[MAN_DIR]}/man1" \
+    cp"man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
 zinit light ogham/exa
 
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
@@ -412,25 +400,33 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/vivid"         @sharkdp/vivid \
     sbin"**/bat"           @sharkdp/bat
 
+zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
+    atclone"
+    mv -vf hyperfine*/autocomplete/_hyperfine _hyperfine
+    mv -vf hyperfine*/*.1  ${ZINIT[MAN_DIR]}/man1
+    rm -rfv hyperfine-*" pick"hyperfine"
+zinit light sharkdp/hyperfine
+
 ### omz lib multisource
-# zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
-#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
-# zinit snippet OMZ::lib
+zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
+    clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+zinit snippet OMZ::lib
+
+# ### omz git
+# zinit ice wait lucid
+# zinit snippet OMZL::git.zsh
+zinit ice wait atload"unalias grv" lucid
+zinit snippet OMZP::git
 
 # BurntSushi/ripgrep
-zinit ice lucid wait"1" as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
+zinit ice lucid as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
     atclone"
         mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light BurntSushi/ripgrep
 
-### forgit
-zinit ice wait lucid \
-    atload'export forgit_revert_commit="grcm"'
-zinit load wfxr/forgit
-
 ### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz
-zinit ice wait"0" from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
-  dl"https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
+zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
+  dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
 ### Install z.lua
@@ -438,33 +434,27 @@ zinit ice wait'!0'
 zinit light skywind3000/z.lua
 
 ### b4b4r07/httpstat
-zinit ice lucid wait"0" as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
+zinit ice lucid wait as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zinit light b4b4r07/httpstat
 
 ### dalance/procs
-zinit ice lucid wait"0" as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
+zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
 zinit light dalance/procs
 
 ### oxipng
-zinit ice lucid wait"0" as"command" from"gh-r" bpick"*x86_64-unknown-linux*" mv"oxipng* -> oxipng" pick"oxipng/oxipng"
+zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-unknown-linux*" mv"oxipng* -> oxipng" pick"oxipng/oxipng"
 zinit light shssoichiro/oxipng
 
 ### dbrgn/tealdeer
-zinit ice lucid wait"0" from"gh-r" as"command" \
+zinit ice lucid wait from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
-    dl"https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr"
+    dl="https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr"
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
-zinit ice lucid wait"0" from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
+zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
   cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
-
-### omz git
-setopt PROMPT_SUBST
-zinit snippet OMZL::git.zsh
-zinit ice atload"unalias grv"
-zinit snippet OMZP::git
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -530,14 +520,32 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
 zinit light trapd00r/LS_COLORS
 
 ### clone vim & compiling
-zinit ice as"program" \
+zinit ice \
+    as"program" \
     atclone"
-        rm -f src/auto/config.cache;
-        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby="scudzy@duck.com";
-        make -j8; sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim9 && sudo make install; sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10; sudo update-alternatives --set editor /usr/local/bin/vim
-        " \
-    atpull"%atclone" #make pick"src/vim"
-    zinit light vim/vim
+        rm -f src/auto/config.cache; 
+        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com'" \
+    atpull"%atclone" \
+    make \
+    pick"src/vim" \
+    atload"
+        sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
+        sudo update-alternatives --set editor /usr/local/bin/vim" #make pick"src/vim"
+zinit light vim/vim
+
+### A more intuitive version of du in rust 
+zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dust" bpick"dust*x86_64*linux-gnu*" pick"dust" \
+    dl="https://raw.githubusercontent.com/bootandy/dust/master/completions/_dust" \
+    dl="https://raw.githubusercontent.com/bootandy/dust/master/man-page/dust.1" \
+    atclone"
+    mv -vf *.1 ${ZINIT[MAN_DIR]}/man1
+    rm -rfv dust-*"
+zinit light bootandy/dust
+
+### git extras
+zinit lucid wait'0a' for \
+    as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" \
+    make"PREFIX=$ZPFX" tj/git-extras
 
 ### FZF configs ------------- ###
 export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
@@ -615,6 +623,12 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
     done'
 
 ### End of fzf configs ----------------------- ###
+
+### Load forgit as the last one before prompt
+### forgit
+zinit ice wait lucid \
+    atload'export forgit_revert_commit="grcm"'
+zinit load wfxr/forgit 
 
 ####################### Start of p10k prompt line ##########################
 
@@ -724,6 +738,16 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 ####################### End of starship prompt line ##########################
 
+# zinit wait lucid light-mode for \
+#     atinit"
+#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/emoji-char-definitions.zsh" \
+#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/emoji-data.txt" \
+#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/update_emoji.pl"
+#     "
+# zinit snippet OMZP::emoji
+
+### nvm lazy loads
+zstyle ':omz:plugins:nvm' lazy yes
 ########################## End of zinit line #############################
 
 # fix mkdir permission
@@ -805,6 +829,31 @@ function j() {
 ### nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# place this after nvm initialization!
+# autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+# add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 # powerline-status
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
