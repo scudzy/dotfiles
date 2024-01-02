@@ -388,7 +388,7 @@ zinit light sharkdp/bat
 ### ogham/exa, replacement for ls
 # zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
 # rm -rf man bin completions
-zinit ice wait"2" lucid from"gh-r" as"program" pick"bin/exa" \
+zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" \
     cp"completions/exa.zsh _exa" \
     cp"man/exa.1 ${ZINIT[MAN_DIR]}/man1" \
     cp"man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
@@ -398,7 +398,8 @@ zinit light ogham/exa
 zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/fd"            @sharkdp/fd \
     sbin"**/vivid"         @sharkdp/vivid \
-    sbin"**/bat"           @sharkdp/bat
+    sbin"**/bat"           @sharkdp/bat \
+    sbin"**/exa"           ogham/exa
 
 zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
     atclone"
@@ -524,13 +525,12 @@ zinit ice \
     as"program" \
     atclone"
         rm -f src/auto/config.cache; 
-        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com'" \
+        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com'
+        sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
+        sudo update-alternatives --set editor /usr/local/bin/vim" \
     atpull"%atclone" \
     make \
-    pick"src/vim" \
-    atload"
-        sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
-        sudo update-alternatives --set editor /usr/local/bin/vim" #make pick"src/vim"
+    pick"src/vim"
 zinit light vim/vim
 
 ### A more intuitive version of du in rust 
@@ -750,6 +750,19 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 zstyle ':omz:plugins:nvm' lazy yes
 ########################## End of zinit line #############################
 
+# Function to set window title
+set_window_title() {
+    # You can customize the title format as needed
+    local title="wSL2"
+    echo -ne "\033]0;$title\007"
+}
+
+# Execute set_window_title before each prompt
+precmd() {
+    set_window_title
+}
+
+
 # fix mkdir permission
 if grep -q microsoft /proc/version; then
     if [ "$(umask)" == '0000' ]; then
@@ -859,12 +872,6 @@ load-nvmrc
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 . "$HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh"
 
-### source xdg settings
-[[ -f '$ZDOTDIR/xdg.zsh' ]] || source $ZDOTDIR/xdg.zsh
-[[ -f '$ZDOTDIR/function.zsh' ]] || source $ZDOTDIR/function.zsh
-# source zalias
-[[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
-
 ### the fuck alias
 eval "$(thefuck --alias)"
 #eval $(thefuck --alias --enable-experimental-instant-mode)
@@ -889,6 +896,12 @@ fi
 unset PIDFOUND
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
+
+### source xdg settings
+[[ -f '$ZDOTDIR/xdg.zsh' ]] || source $ZDOTDIR/xdg.zsh
+[[ -f '$ZDOTDIR/function.zsh' ]] || source $ZDOTDIR/function.zsh
+# source zalias
+[[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
 
 ### Git prompt
 # autoload -Uz vcs_info
