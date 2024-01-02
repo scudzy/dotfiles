@@ -11,8 +11,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set path
-DOTFILES="$HOME/.dotfiles"
-ZDOTDIR="$HOME/.dotfiles/zsh"
+DOTFILES="/home/scudzy/.dotfiles"
+ZDOTDIR="/home/scudzy/.dotfiles/zsh"
 
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
@@ -54,11 +54,6 @@ bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 bindkey '^Xh' _complete_help                      # ctrl x h context for a command
-
-# ### zsh builtin AUTOLOAD
-# autoload -Uz compinit
-# compinit -i
-# (( ${+_comps} )) && _comps[zinit]=_zinit
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
     [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -409,13 +404,13 @@ zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperf
 zinit light sharkdp/hyperfine
 
 ### omz lib multisource
-zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
-    clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
-zinit snippet OMZ::lib
+# zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
+#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+# zinit snippet OMZ::lib
 
-# ### omz git
-# zinit ice wait lucid
-# zinit snippet OMZL::git.zsh
+### omz git
+zinit ice wait lucid
+zinit snippet OMZL::git.zsh
 zinit ice wait atload"unalias grv" lucid
 zinit snippet OMZP::git
 
@@ -624,6 +619,14 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### End of fzf configs ----------------------- ###
 
+# source zalias
+# [[ -r "$ZDOTDIR/.zalias" ]] || 
+source $ZDOTDIR/.zalias
+### source xdg settings
+# [[ -r "$ZDOTDIR/xdg.zsh" ]] || 
+source $ZDOTDIR/xdg.zsh
+# [[ -r "$ZDOTDIR/function.zsh" ]] || source $ZDOTDIR/function.zsh
+
 ### Load forgit as the last one before prompt
 ### forgit
 zinit ice wait lucid \
@@ -738,14 +741,6 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 ####################### End of starship prompt line ##########################
 
-# zinit wait lucid light-mode for \
-#     atinit"
-#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/emoji-char-definitions.zsh" \
-#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/emoji-data.txt" \
-#     dl="https://raw.githubusercontent.com/simplonco/oh-my-zsh/master/plugins/emoji/update_emoji.pl"
-#     "
-# zinit snippet OMZP::emoji
-
 ### nvm lazy loads
 zstyle ':omz:plugins:nvm' lazy yes
 ########################## End of zinit line #############################
@@ -761,7 +756,6 @@ set_window_title() {
 precmd() {
     set_window_title
 }
-
 
 # fix mkdir permission
 if grep -q microsoft /proc/version; then
@@ -897,11 +891,6 @@ unset PIDFOUND
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
-### source xdg settings
-[[ -f '$ZDOTDIR/xdg.zsh' ]] || source $ZDOTDIR/xdg.zsh
-[[ -f '$ZDOTDIR/function.zsh' ]] || source $ZDOTDIR/function.zsh
-# source zalias
-[[ -f '$ZDOTDIR/.zalias' ]] || source $ZDOTDIR/.zalias
 
 ### Git prompt
 # autoload -Uz vcs_info
