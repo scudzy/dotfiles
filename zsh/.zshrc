@@ -519,7 +519,7 @@ zinit light trapd00r/LS_COLORS
 zinit ice \
     as"program" \
     atclone"
-        rm -f src/auto/config.cache; 
+        rm -f src/auto/config.cache;
         ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com'
         sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
         sudo update-alternatives --set editor /usr/local/bin/vim" \
@@ -528,7 +528,7 @@ zinit ice \
     pick"src/vim"
 zinit light vim/vim
 
-### A more intuitive version of du in rust 
+### A more intuitive version of du in rust
 zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dust" bpick"dust*x86_64*linux-gnu*" pick"dust" \
     dl="https://raw.githubusercontent.com/bootandy/dust/master/completions/_dust" \
     dl="https://raw.githubusercontent.com/bootandy/dust/master/man-page/dust.1" \
@@ -620,10 +620,10 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 ### End of fzf configs ----------------------- ###
 
 # source zalias
-# [[ -r "$ZDOTDIR/.zalias" ]] || 
+# [[ -r "$ZDOTDIR/.zalias" ]] ||
 source $ZDOTDIR/.zalias
 ### source xdg settings
-# [[ -r "$ZDOTDIR/xdg.zsh" ]] || 
+# [[ -r "$ZDOTDIR/xdg.zsh" ]] ||
 source $ZDOTDIR/xdg.zsh
 # [[ -r "$ZDOTDIR/function.zsh" ]] || source $ZDOTDIR/function.zsh
 
@@ -631,7 +631,7 @@ source $ZDOTDIR/xdg.zsh
 ### forgit
 zinit ice wait lucid \
     atload'export forgit_revert_commit="grcm"'
-zinit load wfxr/forgit 
+zinit load wfxr/forgit
 
 ####################### Start of p10k prompt line ##########################
 
@@ -752,12 +752,6 @@ set_window_title() {
     echo -ne "\033]0;$title\007"
 }
 
-# # Windows Terminal
-# function settitle () {
-#   export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
-#   echo -ne '\033]0;'"$1"'\a'
-# }
-
 # Execute set_window_title before each prompt
 precmd() {
     set_window_title
@@ -778,7 +772,8 @@ else
 fi
 
 # grc
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+# [[ -s "/etc/grc.zsh" ]] &&
+source /etc/grc.zsh
 # dynamic aliases
 for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
     cmd="${cmd##*conf.}"
