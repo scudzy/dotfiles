@@ -199,7 +199,7 @@ alias rclone-docs="rclone sync '/d/OneDrive/Documents/Business Doc/' 'G-halimi:/
 # python
 alias cc="currency_converter"
 alias vw="pyvoc -w"
-alias pipu="pipx upgrade-all"
+alias pipxu="pipx upgrade-all --verbose"
 alias pipxi="pipx install"
 alias pipxun="pipx uninstall"
 alias pipr="pip-review --local --interactive --verbose --no-cache-dir"
@@ -208,6 +208,8 @@ alias pip3i="python3 -m pip install"
 alias pip3u="pip3 uninstall"
 alias p3="python3"
 alias pyupg="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
+
+alias eurofx="curl -LOf https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip && mv -fv eurofxref-hist.zip /home/scudzy/.local/pipx/venvs/currencyconverter/lib/python3.11/site-packages/currency_converter/eurofxref-hist.zip"
 
 # Ubuntu
 #alias pyupg="python3 -m pip freeze --local |sed -rn 's/^([^=# \t\\][^ \t=]*)=.*/echo; echo Processing \1 ...; python3 -m pip install -U \1/p' |sh"  @ debian
