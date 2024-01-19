@@ -520,11 +520,11 @@ zinit ice \
     as"program" \
     atclone"
         rm -f src/auto/config.cache;
-        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com'
+        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com';
+        make -j4; sudo make install;
         sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
         sudo update-alternatives --set editor /usr/local/bin/vim" \
     atpull"%atclone" \
-    make \
     pick"src/vim"
 zinit light vim/vim
 
