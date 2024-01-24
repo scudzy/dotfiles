@@ -297,9 +297,9 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 ### omz lib multisource
-zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
-    clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
-zinit snippet OMZ::lib
+# zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
+#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+# zinit snippet OMZ::lib
 
 ### Turbo mode
 zinit wait lucid light-mode for \
@@ -325,6 +325,17 @@ zinit wait lucid light-mode for \
         OMZP::debian \
         OMZP::svn \
         OMZP::snap
+
+### OMZ lib
+zinit wait lucid for \
+        OMZL::git.zsh \
+  atload"unalias grv" \
+        OMZP::git
+
+zinit wait'!' lucid for \
+    OMZL::prompt_info_functions.zsh \
+    OMZL::directories.zsh \
+    OMZL::vcs_info.zsh
 
 # declare-zsh
 zinit ice wait lucid
@@ -407,12 +418,6 @@ zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperf
     mv -vf hyperfine*/*.1  ${ZINIT[MAN_DIR]}/man1
     rm -rfv hyperfine-*" pick"hyperfine"
 zinit light sharkdp/hyperfine
-
-# ### omz git
-# zinit ice wait lucid
-# zinit snippet OMZL::git.zsh
-zinit ice wait atload"unalias grv" lucid
-zinit snippet OMZP::git
 
 # BurntSushi/ripgrep
 zinit ice lucid as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
@@ -642,6 +647,7 @@ zinit ice depth"1" atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
 zinit light romkatv/powerlevel10k
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+export GPG_TTY=$TTY
 (( ! ${+functions[p10k]} )) || p10k finalize
 ####################### End of p10k prompt line ############################
 
@@ -893,16 +899,16 @@ unset PIDFOUND
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 
-### Git prompt
-# autoload -Uz vcs_info
-# precmd() { vcs_info }
-# zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
+## Git prompt
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
 # PROMPT='%(?.%F{green}●.%F{red}●%f) %F{211}%1~%f ${vcs_info_msg_0_} '
 # RPROMPT='%F{245}%*%f'
 
 # p10k env var
 POWERLEVEL9K_DISABLE_GITSTATUS="true"
-GITSTATUS_DAEMON="${HOME}/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
+GITSTATUS_DAEMON="${DOTFILES}/gitstatus/usrbin/gitstatusd"
 GITSTATUS_LOG_LEVEL=DEBUG
 
 #####################
@@ -934,3 +940,6 @@ echo ""
 
 # debug
 # zprof
+
+# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
+[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
