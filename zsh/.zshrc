@@ -11,8 +11,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set path
-DOTFILES="/home/scudzy/.dotfiles"
-ZDOTDIR="/home/scudzy/.dotfiles/zsh"
+DOTFILES="${HOME}/.dotfiles"
+ZDOTDIR="${DOTFILES}/zsh"
 
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
@@ -334,8 +334,7 @@ zinit wait lucid for \
 
 zinit wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
-    OMZL::directories.zsh \
-    OMZL::vcs_info.zsh
+    OMZL::directories.zsh
 
 # declare-zsh
 zinit ice wait lucid
@@ -624,14 +623,6 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### End of fzf configs ----------------------- ###
 
-# source zalias
-# [[ -r "$ZDOTDIR/.zalias" ]] ||
-source $ZDOTDIR/.zalias
-### source xdg settings
-# [[ -r "$ZDOTDIR/xdg.zsh" ]] ||
-source $ZDOTDIR/xdg.zsh
-# [[ -r "$ZDOTDIR/function.zsh" ]] || source $ZDOTDIR/function.zsh
-
 ### Load forgit as the last one before prompt
 ### forgit
 zinit ice wait lucid \
@@ -643,11 +634,10 @@ zinit load wfxr/forgit
 # # After finishing the configuration wizard change the atload'' ice to:
 # # -> atload'source ~/.p10k.zsh; _p9k_precmd'
 # zinit ice depth"1" atload'true; _p9k_precmd' nocd
-zinit ice depth"1" atload'source $ZDOTDIR/.p10k.zsh; _p9k_precmd' nocd
+zinit ice depth"1" src"$ZDOTDIR/.p10k.zsh" atload'_p9k_precmd' nocd
 zinit light romkatv/powerlevel10k
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-export GPG_TTY=$TTY
+# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 (( ! ${+functions[p10k]} )) || p10k finalize
 ####################### End of p10k prompt line ############################
 
@@ -777,9 +767,8 @@ else
     echo "Non-Login" && fortune linux | cowsay -f tux
 fi
 
-# grc
-# [[ -s "/etc/grc.zsh" ]] &&
 source /etc/grc.zsh
+
 # dynamic aliases
 for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
     cmd="${cmd##*conf.}"
@@ -842,7 +831,7 @@ function j() {
 
 ### nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # place this after nvm initialization!
 # autoload -U add-zsh-hook
@@ -873,6 +862,9 @@ load-nvmrc
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 . "$HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh"
 
+. /home/scudzy/.dotfiles/zsh/.zalias
+. /home/scudzy/.dotfiles/zsh/xdg.zsh
+
 ### the fuck alias
 eval "$(thefuck --alias)"
 #eval $(thefuck --alias --enable-experimental-instant-mode)
@@ -898,17 +890,16 @@ unset PIDFOUND
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
-
 ## Git prompt
-autoload -Uz vcs_info
-precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
+# autoload -Uz vcs_info
+# precmd() { vcs_info }
+# zstyle ':vcs_info:git:*' formats '%F{153}%b%f'
 # PROMPT='%(?.%F{green}●.%F{red}●%f) %F{211}%1~%f ${vcs_info_msg_0_} '
 # RPROMPT='%F{245}%*%f'
 
 # p10k env var
 POWERLEVEL9K_DISABLE_GITSTATUS="true"
-GITSTATUS_DAEMON="${DOTFILES}/gitstatus/usrbin/gitstatusd"
+GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
 GITSTATUS_LOG_LEVEL=DEBUG
 
 #####################
@@ -940,6 +931,3 @@ echo ""
 
 # debug
 # zprof
-
-# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
