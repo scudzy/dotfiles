@@ -13,7 +13,7 @@ export XDG_RUNTIME_DIR="${HOME}/.local/service-scudzy.aqX}"
 export XDG_CONFIG_DIRS="/etc/xdg"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share:/usr/share/gnome"
 # export XDG_DATA_DIRS="${HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share/gnome:/usr/local/share/:/usr/share/"
-export RUNLEVEL=3
+# export RUNLEVEL=3
 
 export ICEAUTHORITY="$XDG_RUNTIME_DIR/ICEauthority"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
