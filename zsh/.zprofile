@@ -14,6 +14,20 @@ if [[ -v SSH_CLIENT ]]; then
 	rm $TMPFILE
 fi
 
+# if [[ -f "${ZDOTDIR}/.zalias" ]]; then 
+#     source "${ZDOTDIR}/.zalias"
+#     printf "\nsourcing .zalias"
+#     else
+#     printf "\n404 - File not found\n" 
+# fi
+
+# if [[ -f "${ZDOTDIR}/xdg.zsh" ]]; then 
+#     source "${ZDOTDIR}/xdg.zsh"
+#     printf "\nsourcing xdg\n"
+#     else
+#     printf "404 - File not found\n"  
+# fi
+
 # pip zsh completion start
 function _pip_completion {
   local words cword
@@ -25,3 +39,4 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip3
 # pip zsh completion end
+
