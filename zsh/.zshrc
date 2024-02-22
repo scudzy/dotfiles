@@ -33,7 +33,7 @@ setopt nonomatch            # hide error message if there is no match for the pa
 setopt notify               # report the status of background jobs immediately
 setopt numericglobsort      # sort filenames numerically when it makes sense
 setopt nohup                # for nohup to works against watch
-setopt promptsubst          # enable command substitution in prompt
+# setopt promptsubst          # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -63,9 +63,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 # # ensure compinit recognizes zinit's changes
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-# shellcheck disable=SC2154
-# autoload -Uz compinit
-# compinit -i
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-descitiption 'specify: %d'
@@ -296,6 +293,10 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+### nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 ### omz lib multisource
 # zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
 #     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
@@ -327,14 +328,18 @@ zinit wait lucid light-mode for \
         OMZP::snap
 
 ### OMZ lib
-zinit wait lucid for \
-        OMZL::git.zsh \
-  atload"unalias grv" \
-        OMZP::git
+# zinit snippet OMZL::git.zsh
 
 zinit wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
-    OMZL::directories.zsh
+    OMZL::directories.zsh \
+    OMZL::clipboard.zsh \
+    OMZL::git.zsh
+
+zinit snippet OMZP::git
+zinit cdclear -q
+
+setopt promptsubst
 
 # declare-zsh
 zinit ice wait lucid
@@ -370,6 +375,12 @@ zstyle ":history-search-multi-word" page-size "11"
 ### diff-so-fancy
 zinit ice wait"1" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
+
+### LS_COLORS Download the default profile
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
 
 ### sharkdp/fd
 zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" \
@@ -408,8 +419,7 @@ zinit light ogham/exa
 zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/fd"            @sharkdp/fd \
     sbin"**/vivid"         @sharkdp/vivid \
-    sbin"**/bat"           @sharkdp/bat \
-    sbin"**/exa"           ogham/exa
+    sbin"**/bat"           @sharkdp/bat
 
 zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
     atclone"
@@ -513,24 +523,18 @@ zinit ice wait"1" lucid \
   "
 zinit light Aloxaf/fzf-tab
 
-### LS_COLORS Download the default profile
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
-
-### clone vim & compiling
-zinit ice \
-    as"program" \
-    atclone"
-        rm -f src/auto/config.cache;
-        ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com';
-        make -j4; sudo make install;
-        sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
-        sudo update-alternatives --set editor /usr/local/bin/vim" \
-    atpull"%atclone" \
-    pick"src/vim"
-zinit light vim/vim
+# ### clone vim & compiling
+# zinit ice \
+#     as"program" \
+#     atclone"
+#         rm -f src/auto/config.cache;
+#         ./configure --with-features=huge --enable-gui=gtk3 --enable-cscope --with-x --enable-multibyte --enable-rubyinterp=yes --enable-perlinterp=yes --enable-python3interp=yes --with-python3-command=/usr/bin/python3 --with-python3-config-dir=/usr/lib/python3.11/config-3.11-x86_64-linux-gnu/ --enable-luainterp=yes --with-compiledby='scudzy@duck.com';
+#         make -j4; sudo make install;
+#         sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 10;
+#         sudo update-alternatives --set editor /usr/local/bin/vim" \
+#     atpull"%atclone" \
+#     pick"src/vim"
+# zinit light vim/vim
 
 ### A more intuitive version of du in rust
 zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dust" bpick"dust*x86_64*linux-gnu*" pick"dust" \
@@ -542,9 +546,11 @@ zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dus
 zinit light bootandy/dust
 
 ### git extras
-zinit lucid wait'0a' for \
-    as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" \
-    make"PREFIX=$ZPFX" tj/git-extras
+# zinit ice as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX"
+# zinit light tj/git-extras
+
+# zinit lucid wait'0a' for \
+# as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX" tj/git-extras
 
 ### FZF configs ------------- ###
 export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
@@ -625,21 +631,8 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### Load forgit as the last one before prompt
 ### forgit
-zinit ice wait lucid \
-    atload'export forgit_revert_commit="grcm"'
+zinit ice wait lucid
 zinit load wfxr/forgit
-
-####################### Start of p10k prompt line ##########################
-
-# # After finishing the configuration wizard change the atload'' ice to:
-# # -> atload'source ~/.p10k.zsh; _p9k_precmd'
-# zinit ice depth"1" atload'true; _p9k_precmd' nocd
-zinit ice depth"1" src"$ZDOTDIR/.p10k.zsh" atload'_p9k_precmd' nocd
-zinit light romkatv/powerlevel10k
-
-# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-(( ! ${+functions[p10k]} )) || p10k finalize
-####################### End of p10k prompt line ############################
 
 ####################### Start of pure prompt line ##########################
 
@@ -767,6 +760,13 @@ else
     echo "Non-Login" && fortune linux | cowsay -f tux
 fi
 
+# source /home/scudzy/.dotfiles/zsh/.zalias
+# source "${ZDOTDIR}/.zalias"
+# source "${ZDOTDIR}/xdg.zsh"
+[[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
+
+[[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
+
 source /etc/grc.zsh
 
 # dynamic aliases
@@ -829,41 +829,34 @@ function j() {
     fi
 }
 
-### nvm
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
 # place this after nvm initialization!
 # autoload -U add-zsh-hook
 
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
+# load-nvmrc() {
+#   local nvmrc_path
+#   nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version
+#     nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+#       nvm use
+#     fi
+#   elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
 
-# add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+# # add-zsh-hook chpwd load-nvmrc
+# load-nvmrc
 
 # powerline-status
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
 . "$HOME/.local/pipx/venvs/powerline-status/lib/python3.11/site-packages/powerline/bindings/zsh/powerline.zsh"
-
-. /home/scudzy/.dotfiles/zsh/.zalias
-. /home/scudzy/.dotfiles/zsh/xdg.zsh
 
 ### the fuck alias
 eval "$(thefuck --alias)"
@@ -887,6 +880,18 @@ if [ -n "$PIDFOUND" ]; then
     export DIRMNGR_INFO="$HOME/.gnupg/S.dirmngr:$PIDFOUND:1"
 fi
 unset PIDFOUND
+
+####################### Start of p10k prompt line ##########################
+
+# # After finishing the configuration wizard change the atload'' ice to:
+# # -> atload'source ~/.p10k.zsh; _p9k_precmd'
+# zinit ice depth"1" atload'true; _p9k_precmd' nocd
+zinit ice depth"1" src"$ZDOTDIR/.p10k.zsh" atload'_p9k_precmd' nocd
+zinit light romkatv/powerlevel10k
+
+# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+(( ! ${+functions[p10k]} )) || p10k finalize
+####################### End of p10k prompt line ############################
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 

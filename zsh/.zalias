@@ -62,7 +62,7 @@ alias -g M='| more'
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
 alias -g -- --help='--help |& bat --language=help --style=plain'
 
-alias -g -- ?='--help'
+alias -g -- hh='--help |& bat --language=help --style=plain'
 
 # subversion
 alias svn="svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"

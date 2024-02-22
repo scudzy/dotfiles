@@ -14,15 +14,15 @@ if [[ -v SSH_CLIENT ]]; then
 	rm $TMPFILE
 fi
 
-# if [[ -f "${ZDOTDIR}/.zalias" ]]; then 
-#     source "${ZDOTDIR}/.zalias"
+# if [[ -e "${HOME}/.dotfiles/zsh/.zalias" ]]; then 
+#     source "${HOME}/.dotfiles/zsh/.zalias"
 #     printf "\nsourcing .zalias"
 #     else
 #     printf "\n404 - File not found\n" 
 # fi
 
-# if [[ -f "${ZDOTDIR}/xdg.zsh" ]]; then 
-#     source "${ZDOTDIR}/xdg.zsh"
+# if [[ -e "${HOME}/.dotfiles/zsh/xdg.zsh" ]]; then 
+#     source "${HOME}/.dotfiles/zsh/xdg.zsh"
 #     printf "\nsourcing xdg\n"
 #     else
 #     printf "404 - File not found\n"  
