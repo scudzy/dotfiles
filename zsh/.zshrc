@@ -760,13 +760,6 @@ else
     echo "Non-Login" && fortune linux | cowsay -f tux
 fi
 
-# source /home/scudzy/.dotfiles/zsh/.zalias
-# source "${ZDOTDIR}/.zalias"
-# source "${ZDOTDIR}/xdg.zsh"
-[[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
-
-[[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
-
 source /etc/grc.zsh
 
 # dynamic aliases
@@ -774,6 +767,13 @@ for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); 
     cmd="${cmd##*conf.}"
     type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
 done
+
+# source /home/scudzy/.dotfiles/zsh/.zalias
+# source "${ZDOTDIR}/.zalias"
+# source "${ZDOTDIR}/xdg.zsh"
+[[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
+
+[[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
@@ -830,29 +830,29 @@ function j() {
 }
 
 # place this after nvm initialization!
-# autoload -U add-zsh-hook
+autoload -U add-zsh-hook
 
-# load-nvmrc() {
-#   local nvmrc_path
-#   nvmrc_path="$(nvm_find_nvmrc)"
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
 
-#   if [ -n "$nvmrc_path" ]; then
-#     local nvmrc_node_version
-#     nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-#     if [ "$nvmrc_node_version" = "N/A" ]; then
-#       nvm install
-#     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-#       nvm use
-#     fi
-#   elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-#     echo "Reverting to nvm default version"
-#     nvm use default
-#   fi
-# }
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
 
-# # add-zsh-hook chpwd load-nvmrc
-# load-nvmrc
+# add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 # powerline-status
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
@@ -910,7 +910,7 @@ GITSTATUS_LOG_LEVEL=DEBUG
 #####################
 # COLORING          #
 #####################
-autoload colors && colors
+# autoload colors && colors
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
@@ -935,4 +935,4 @@ printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;
 echo ""
 
 # debug
-# zprof
+# zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
