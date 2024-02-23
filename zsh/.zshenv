@@ -44,9 +44,9 @@ export PYTHONPATH="${HOME}/.local/lib/python3.11/site-packages"
 export PYTHONSTARTUP="$DOTFILES/.pythonrc"
 
 ### pass
-export PASSWORD_STORE_DIR="${HOME}/password-store"
+export PASSWORD_STORE_DIR="${HOME}/.password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
-export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/password-store/.extensions"
+export PASSWORD_STORE_EXTENSIONS_DIR="${HOME}/.password-store/.extensions"
 export PASSWORD_STORE_GENERATED_LENGTH="20"
 # export PASSWORD_STORE_TOMB="/usr/bin/tomb"
 # export PASSWORD_STORE_TOMB_FILE="${HOME}/.password.tomb"
