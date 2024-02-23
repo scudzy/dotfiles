@@ -545,12 +545,9 @@ zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dus
     rm -rfv dust-*"
 zinit light bootandy/dust
 
-### git extras
-# zinit ice as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX"
-# zinit light tj/git-extras
-
-# zinit lucid wait'0a' for \
-# as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX" tj/git-extras
+zi ice as"program" atinit"sudo make install PREFIX=$ZPFX" \
+    src"/home/scudzy/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh"
+zi light tj/git-extras
 
 ### FZF configs ------------- ###
 export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
@@ -772,7 +769,6 @@ done
 # source "${ZDOTDIR}/.zalias"
 # source "${ZDOTDIR}/xdg.zsh"
 [[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
-
 [[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
 
 # xterm modes
