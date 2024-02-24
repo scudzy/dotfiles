@@ -421,6 +421,11 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/vivid"         @sharkdp/vivid \
     sbin"**/bat"           @sharkdp/bat
 
+zinit ice wait lucid from"gh-r" as"command" \
+    dl"https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza" \
+    bpick"*x86_64-unknown-linux-musl*"
+zinit light eza-community/eza
+
 zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
     atclone"
     mv -vf hyperfine*/autocomplete/_hyperfine _hyperfine
@@ -458,12 +463,13 @@ zinit light shssoichiro/oxipng
 ### dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
-    dl="https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr"
+    dl="https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr" \
+    src"${ZDOTDIR}/.zalias"
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
 zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
-  cp"completions/glow.zsh -> _glow"
+  cp"completions/glow.zsh -> _glow" src"${ZDOTDIR}/xdg.zsh"
 zinit light charmbracelet/glow
 
 ### Load fzf, completion & key biindings
@@ -545,7 +551,7 @@ zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dus
     rm -rfv dust-*"
 zinit light bootandy/dust
 
-zi ice as"program" atinit"sudo make install PREFIX=$ZPFX" \
+zi ice as"program" atclone"sudo make PREFIX=$ZPFX install" \
     src"/home/scudzy/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh"
 zi light tj/git-extras
 
@@ -630,6 +636,11 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 ### forgit
 zinit ice wait lucid
 zinit load wfxr/forgit
+
+# Ctrl+A for aliases full commands
+zle -C alias-expension complete-word _generic
+bindkey '^a' alias-expension
+zstyle ':completion:alias-expension:*' completer _expand_alias
 
 ####################### Start of pure prompt line ##########################
 
@@ -768,8 +779,8 @@ done
 # source /home/scudzy/.dotfiles/zsh/.zalias
 # source "${ZDOTDIR}/.zalias"
 # source "${ZDOTDIR}/xdg.zsh"
-[[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
-[[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
+# [[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
+# [[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
 
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
