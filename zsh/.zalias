@@ -308,3 +308,5 @@ alias gc-s="gcloud cheat-sheet"
 # shutdown & reboot
 alias shutdown="wsl.exe --shutdown $WSL_DISTRO_NAME"
 alias reboot="wsl.exe --terminate $WSL_DISTRO_NAME"
+
+alias tmx="tmux new -s"
