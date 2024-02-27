@@ -35,7 +35,7 @@ export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.l
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 ### golang
-export GOROOT="/usr/lib/go"
+export GOROOT="/usr/local/go/bin/"
 export GOPATH="${HOME}/go"
 
 ### python
