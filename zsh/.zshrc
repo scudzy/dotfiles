@@ -410,9 +410,10 @@ zinit light sharkdp/bat
 # zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
 # rm -rf man bin completions
 zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" \
-    cp"completions/exa.zsh _exa" \
-    cp"man/exa.1 ${ZINIT[MAN_DIR]}/man1" \
-    cp"man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
+    atclone"
+    cp completions/exa.zsh _exa
+    cp man/exa.1 ${ZINIT[MAN_DIR]}/man1
+    cp man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
 zinit light ogham/exa
 
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
@@ -436,12 +437,12 @@ zinit light sharkdp/hyperfine
 # BurntSushi/ripgrep
 zinit ice lucid as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
     atclone"
-        mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
+    mv -vf rg/doc/rg.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light BurntSushi/ripgrep
 
 ### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz
 zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
-  dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
+    dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
 ### Install z.lua
@@ -464,12 +465,12 @@ zinit light shssoichiro/oxipng
 zinit ice lucid wait from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
     dl="https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr" \
-    src"${ZDOTDIR}/.zalias"
+    multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh"
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
 zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
-  cp"completions/glow.zsh -> _glow" src"${ZDOTDIR}/xdg.zsh"
+  cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
 
 ### Load fzf, completion & key biindings
