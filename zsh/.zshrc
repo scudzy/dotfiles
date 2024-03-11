@@ -383,19 +383,19 @@ zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
 zinit light trapd00r/LS_COLORS
 
 ### sharkdp/fd
-zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd" \
     atclone"
     mv -vf fd*/autocomplete/_fd _fd
     mv -vf fd*/fd.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light sharkdp/fd
 
 ### vivid
-zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"vivid* -> vivid" pick"vivid/vivid" \
     atload'export LS_COLORS="$(vivid generate snazzy)"'
 zinit light sharkdp/vivid
 
 ### sharkdp/bat
-zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" \
+zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat" \
   atclone"
     mv -vf bat*/autocomplete/bat.zsh _bat
     mv -vf bat*/bat.1 ${ZINIT[MAN_DIR]}/man1" \
@@ -421,11 +421,6 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/fd"            @sharkdp/fd \
     sbin"**/vivid"         @sharkdp/vivid \
     sbin"**/bat"           @sharkdp/bat
-
-zinit ice wait lucid from"gh-r" as"command" \
-    dl"https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza" \
-    bpick"*x86_64-unknown-linux-musl*"
-zinit light eza-community/eza
 
 zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
     atclone"
@@ -456,10 +451,6 @@ zinit light b4b4r07/httpstat
 ### dalance/procs
 zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
 zinit light dalance/procs
-
-### oxipng
-zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-unknown-linux*" mv"oxipng* -> oxipng" pick"oxipng/oxipng"
-zinit light shssoichiro/oxipng
 
 ### dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" \
