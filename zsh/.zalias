@@ -70,6 +70,7 @@ alias svn="svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
 # mask built-ins with better defaults
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias ping="ping -c5 $@"
+alias hp3="hping3 --icmp --count 5 $@"
 
 # be safe
 alias cpi='cp -i'
