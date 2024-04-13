@@ -111,6 +111,9 @@ alias untar="tar -xf"
 alias biggest='du -s ./* | sort -nr | awk '\''{print $2}'\'' | xargs du -sh'
 alias dux='du -x --max-depth=1 | sort -n'
 #alias path='echo -e ${PATH//:/\\n}'
+alias manpath="print -l $manpath"
+alias fpath="print -l $fpath"
+
 alias linecount="grep -c '^'"
 #alias ds="date +%Y%m%d"
 alias ts="date +%d%m%Y-%H%M%S"
@@ -161,7 +164,7 @@ alias c="calc $@"
 alias suu="sudo apt update && sudo apt upgrade -y"
 alias dfh="df -h $@"
 alias dush="du -csh $@"
-alias fpath="print -l $fpath"
+
 alias stats="stat -c '%A %a %n' $@" ### "stat -c '%a' $@"
 #alias time="/usr/bin/time -f'Loading in %e secomds' $@"
 alias speed="speedtest --selection-details -v"
