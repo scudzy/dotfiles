@@ -850,8 +850,9 @@ load-nvmrc() {
   fi
 }
 
-# add-zsh-hook chpwd load-nvmrc
+add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+#######
 
 # powerline-status
 $HOME/.local/pipx/venvs/powerline-status/bin/powerline-daemon -q
