@@ -201,17 +201,17 @@ if command -v sqlite3 &> /dev/null; then
   [[ $VERIFY_XDG == true ]] && verify_appfile "$SQLITE_HISTORY" "$HOME"/.sqlite_history
 fi
 
-#
-# tmux
-#
-if command -v tmux &> /dev/null; then
-  export TMUX_CONFIG="$XDG_CONFIG_HOME"/tmux/tmux.conf
-  [[ $VERIFY_XDG == true ]] && verify_appfile "$TMUX_CONFIG" "$HOME"/.tmux.conf
-  # tmux devs are stubborn turkeys (that's the nice version)
-  # We can't just set a variable, we instead have to alias tmux to use XDG
-  # https://github.com/tmux/tmux/issues/142
-  alias tmux='command tmux -f "$TMUX_CONFIG"'
-fi
+# #
+# # tmux
+# #
+# if command -v tmux &> /dev/null; then
+#   export TMUX_CONFIG="$XDG_CONFIG_HOME"/tmux/tmux.conf
+#   [[ $VERIFY_XDG == true ]] && verify_appfile "$TMUX_CONFIG" "$HOME"/.tmux.conf
+#   # tmux devs are stubborn turkeys (that's the nice version)
+#   # We can't just set a variable, we instead have to alias tmux to use XDG
+#   # https://github.com/tmux/tmux/issues/142
+#   alias tmux='command tmux -f "$TMUX_CONFIG"'
+# fi
 
 #
 # wget
