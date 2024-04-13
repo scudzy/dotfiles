@@ -1,0 +1,3 @@
+[submodule "/home/scudzy/.dotfiles/.config/nvm"]
+	path = /home/scudzy/.dotfiles/.config/nvm
+	url = https://github.com/nvm-sh/nvm
