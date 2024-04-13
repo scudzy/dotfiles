@@ -134,6 +134,8 @@ export QT_SCALE_FACTOR=2
 
 export fdatetime="$(date +%d%m%Y-%H%M)"
 
+export NVM_DIR="/home/scudzy/.nvm"
+
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 # export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
