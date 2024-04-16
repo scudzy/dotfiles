@@ -753,13 +753,6 @@ if grep -q microsoft /proc/version; then
     fi
 fi
 
-# Checking Login v.s. Non-Login
-if [[ -o Login ]]; then
-    echo "Login" && neofetch
-else
-    echo "Non-Login" && fortune linux | cowsay -f tux
-fi
-
 source /etc/grc.zsh
 
 # dynamic aliases
@@ -893,6 +886,13 @@ zinit light romkatv/powerlevel10k
 (( ! ${+functions[p10k]} )) || p10k finalize
 ####################### End of p10k prompt line ############################
 
+# Checking Login v.s. Non-Login
+if [[ -o Login ]]; then
+    echo "Login" && fastfetch -c /home/scudzy/.config/fastfetch/12.jsonc
+else
+    echo "Non-Login" && fortune linux | cowsay -f tux
+fi
+
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
 ## Git prompt
@@ -932,7 +932,6 @@ total="$(( end - start ))"
 #fortune linux | cowsay -f tux
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-echo ""
-
+#echo ""
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
