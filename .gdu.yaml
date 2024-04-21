@@ -1,0 +1,34 @@
+log-file: /dev/null
+input-file: ""
+output-file: ""
+ignore-dirs:
+    - /proc
+    - /dev
+    - /sys
+    - /run
+ignore-dir-patterns: []
+ignore-from-file: ""
+max-cores: 4
+show-apparent-size: true
+show-relative-size: false
+no-color: false
+no-mouse: false
+non-interactive: true
+no-progress: false
+no-cross: false
+no-hidden: false
+follow-symlinks: false
+profiling: false
+const-gc: false
+summarize: false
+use-si-prefix: true
+no-prefix: false
+style:
+    selected-row:
+        text-color: ""
+        background-color: ""
+    progress-modal:
+        current-item-path-max-len: 0
+sorting:
+    by: ""
+    order: ""
