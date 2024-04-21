@@ -283,6 +283,15 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{160} The clone has failed.%f%b"
 fi
 
+### Checking Login v.s. Non-Login
+if [[ -o Login ]]; then
+    echo ""
+    echo "Login" && fastfetch -c ~/fastfetch/fastfetch.jsonc
+else
+    echo ""
+    echo "Non-Login" && fortune linux | cowsay -f tux
+fi
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -301,6 +310,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 # zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
 #     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
 # zinit snippet OMZ::lib
+
+zinit snippet OMZP::git
+setopt promptsubst
 
 ### Turbo mode
 zinit wait lucid light-mode for \
@@ -327,19 +339,11 @@ zinit wait lucid light-mode for \
         OMZP::svn \
         OMZP::snap
 
-### OMZ lib
-# zinit snippet OMZL::git.zsh
-
 zinit wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
     OMZL::directories.zsh \
     OMZL::clipboard.zsh \
     OMZL::git.zsh
-
-zinit snippet OMZP::git
-zinit cdclear -q
-
-setopt promptsubst
 
 # declare-zsh
 zinit ice wait lucid
@@ -400,7 +404,7 @@ zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat" \
     mv -vf bat*/autocomplete/bat.zsh _bat
     mv -vf bat*/bat.1 ${ZINIT[MAN_DIR]}/man1" \
   atload"
-    export BAT_THEME='zenburn'
+    export BAT_THEME='Sublime Snazzy'
     export BAT_PAGER='less -R -F -+X --mouse'
     export PAGER='less'
     export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'"
@@ -463,6 +467,12 @@ zinit light dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
   cp"completions/glow.zsh -> _glow"
 zinit light charmbracelet/glow
+
+### gdu
+zinit ice lucid wait from"gh-r" as"command" bpick"gdu_linux_amd64.tgz" mv"gdu_* -> gdu" \
+  pick"gdu" dl="https://raw.githubusercontent.com/dundee/gdu/master/gdu.1" \
+  atclone"mv -vf gdu.1 ${ZINIT[MAN_DIR]}/man1"
+zinit light dundee/gdu
 
 ### Load fzf, completion & key biindings
 zinit for \
@@ -761,16 +771,16 @@ for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); 
     type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
 done
 
-# source /home/scudzy/.dotfiles/zsh/.zalias
-# source "${ZDOTDIR}/.zalias"
-# source "${ZDOTDIR}/xdg.zsh"
-# [[ -e ${ZDOTDIR}/.zalias ]] && source ${ZDOTDIR}/.zalias
-# [[ -e ${ZDOTDIR}/xdg.zsh ]] && source ${ZDOTDIR}/xdg.zsh
-
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
     export TERM=xterm-256color
 fi
+
+### bathelp
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
 
 ### fzf pass ZSH
 _fzf_complete_pass() {
@@ -884,14 +894,11 @@ zinit light romkatv/powerlevel10k
 
 # typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 (( ! ${+functions[p10k]} )) || p10k finalize
+
 ####################### End of p10k prompt line ############################
 
-# Checking Login v.s. Non-Login
-if [[ -o Login ]]; then
-    echo "Login" && fastfetch -c /home/scudzy/.config/fastfetch/12.jsonc
-else
-    echo "Non-Login" && fortune linux | cowsay -f tux
-fi
+# autoload -U +X bashcompinit && bashcompinit
+# source $ZDOTDIR/completions/_sysbench
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
 
@@ -910,17 +917,14 @@ GITSTATUS_LOG_LEVEL=DEBUG
 #####################
 # COLORING          #
 #####################
-# autoload colors && colors
+autoload colors && colors
+
+# fpath
+fpath=( /home/scudzy/.local/share/zinit/completions /home/scudzy/.dotfiles/zsh/completions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
-
-# fpath
-fpath=(
-    /home/scudzy/.local/share/zinit/completions
-    /home/scudzy/.dotfiles/zsh/functions
-    "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
 
 # load function folders ----------- NEVER DELETE BELOW RHIS LINE
 ### End of Zinit's installer chunk
@@ -932,6 +936,6 @@ total="$(( end - start ))"
 #fortune linux | cowsay -f tux
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-#echo ""
+echo ""
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
