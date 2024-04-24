@@ -286,10 +286,10 @@ fi
 ### Checking Login v.s. Non-Login
 if [[ -o Login ]]; then
     echo ""
-    echo "Login" && fastfetch -c ~/fastfetch/fastfetch.jsonc
+    echo "Login" && fortune linux | cowsay -f tux
 else
     echo ""
-    echo "Non-Login" && fortune linux | cowsay -f tux
+    echo "Non-Login"
 fi
 
 # Load a few important annexes, without Turbo
@@ -638,6 +638,10 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 ### forgit
 zinit ice wait lucid
 zinit load wfxr/forgit
+
+### oxipng
+zinit ice lucid wait as"command" from"gh-r" mv"oxipng*x86_64-unknown-linux-gnu* -> oxipng" bpick"oxipng*x86_64-unknown-linux-gnu*" pick"oxipng/oxipng"
+zinit light shssoichiro/oxipng
 
 # Ctrl+A for aliases full commands
 zle -C alias-expension complete-word _generic
