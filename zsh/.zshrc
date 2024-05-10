@@ -285,12 +285,12 @@ fi
 
 ### Checking Login v.s. Non-Login
 if [[ -o Login ]]; then
-    echo ""
-    echo "Login" && fortune linux | cowsay -f tux
+    echo "Login"
 else
-    echo ""
     echo "Non-Login"
 fi
+
+#fortune debian | cowsay -f bunny
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
@@ -443,6 +443,15 @@ zinit light BurntSushi/ripgrep
 zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
     dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
+
+# # fastfetch
+# zinit ice wait from"gh-r" as"command" bpick"*freebsd-amd64.tar.gz" mv"fastfetch*/usr/bin/fastfetch -> fastfetch" pick"fastfetch" \
+#     atclone"
+#     cp fastfetch*/usr/share/man/man1/fastfetch.1 ${ZINIT[MAN_DIR]}/man1/
+#     "
+# zinit light fastfetch-cli/fastfetch
+
+#mv"fastfetch-* -> fastfetch"
 
 ### Install z.lua
 zinit ice wait'!0'
@@ -634,10 +643,10 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 
 ### End of fzf configs ----------------------- ###
 
-### Load forgit as the last one before prompt
-### forgit
-zinit ice wait lucid
-zinit load wfxr/forgit
+# ### Load forgit as the last one before prompt
+# ### forgit
+# zinit ice wait'0' # or just: zinit ice wait
+# zinit light wfxr/forgit
 
 ### oxipng
 zinit ice lucid wait as"command" from"gh-r" mv"oxipng*x86_64-unknown-linux-gnu* -> oxipng" bpick"oxipng*x86_64-unknown-linux-gnu*" pick"oxipng/oxipng"
@@ -905,6 +914,10 @@ zinit light romkatv/powerlevel10k
 # source $ZDOTDIR/completions/_sysbench
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
+# forgit
+zinit ice wait lucid
+zinit load 'wfxr/forgit'
+
 
 ## Git prompt
 # autoload -Uz vcs_info
@@ -941,5 +954,6 @@ total="$(( end - start ))"
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
+# fastfetch -c /usr/share/fastfetch/presets/examples/12.jsonc
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
