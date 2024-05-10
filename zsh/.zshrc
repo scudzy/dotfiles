@@ -311,8 +311,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 #     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
 # zinit snippet OMZ::lib
 
-zinit snippet OMZP::git
-setopt promptsubst
+# zinit snippet OMZP::git
+# setopt promptsubst
 
 ### Turbo mode
 zinit wait lucid light-mode for \
@@ -342,8 +342,15 @@ zinit wait lucid light-mode for \
 zinit wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
     OMZL::directories.zsh \
-    OMZL::clipboard.zsh \
-    OMZL::git.zsh
+    OMZL::clipboard.zsh
+
+setopt promptsubst
+
+# B.
+zinit wait lucid for \
+        OMZL::git.zsh \
+  atload"unalias grv" \
+        OMZP::git
 
 # declare-zsh
 zinit ice wait lucid
