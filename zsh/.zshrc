@@ -451,14 +451,14 @@ zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
     dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
 zinit light dandavison/delta
 
-# # fastfetch
-# zinit ice wait from"gh-r" as"command" bpick"*freebsd-amd64.tar.gz" mv"fastfetch*/usr/bin/fastfetch -> fastfetch" pick"fastfetch" \
-#     atclone"
-#     cp fastfetch*/usr/share/man/man1/fastfetch.1 ${ZINIT[MAN_DIR]}/man1/
-#     "
-# zinit light fastfetch-cli/fastfetch
-
-#mv"fastfetch-* -> fastfetch"
+### fastfetch
+zinit ice wait from"gh-r" as"command" bpick"fastfetch-linux-amd64.tar.gz" \
+    mv"fastfetch*/usr/bin/fastfetch -> fastfetch" pick"fastfetch*/fastfetch" \
+    atclone"
+    mv -vf fastfetch*/usr/share/man/man1/fastfetch.1 ${ZINIT[MAN_DIR]}/man1
+    mv -vf fastfetch*/usr/share/fastfetch/presets .
+    "
+zinit light fastfetch-cli/fastfetch
 
 ### Install z.lua
 zinit ice wait'!0'
@@ -649,11 +649,6 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
     done'
 
 ### End of fzf configs ----------------------- ###
-
-# ### Load forgit as the last one before prompt
-# ### forgit
-# zinit ice wait'0' # or just: zinit ice wait
-# zinit light wfxr/forgit
 
 ### oxipng
 zinit ice lucid wait as"command" from"gh-r" mv"oxipng*x86_64-unknown-linux-gnu* -> oxipng" bpick"oxipng*x86_64-unknown-linux-gnu*" pick"oxipng/oxipng"
@@ -958,6 +953,10 @@ end="$(date +%s)"
 total="$(( end - start ))"
 # neofetch
 #fortune linux | cowsay -f tux
+# if [ -d ~/.local/share/zinit/plugins/fastfetch-cli---fastfetch/presets/ ]; then
+#     fastfetch -c ~/.local/share/zinit/plugins/fastfetch-cli---fastfetch/presets/examples/18.jsonc
+# fi
+
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
