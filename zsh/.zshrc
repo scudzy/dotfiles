@@ -469,8 +469,9 @@ zinit ice lucid wait as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zinit light b4b4r07/httpstat
 
 ### dalance/procs
-zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
-zinit light dalance/procs
+# zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
+# zinit light dalance/procs
+zinit for from'gh-r' sbin'**/procs -> procs' dalance/procs
 
 ### dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" \
@@ -480,9 +481,16 @@ zinit ice lucid wait from"gh-r" as"command" \
 zinit light dbrgn/tealdeer
 
 ### charmbracelet/glow
-zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" pick"glow" \
-  cp"completions/glow.zsh -> _glow"
-zinit light charmbracelet/glow
+# zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" \
+#   mv"glow* -> glow" pick"glow/glow"
+# zinit light charmbracelet/glow
+zinit for from'gh-r' sbin'**/glow' charmbracelet/glow
+
+### Github CLI
+zinit for from'gh-r' sbin'**/gh' cli/cli
+
+### jq
+zinit for from'gh-r' sbin'* -> jq' nocompile @jqlang/jq
 
 ### gdu
 zinit ice lucid wait from"gh-r" as"command" bpick"gdu_linux_amd64.tgz" mv"gdu_* -> gdu" \
