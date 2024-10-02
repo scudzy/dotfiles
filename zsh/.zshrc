@@ -476,9 +476,9 @@ zinit for from'gh-r' sbin'**/procs -> procs' dalance/procs
 ### dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
-    dl="https://raw.githubusercontent.com/dbrgn/tealdeer/main/completion/zsh_tealdeer -> _tldr" \
+    dl="https://raw.githubusercontent.com/tealdeer-rs/tealdeer/refs/heads/main/completion/zsh_tealdeer -> _tldr" \
     multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh"
-zinit light dbrgn/tealdeer
+zinit light tealdeer-rs/tealdeer
 
 ### charmbracelet/glow
 # zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" \
