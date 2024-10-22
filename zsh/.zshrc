@@ -968,6 +968,7 @@ total="$(( end - start ))"
 echo ""
 printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
 echo ""
+copyq --start-server
 # fastfetch -c /usr/share/fastfetch/presets/examples/12.jsonc
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
