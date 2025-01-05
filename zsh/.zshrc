@@ -912,13 +912,16 @@ unset PIDFOUND
 # # After finishing the configuration wizard change the atload'' ice to:
 # # -> atload'source ~/.p10k.zsh; _p9k_precmd'
 # zinit ice depth"1" atload'true; _p9k_precmd' nocd
-zinit ice depth"1" src"$ZDOTDIR/.p10k.zsh" atload'_p9k_precmd' nocd
-zinit light romkatv/powerlevel10k
+# zinit ice depth"1" src"$ZDOTDIR/.p10k.zsh" atload'_p9k_precmd' nocd
+# zinit light romkatv/powerlevel10k
 
-# typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-(( ! ${+functions[p10k]} )) || p10k finalize
+# # typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+# (( ! ${+functions[p10k]} )) || p10k finalize
 
 ####################### End of p10k prompt line ############################
+
+### OMP themes
+eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/craver.omp.json)"
 
 # autoload -U +X bashcompinit && bashcompinit
 # source $ZDOTDIR/completions/_sysbench
