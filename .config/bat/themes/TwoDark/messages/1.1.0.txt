@@ -1,9 +1,0 @@
-TwoDark Changelog
-==================
-
-## [1.1.0] 2016-12-08
-
-### Enhancement
-
-* Scrollbars (Whoa, magical!)
-* Support for 'Skins' plugin.
