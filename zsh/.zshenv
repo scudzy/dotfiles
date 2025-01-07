@@ -138,7 +138,7 @@ export NVM_DIR="/home/scudzy/.nvm"
 
 export BAT_CONFIG_PATH="/home/scudzy/.config/bat/config"
 export BAT_CONFIG_DIR="/home/scudzy/.config/bat"
-export BAT_THEME="OneHalfDark"
+export BAT_THEME="Monokai Extended Origin"
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
