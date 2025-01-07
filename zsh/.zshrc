@@ -920,8 +920,14 @@ unset PIDFOUND
 
 ####################### End of p10k prompt line ############################
 
-### OMP themes
-eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/craver.omp.json)"
+### Load Oh My Posh
+# zinit ice wait lucid for \
+#     'https://cdn.jsdelivr.net/gh/JanDeDobbeleer/oh-my-posh@v7/themes/*.omp.json(f)'
+# zinit light JanDeDobbeleer/oh-my-posh
+
+# Initialize Oh My Posh (choose your theme)
+eval "$(oh-my-posh init zsh --config /home/scudzy/.dotfiles/.mythemes.omp.json)"
+##### End OMP #####
 
 # autoload -U +X bashcompinit && bashcompinit
 # source $ZDOTDIR/completions/_sysbench
@@ -930,7 +936,6 @@ eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/crave
 # forgit
 zinit ice wait lucid
 zinit load 'wfxr/forgit'
-
 
 ## Git prompt
 # autoload -Uz vcs_info
