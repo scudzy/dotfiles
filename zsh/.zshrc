@@ -926,7 +926,7 @@ unset PIDFOUND
 # zinit light JanDeDobbeleer/oh-my-posh
 
 # Initialize Oh My Posh (choose your theme)
-eval "$(oh-my-posh init zsh --config /home/scudzy/.dotfiles/.mythemes.omp.json)"
+eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/emodipt-extend.omp.json)"
 ##### End OMP #####
 
 # autoload -U +X bashcompinit && bashcompinit
@@ -948,6 +948,7 @@ zinit load 'wfxr/forgit'
 POWERLEVEL9K_DISABLE_GITSTATUS="true"
 GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
 GITSTATUS_LOG_LEVEL=DEBUG
+#source ~/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/gitstatus.prompt.zsh
 
 #####################
 # COLORING          #
