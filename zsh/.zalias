@@ -312,3 +312,6 @@ alias shutdown="wsl.exe --shutdown $WSL_DISTRO_NAME"
 alias reboot="wsl.exe --terminate $WSL_DISTRO_NAME"
 
 alias tmx="tmux new -s"
+
+# fpath
+alias fpath="print -l $fpath"
