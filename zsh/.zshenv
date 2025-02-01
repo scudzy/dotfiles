@@ -29,10 +29,16 @@ if [[ "$OSTYPE" == linux-gnu ]]; then
   export XDG_VIDEOS_DIR="${HOME}/Users/Videos"
 fi
 
-# Add all local binary paths to the system path.
-export PAGER="less"
-export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.local/share/zinit/plugins/tj---git-extras/man"
+# bat
+export PAGER='less'
+export BAT_PAGER='less -R -F -+X --mouse'
+
+export BAT_CONFIG_PATH='/home/scudzy/.config/bat/config'
+export BAT_CONFIG_DIR='/home/scudzy/.config/bat'
+export BAT_THEME='OneHalfDark'
+
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPATH="/usr/share/man:${HOME}/.local/share/zinit/polaris/man:${HOME}/.local/share/zinit/plugins/tj---git-extras/man"
 
 ### golang
 export GOROOT="/usr/local/go/bin/"
@@ -135,10 +141,6 @@ export QT_SCALE_FACTOR=2
 export fdatetime="$(date +%d%m%Y-%H%M)"
 
 export NVM_DIR="/home/scudzy/.nvm"
-
-export BAT_CONFIG_PATH="/home/scudzy/.config/bat/config"
-export BAT_CONFIG_DIR="/home/scudzy/.config/bat"
-export BAT_THEME="Dracula"
 
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
