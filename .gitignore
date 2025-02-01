@@ -95,3 +95,12 @@ circle_icon_ffffffff.png
 node_modules
 package.json
 package-lock.json
+
+# Ignore files containing OAuth tokens
+*access_token*
+*oauth*
+*token*
+secrets.env
+config/secrets.json
+hosts.yml
+logs/
