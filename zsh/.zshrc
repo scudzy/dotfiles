@@ -409,13 +409,13 @@ zinit light sharkdp/vivid
 zinit ice lucid wait"1" as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat" \
   atclone"
     mv -vf bat*/autocomplete/bat.zsh _bat
-    mv -vf bat*/bat.1 ${ZINIT[MAN_DIR]}/man1" \
-  atload"
-    export BAT_THEME='Sublime Snazzy'
-    export BAT_PAGER='less -R -F -+X --mouse'
-    export PAGER='less'
-    export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"'"
+    mv -vf bat*/bat.1 ${ZINIT[MAN_DIR]}/man1"
 zinit light sharkdp/bat
+
+# export BAT_PAGER='less -R -F -+X --mouse'
+# export PAGER='less'
+# export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"
+# export MANPAGER="sh -c 'sed -e s/\\\\\\\\ x08//g | bat -l man -p'""
 
 ### ogham/exa, replacement for ls
 # zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
