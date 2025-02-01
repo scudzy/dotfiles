@@ -137,6 +137,10 @@ Plug 'ervandew/supertab'
 " zinit-vim-syntax
 Plug 'zdharma-continuum/zinit-vim-syntax'
 
+" less.vim
+Plug 'groenewege/vim-less'
+
+
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -171,7 +175,7 @@ let g:airline_theme='powerlineish'
 "let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
 "colorscheme powerlineish
-colorscheme gruvbox
+colorscheme brogrammer
 "colorscheme gruvbox
 
 " Specific colorscheme settings (must come after setting your colorscheme).
@@ -689,3 +693,4 @@ let g:vim_tmux_clipboard#loadb_option = '-w'
 "python del powerline_setup
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+set rtp^=/usr/share/vimpager
