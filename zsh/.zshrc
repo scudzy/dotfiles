@@ -417,15 +417,20 @@ zinit light sharkdp/bat
 # export MANPAGER='sh -c \"col -bx | bat --color=always --style=plain --language=man\"
 # export MANPAGER="sh -c 'sed -e s/\\\\\\\\ x08//g | bat -l man -p'""
 
+### eza-community/eza
+zinit ice wait"1" lucid from"gh-r" as"program" \
+    dl="https://raw.githubusercontent.com/eza-community/eza/refs/heads/main/completions/zsh/_eza"
+zinit light eza-community/eza
+
 ### ogham/exa, replacement for ls
 # zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
 # rm -rf man bin completions
-zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" \
-    atclone"
-    cp completions/exa.zsh _exa
-    cp man/exa.1 ${ZINIT[MAN_DIR]}/man1
-    cp man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
-zinit light ogham/exa
+#zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" \
+#    atclone"
+#    cp completions/exa.zsh _exa
+#    cp man/exa.1 ${ZINIT[MAN_DIR]}/man1
+#    cp man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
+#zinit light ogham/exa
 
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
 zinit wait"1" lucid from"gh-r" as"null" for \
