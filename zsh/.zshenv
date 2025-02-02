@@ -142,6 +142,7 @@ export fdatetime="$(date +%d%m%Y-%H%M)"
 
 export NVM_DIR="/home/scudzy/.nvm"
 
+export EZA_CONFIG_DIR="${XDG_CONFIG_HOME}/eza"
 ### Homebrew
 # export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 # export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
