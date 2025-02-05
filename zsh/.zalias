@@ -127,13 +127,13 @@ alias dus="du -had 1 | sort -rh"
 alias autorotate="jhead -autorot"
 
 # ls
-alias ld="eza -ahDGo --icons"
-alias lld="eza -laho --icons"
+alias ld="eza -lahDoT -L=1 --icons"
+#alias lld="eza -laho --icons"
 alias ll="eza -lahoT -L=1 --icons --group-directories-first"
 alias l2="eza -lahoT -L=2 --icons --group-directories-first"
 alias l3="eza -lahoT -L=3 --icons --group-directories-first"
-alias lg="eza -ahoG --icons --group-directories-first"
-alias llg="eza -laghG --icons --group-directories-first"
+alias lg="eza -lahoG --icons --group-directories-first"
+alias llg="eza -lahoG --icons --group-directories-first"
 alias lgit="eza -lahoT -L=1 --icons --git --group-directories-first"
 
 # sh
