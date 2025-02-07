@@ -1,4 +1,5 @@
 start="$(date +%s)"
+# Start timing before Zinit loads
 # module_path+=( "/home/scudzy/.local/share/zinit/module/Src" )
 # zmodload zsh/zprof
 # zmodload -i zsh/complist
@@ -286,19 +287,19 @@ fi
 ### Checking Login v.s. Non-Login
 if [[ -o Login ]]; then
     echo "Login"
+    echo ""
+    fastfetch -c ~/.config/fastfetch/examples/21.jsonc
+    echo ""
 else
     echo "Non-Login"
+    echo ""
+    fastfetch -c ~/.config/fastfetch/examples/8.jsonc
+    echo ""
 fi
 
-#fortune debian | cowsay -f bunny
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
+### load zinit modules
 zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+  zdharma-continuum/zinit-annex-{'readurl','bin-gem-node','patch-dl','rust'}
 
 ### End of Zinit's installer chunk
 
@@ -306,51 +307,18 @@ zinit light-mode for \
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-### omz lib multisource
+# ### omz lib multisource
 # zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
-#     clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
+#      clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
 # zinit snippet OMZ::lib
 
 # zinit snippet OMZP::git
 # setopt promptsubst
 
-### Turbo mode
-zinit wait lucid light-mode for \
-    atinit"zicompinit; zicdreplay" \
-        zdharma-continuum/fast-syntax-highlighting \
-    atload"_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions \
-        blockf atpull'zinit creinstall -q .' \
-        zsh-users/zsh-completions \
-        OMZP::tmux \
-        OMZP::genpass \
-        OMZP::fzf \
-        OMZP::sudo \
-        OMZP::command-not-found \
-        OMZP::colored-man-pages \
-        OMZP::python \
-        OMZP::systemd \
-        OMZP::zsh-interactive-cd \
-        OMZP::encode64 \
-        OMZP::systemadmin \
-        OMZP::gpg-agent \
-        OMZP::docker-compose \
-        OMZP::debian \
-        OMZP::svn \
-        OMZP::snap
-
-zinit wait'!' lucid for \
-    OMZL::prompt_info_functions.zsh \
-    OMZL::directories.zsh \
-    OMZL::clipboard.zsh
-
-setopt promptsubst
-
-# B.
-zinit wait lucid for \
-        OMZL::git.zsh \
-  atload"unalias grv" \
-        OMZP::git
+#zinit wait lucid for \
+#        OMZL::git.zsh \
+#  atload"unalias grv" \
+#        OMZP::git
 
 # declare-zsh
 zinit ice wait lucid
@@ -438,12 +406,17 @@ zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/vivid"         @sharkdp/vivid \
     sbin"**/bat"           @sharkdp/bat
 
-zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
-    atclone"
-    mv -vf hyperfine*/autocomplete/_hyperfine _hyperfine
-    mv -vf hyperfine*/*.1  ${ZINIT[MAN_DIR]}/man1
-    rm -rfv hyperfine-*" pick"hyperfine"
-zinit light sharkdp/hyperfine
+# zinit ice wait"1" lucid as"command" from"gh-r" mv"hyperfine*/hyperfine -> hyperfine" \
+#     atclone"
+#     mv -vf hyperfine*/autocomplete/_hyperfine _hyperfine
+#     mv -vf hyperfine*/*.1  ${ZINIT[MAN_DIR]}/man1
+#     rm -rfv hyperfine-*" pick"hyperfine"
+# zinit light sharkdp/hyperfine
+
+zi for \
+    from'gh-r' \
+    sbin'**/h*e -> hyperfine' \
+  @sharkdp/hyperfine
 
 # BurntSushi/ripgrep
 zinit ice lucid as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
@@ -452,9 +425,14 @@ zinit ice lucid as"command" from"gh-r" mv"ripgrep* -> rg" pick"rg/rg" \
 zinit light BurntSushi/ripgrep
 
 ### git-delta delta-0.16.5-x86_64-unknown-linux-musl.tar.gz
-zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
-    dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
-zinit light dandavison/delta
+# zinit ice wait from"gh-r" as"command" mv"delta-* -> delta" pick"delta/delta" \
+#     dl="https://github.com/dandavison/delta/raw/HEAD/etc/completion/completion.zsh -> _delta"
+# zinit light dandavison/delta
+
+zi for \
+    from'gh-r' \
+    sbin'**/delta -> delta' \
+  dandavison/delta
 
 ### fastfetch
 zinit ice wait from"gh-r" as"command" bpick"fastfetch-linux-amd64.tar.gz" \
@@ -462,7 +440,8 @@ zinit ice wait from"gh-r" as"command" bpick"fastfetch-linux-amd64.tar.gz" \
     atclone"
     mv -vf fastfetch*/usr/share/man/man1/fastfetch.1 ${ZINIT[MAN_DIR]}/man1
     mv -vf fastfetch*/usr/share/fastfetch/presets .
-    "
+    " \
+    atload"ln -s "
 zinit light fastfetch-cli/fastfetch
 
 ### Install z.lua
@@ -474,21 +453,15 @@ zinit ice lucid wait as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zinit light b4b4r07/httpstat
 
 ### dalance/procs
-# zinit ice lucid wait as"command" from"gh-r" bpick"*x86_64-linux*" pick"procs"
-# zinit light dalance/procs
 zinit for from'gh-r' sbin'**/procs -> procs' dalance/procs
 
 ### dbrgn/tealdeer
 zinit ice lucid wait from"gh-r" as"command" \
     mv"tealdeer* -> tldr" \
-    dl="https://raw.githubusercontent.com/tealdeer-rs/tealdeer/refs/heads/main/completion/zsh_tealdeer -> _tldr" \
-    multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh"
+    dl="https://raw.githubusercontent.com/tealdeer-rs/tealdeer/refs/heads/main/completion/zsh_tealdeer -> _tldr"
 zinit light tealdeer-rs/tealdeer
 
 ### charmbracelet/glow
-# zinit ice lucid wait from"gh-r" as"command" bpick"*_linux_x86_64.tar.gz" \
-#   mv"glow* -> glow" pick"glow/glow"
-# zinit light charmbracelet/glow
 zinit for from'gh-r' sbin'**/glow' charmbracelet/glow
 
 ### Github CLI
@@ -518,6 +491,10 @@ zinit for \
     mv -vf *.1 ${ZINIT[MAN_DIR]}/man1
     " \
   @junegunn/fzf
+
+# ### junegunn/fzf-bin
+# zinit ice from"gh-r" as"program"
+# zinit light junegunn/fzf-bin
 
 ### tab completions via fzf-tab
 zinit ice wait"1" lucid \
@@ -582,9 +559,9 @@ zinit ice lucid wait as"command" from"gh-r" mv"dust*x86_64*linux-gnu/dust -> dus
     rm -rfv dust-*"
 zinit light bootandy/dust
 
-zi ice as"program" atclone"sudo make PREFIX=$ZPFX install" \
+zinit ice as"program" atclone"sudo make PREFIX=$ZPFX install" \
     src"/home/scudzy/.local/share/zinit/plugins/tj---git-extras/etc/git-extras-completion.zsh"
-zi light tj/git-extras
+zinit light tj/git-extras
 
 ### FZF configs ------------- ###
 export FZF_BASE="$HOME/.local/share/zinit/plugins/junegunn---fzf"
@@ -791,14 +768,6 @@ if grep -q microsoft /proc/version; then
     fi
 fi
 
-source /etc/grc.zsh
-
-# dynamic aliases
-for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-    cmd="${cmd##*conf.}"
-    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-done
-
 # xterm modes
 if [ "$TERM" != "xterm-256color" ]; then
     export TERM=xterm-256color
@@ -925,22 +894,58 @@ unset PIDFOUND
 
 ####################### End of p10k prompt line ############################
 
-### Load Oh My Posh
-# zinit ice wait lucid for \
-#     'https://cdn.jsdelivr.net/gh/JanDeDobbeleer/oh-my-posh@v7/themes/*.omp.json(f)'
-# zinit light JanDeDobbeleer/oh-my-posh
-
 # Initialize Oh My Posh (choose your theme)
 eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/emodipt-extend.omp.json)"
-##### End OMP #####
+#### End OMP #####
 
 # autoload -U +X bashcompinit && bashcompinit
 # source $ZDOTDIR/completions/_sysbench
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
-# forgit
-zinit ice wait lucid
-zinit load 'wfxr/forgit'
+### Turbo mode
+zinit wait lucid light-mode for \
+    atinit"zicompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+        blockf atpull'zinit creinstall -q .' \
+        zsh-users/zsh-completions \
+        OMZP::tmux \
+        OMZP::genpass \
+        OMZP::fzf \
+        OMZP::sudo \
+        OMZP::command-not-found \
+        OMZP::colored-man-pages \
+        OMZP::python \
+        OMZP::systemd \
+        OMZP::zsh-interactive-cd \
+        OMZP::encode64 \
+        OMZP::systemadmin \
+        OMZP::gpg-agent \
+        OMZP::docker-compose \
+        OMZP::debian \
+        OMZP::svn \
+        OMZP::snap \
+        OMZP::git
+
+zinit wait'!' lucid for \
+    OMZL::directories.zsh \
+    OMZL::clipboard.zsh \
+    OMZL::cli.zsh \
+    OMZL::history.zsh
+
+zinit wait lucid for \
+                        OMZL::git.zsh \
+    atload"unalias grv" OMZP::git
+
+zinit ice run-atpull multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh /etc/grc.zsh"
+zinit light zdharma-continuum/null
+
+# dynamic aliases
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+    cmd="${cmd##*conf.}"
+    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+done
 
 ## Git prompt
 # autoload -Uz vcs_info
@@ -950,10 +955,14 @@ zinit load 'wfxr/forgit'
 # RPROMPT='%F{245}%*%f'
 
 # p10k env var
-POWERLEVEL9K_DISABLE_GITSTATUS="true"
-GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
-GITSTATUS_LOG_LEVEL=DEBUG
+# POWERLEVEL9K_DISABLE_GITSTATUS="true"
+# GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
+# GITSTATUS_LOG_LEVEL=DEBUG
 #source ~/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/gitstatus.prompt.zsh
+
+# forgit
+zinit ice wait lucid
+zinit light 'wfxr/forgit'
 
 #####################
 # COLORING          #
@@ -965,25 +974,17 @@ fpath=( /home/scudzy/.local/share/zinit/completions /home/scudzy/.dotfiles/zsh/c
 autoload -Uz $fpath[1]/*(.:t)
 
 # automatically remove duplicates from these arrays
-typeset -U path cdpath fpath manpath
+# typeset -U path cdpath fpath manpath
 
-# load function folders ----------- NEVER DELETE BELOW RHIS LINE
-### End of Zinit's installer chunk
-
-# Execution time
-end="$(date +%s)"
-total="$(( end - start ))"
-# neofetch
-#fortune linux | cowsay -f tux
-# if [ -d ~/.local/share/zinit/plugins/fastfetch-cli---fastfetch/presets/ ]; then
-#     fastfetch -c ~/.local/share/zinit/plugins/fastfetch-cli---fastfetch/presets/examples/18.jsonc
-# fi
-
-echo ""
-printf "\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n"
-echo ""
 copyq --start-server
 
-# fastfetch -c /usr/share/fastfetch/presets/examples/12.jsonc
+# Execution time
+# Then later, load the plugin with a custom atload hook:
+zinit ice as"null" atload"\
+    end=\$(date +%s); \
+    total=\$(( end - start )); \
+    printf \"\n\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m\$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n\"\ "
+zinit load zdharma-continuum/null
+
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
