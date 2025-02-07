@@ -122,6 +122,17 @@ export POWERLINE_CONFIG_COMMAND="${HOME}/.local/bin/powerline-config"
 export POWERLINE_ZSH_CONTINUATION="1"
 export POWERLINE_ZSH_SELECT="1"
 
+### p10k & Gitstatus
+export POWERLEVEL9K_DISABLE_GITSTATUS="true"
+export GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
+export GITSTATUS_LOG_LEVEL=DEBUG
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+export POWERLEVEL9K_VCS_MAX_INDEX_SIZE=10000000
+typeset -g P10K_INSTANT_PROMPT=quiet
+
+### deduplicated
+typeset -U path cdpath fpath manpath
+
 ### tmux
 export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
@@ -143,12 +154,4 @@ export fdatetime="$(date +%d%m%Y-%H%M)"
 export NVM_DIR="/home/scudzy/.nvm"
 
 export EZA_CONFIG_DIR="${XDG_CONFIG_HOME}/eza"
-### Homebrew
-# export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-# export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-# export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-# export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";\
-# export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
-# export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
-# export HOMEBREW_NO_INSTALL_FROM_API="1"
-# export HOMEBREW_VERBOSE="1"
+
