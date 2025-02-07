@@ -296,29 +296,57 @@ else
     fastfetch -c ~/.config/fastfetch/examples/8.jsonc
     echo ""
 fi
-
-### load zinit modules
-zinit light-mode for \
-  zdharma-continuum/zinit-annex-{'readurl','bin-gem-node','patch-dl','rust'}
-
 ### End of Zinit's installer chunk
 
 ### nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
+### load zinit modules
+zinit light-mode for \
+  zdharma-continuum/zinit-annex-{'readurl','bin-gem-node','patch-dl','rust'}
+
 # ### omz lib multisource
 # zinit ice svn pick"completion.zsh" multisrc"git.zsh functions.zsh \
 #      clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
 # zinit snippet OMZ::lib
 
-# zinit snippet OMZP::git
-# setopt promptsubst
+setopt promptsubst
 
-#zinit wait lucid for \
-#        OMZL::git.zsh \
-#  atload"unalias grv" \
-#        OMZP::git
+### Turbo mode
+zinit wait lucid light-mode for \
+    atinit"zicompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+        blockf atpull'zinit creinstall -q .' \
+        zsh-users/zsh-completions \
+        OMZP::tmux \
+        OMZP::genpass \
+        OMZP::fzf \
+        OMZP::sudo \
+        OMZP::command-not-found \
+        OMZP::colored-man-pages \
+        OMZP::python \
+        OMZP::systemd \
+        OMZP::zsh-interactive-cd \
+        OMZP::encode64 \
+        OMZP::systemadmin \
+        OMZP::gpg-agent \
+        OMZP::docker-compose \
+        OMZP::debian \
+        OMZP::svn \
+        OMZP::snap
+
+zinit wait'!' lucid for \
+    OMZL::directories.zsh \
+    OMZL::clipboard.zsh \
+    OMZL::cli.zsh \
+    OMZL::history.zsh
+
+zinit wait lucid for \
+                        OMZL::git.zsh \
+    atload"unalias grv" OMZP::git
 
 # declare-zsh
 zinit ice wait lucid
@@ -390,16 +418,6 @@ zinit ice wait"1" lucid from"gh-r" as"program" \
     dl="https://raw.githubusercontent.com/eza-community/eza/refs/heads/main/completions/zsh/_eza"
 zinit light eza-community/eza
 
-### ogham/exa, replacement for ls
-# zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" pick"exa" \
-# rm -rf man bin completions
-#zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa" \
-#    atclone"
-#    cp completions/exa.zsh _exa
-#    cp man/exa.1 ${ZINIT[MAN_DIR]}/man1
-#    cp man/exa_colors.5 ${ZINIT[MAN_DIR]}/man5"
-#zinit light ogham/exa
-
 ### All of the above using the for-syntax and also z-a-bin-gem-node annex
 zinit wait"1" lucid from"gh-r" as"null" for \
     sbin"**/fd"            @sharkdp/fd \
@@ -441,7 +459,7 @@ zinit ice wait from"gh-r" as"command" bpick"fastfetch-linux-amd64.tar.gz" \
     mv -vf fastfetch*/usr/share/man/man1/fastfetch.1 ${ZINIT[MAN_DIR]}/man1
     mv -vf fastfetch*/usr/share/fastfetch/presets .
     " \
-    atload"ln -s "
+    atload"ln -sfv ${ZINIT[PLUGINS]/fastfetch-cli/fastfetch ~/.local/bin/fastfetch} "
 zinit light fastfetch-cli/fastfetch
 
 ### Install z.lua
@@ -491,10 +509,6 @@ zinit for \
     mv -vf *.1 ${ZINIT[MAN_DIR]}/man1
     " \
   @junegunn/fzf
-
-# ### junegunn/fzf-bin
-# zinit ice from"gh-r" as"program"
-# zinit light junegunn/fzf-bin
 
 ### tab completions via fzf-tab
 zinit ice wait"1" lucid \
@@ -641,8 +655,14 @@ zstyle ':completion::*:git::*,[a-z]*' fzf-completion-opts --preview='
 ### End of fzf configs ----------------------- ###
 
 ### oxipng
-zinit ice lucid wait as"command" from"gh-r" mv"oxipng*x86_64-unknown-linux-gnu* -> oxipng" bpick"oxipng*x86_64-unknown-linux-gnu*" pick"oxipng/oxipng"
+zinit ice lucid wait as"command" from"gh-r" mv"oxipng*x86_64-unknown-linux-gnu* -> oxipng" bpick"oxipng*x86_64-unknown-linux-gnu*" pick"oxipng/oxipng" multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh /etc/grc.zsh"
 zinit light shssoichiro/oxipng
+
+# dynamic aliases
+for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
+    cmd="${cmd##*conf.}"
+    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
+done
 
 # Ctrl+A for aliases full commands
 zle -C alias-expension complete-word _generic
@@ -894,58 +914,13 @@ unset PIDFOUND
 
 ####################### End of p10k prompt line ############################
 
-# Initialize Oh My Posh (choose your theme)
-eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/emodipt-extend.omp.json)"
-#### End OMP #####
-
 # autoload -U +X bashcompinit && bashcompinit
 # source $ZDOTDIR/completions/_sysbench
 
 ### Auto Completion -------------- SOURCE BEFORE THIS LINE
-### Turbo mode
-zinit wait lucid light-mode for \
-    atinit"zicompinit; zicdreplay" \
-        zdharma-continuum/fast-syntax-highlighting \
-    atload"_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions \
-        blockf atpull'zinit creinstall -q .' \
-        zsh-users/zsh-completions \
-        OMZP::tmux \
-        OMZP::genpass \
-        OMZP::fzf \
-        OMZP::sudo \
-        OMZP::command-not-found \
-        OMZP::colored-man-pages \
-        OMZP::python \
-        OMZP::systemd \
-        OMZP::zsh-interactive-cd \
-        OMZP::encode64 \
-        OMZP::systemadmin \
-        OMZP::gpg-agent \
-        OMZP::docker-compose \
-        OMZP::debian \
-        OMZP::svn \
-        OMZP::snap \
-        OMZP::git
 
-zinit wait'!' lucid for \
-    OMZL::directories.zsh \
-    OMZL::clipboard.zsh \
-    OMZL::cli.zsh \
-    OMZL::history.zsh
-
-zinit wait lucid for \
-                        OMZL::git.zsh \
-    atload"unalias grv" OMZP::git
-
-zinit ice run-atpull multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh /etc/grc.zsh"
-zinit light zdharma-continuum/null
-
-# dynamic aliases
-for cmd in g++ gas head make ld ping6 tail traceroute6 $( ls /usr/share/grc/ ); do
-    cmd="${cmd##*conf.}"
-    type "${cmd}" >/dev/null 2>&1 && alias "${cmd}"="$( which grc ) --colour=auto ${cmd}"
-done
+# zinit for multisrc"${ZDOTDIR}/.zalias ${ZDOTDIR}/xdg.zsh /etc/grc.zsh" \
+#     @zdharma-continuum/null
 
 ## Git prompt
 # autoload -Uz vcs_info
@@ -959,6 +934,10 @@ done
 # GITSTATUS_DAEMON="/home/scudzy/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/usrbin/gitstatusd"
 # GITSTATUS_LOG_LEVEL=DEBUG
 #source ~/.local/share/zinit/plugins/romkatv---powerlevel10k/gitstatus/gitstatus.prompt.zsh
+
+# Initialize Oh My Posh (choose your theme)
+eval "$(oh-my-posh init zsh --config /home/scudzy/.cache/oh-my-posh/themes/emodipt-extend.omp.json)"
+#### End OMP #####
 
 # forgit
 zinit ice wait lucid
@@ -984,7 +963,7 @@ zinit ice as"null" atload"\
     end=\$(date +%s); \
     total=\$(( end - start )); \
     printf \"\n\e[0;97m 💠 Loading your blazing 🚀 fast ⚡ shell in\e[39m \e[1;92;5m\$total\e[0m 🔥 \e[0;97mseconds 👻 \e[0m\n\"\ "
-zinit load zdharma-continuum/null
+zinit light zdharma-continuum/null
 
 # debug
 # zprof[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
