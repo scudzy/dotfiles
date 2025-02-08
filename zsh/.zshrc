@@ -311,8 +311,6 @@ zinit light-mode for \
 #      clipboard.zsh cli.zsh history.zsh completion.zsh termsupport.zsh"
 # zinit snippet OMZ::lib
 
-setopt promptsubst
-
 ### Turbo mode
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
@@ -347,6 +345,10 @@ zinit wait'!' lucid for \
 zinit wait lucid for \
                         OMZL::git.zsh \
     atload"unalias grv" OMZP::git
+
+zinit cdclear -q #forget completions provided up to this point
+
+setopt promptsubst
 
 # declare-zsh
 zinit ice wait lucid
