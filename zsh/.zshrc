@@ -34,7 +34,6 @@ setopt nonomatch            # hide error message if there is no match for the pa
 setopt notify               # report the status of background jobs immediately
 setopt numericglobsort      # sort filenames numerically when it makes sense
 setopt nohup                # for nohup to works against watch
-# setopt promptsubst          # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -80,13 +79,20 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # History configurations
-HISTSIZE=1000
-SAVEHIST=2000
+HISTSIZE=500000
+SAVEHIST=1000000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 #setopt share_history         # share command history data
+setopt HIST_SAVE_NO_DUPS     # Remove duplicate commands from history
+setopt APPEND_HISTORY        # Append history instead of overwriting
+setopt HIST_IGNORE_DUPS      # Ignore duplicate commands
+setopt HIST_IGNORE_SPACE     # Ignore commands that start with a space
+
+export HISTCONTROL=ignoredups:erasedups   # Avoid duplicate entries
+export HISTIGNORE="ls:bg:fg:exit"        # Ignore common commands
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -949,6 +955,9 @@ zinit light 'wfxr/forgit'
 # COLORING          #
 #####################
 autoload colors && colors
+
+autoload -Uz compinit
+compinit -C  # Use cached completion if available
 
 # fpath
 fpath=( /home/scudzy/.local/share/zinit/completions /home/scudzy/.dotfiles/zsh/completions "${fpath[@]}" )
