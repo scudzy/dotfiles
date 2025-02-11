@@ -134,7 +134,7 @@ alias l2="eza -lahoT -L=2 --icons --group-directories-first"
 alias l3="eza -lahoT -L=3 --icons --group-directories-first"
 alias lg="eza -lahoG --icons --group-directories-first"
 alias llg="eza -lahoG --icons --group-directories-first"
-alias lgit="eza -lahoT -L=1 --icons --git --group-directories-first"
+alias lgit="eza -lahoT -L=1 --icons --git --group-directories-first --git-repos"
 
 # sh
 alias ffmpegts="sh -c '$DOTFILES/sh/ffmpegts.sh'"
